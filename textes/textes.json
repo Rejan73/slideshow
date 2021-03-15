@@ -1,0 +1,12 @@
+texte ='['
++'{"id":"0",'
++'"title":"Titre",'
++'"subTitle":"Sous-Titre",'
++'"lines":['
++'{"line":"fgfdsgf"},'
++'{"line":"131212"},'
++'{"line":"fgf1323213213132132 1213123 213132dsgf"},'
++'{"line":"fgf321132 132321213132v dsgf"}'
++']'
++'}'
++']';
