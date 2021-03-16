@@ -6,15 +6,16 @@
   <link rel="stylesheet" href="css/slideshow.css">
   <link rel="stylesheet" href="css/font-awesome.min.css">
   <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-  <script type="text/javascript" src="data.json"></script>
-  <script type="text/javascript" src="textes/textes.json"></script>
 </head>
 <body>
 
-<a class="js-open-modal btn" href="#" start-slideshow-id="start-slideshow" title="Start"><i class="fa fa-play-circle" style="color:green;"></i></a>
+
 <a class="js-open-modal btn" href="#" config-id="config-id" title="Configuration"><i class="fa fa-cog" style="color:green;"></i></a>
 
 <div id="configurationSlideShow" style="display:none">
+  <input type='file' accept='application/JSON' onchange='openFile(event)'><br>
+  <a class="js-open-modal btn" href="#" start-slideshow-id="start-slideshow" title="Start"><i class="fa fa-play-circle" style="color:green;"></i></a>
+  <br><br>
   <label for="fname"><i class="fa fa-film" style="color:green;"></i></label>                                            
   <input type="text" id="idSlideShow" value="0" size="1" pattern="[0-9]{3}" style="color:green;">
   <a class="js-open-modal btn" href="#" set-slideshow-id="set-slideshow" title="Sauvegarder"><i class="fa fa-rotate-left" style="color:green;"></i></a>
@@ -64,6 +65,7 @@ function hideAll(){
     $('#images').hide();
     $('#musics').hide();
     $('#textes').hide();
+    $('#configurationSlideShow').hide();
 }
 
 function stopMusic(){
@@ -73,13 +75,10 @@ function stopMusic(){
 
 var datas;
 var currentData;
-var textes;
 var id;
 
 (function($) {
   $(document).ready(function(){
-    datas = JSON.parse(data);
-    textes= JSON.parse(texte);
     id=0;
     // ajout du listener
     $('#video').get(0).addEventListener('pause', function(e) {
@@ -90,8 +89,17 @@ var id;
   });
 })(jQuery);
 
+var openFile = function(event) {
+        var input = event.target;
+        var reader = new FileReader();
+        reader.onload = function(){
+          slideShowDatas = JSON.parse(reader.result);
+        };
+        reader.readAsText(input.files[0]);
+      };
+
 $('a[start-slideshow-id]').click(function(e) {
-   runAnimation(id);
+   runAnimation();
 });
 
 $('a[config-id]').click(function(e) {
@@ -104,11 +112,11 @@ $('a[set-slideshow-id]').click(function(e) {
 
 function runAnimation(){
   hideAll();
-  if (id>=datas.length){
-   alert('end');
-   return null;
+  if (id>=slideShowDatas.length){
+    console.log('fini');
+    return null;
   }
-  currentData=datas[id];
+  currentData=slideShowDatas[id];
   switch (currentData.media)
   {
     case "mp3":
@@ -142,9 +150,9 @@ function playMovie(){
     $('#srcVideo').attr('src',currentData.file);
     $('#video')[0].load();
     $('#videos').show();
-    
+    //$('#video').get(0).requestFullscreen();
     $('#video').get(0).play();
-    $('#video').get(0).requestFullscreen();
+    
 }
   
 function playMusic(){
@@ -157,11 +165,10 @@ function playMusic(){
 };
 
 function playText(){
-  texte=textes[currentData.id];
   var div_data ='<div class="title">'
-  + '<p>'+texte.title+'</p>'
-  + '<h1>'+texte.subTitle+'</h1></div>' ;
-  texte.lines.forEach(object => div_data=div_data+'<p>'+object.line+'<p>');
+  + '<p>'+currentData.title+'</p>'
+  + '<h1>'+currentData.subTitle+'</h1></div>' ;
+  currentData.lines.forEach(object => div_data=div_data+'<p>'+object.line+'<p>');
   div_data=div_data+"</div>"                     
 
   $("#divCrawl").html(div_data);                     
@@ -169,6 +176,7 @@ function playText(){
   id++;
   window.setTimeout( runAnimation, currentData.duration*1000);
 };
+
 </script>
  
 </body>
