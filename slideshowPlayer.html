@@ -10,52 +10,50 @@
 <body>
 
 
-<a class="js-open-modal btn" href="#" config-id="config-id" title="Configuration"><i class="fa fa-cog"></i></a>
+<a class="js-open-modal btn" href="#" config-id="config-id" title="Configuration"><i class="fa fa-cog fa-2x"></i></a>
 
 <div id="configurationSlideShow" style="display:none">
   <input type='file' accept='application/JSON' onchange='openFile(event)'><br>
-  <a class="js-open-modal btn" href="#" start-slideshow-id="start-slideshow" title="Start"><i class="fa fa-play-circle"></i></a>
+  <a class="js-open-modal btn" href="#" start-slideshow-id="start-slideshow" title="Start"><i class="fa fa-play-circle fa-2x"></i></a>
+  <a class="js-open-modal btn" href="slideshowTools.html" add-media="add-media" title="Ajout M‚dia"><i class="fa fa-briefcase fa-2x" ></i></a>
   <br><br>
-  <label for="fname"><i class="fa fa-film"></i></label>                                            
+  <label for="fname"><i class="fa fa-film fa-2x"></i></label>                                            
   <input type="text" id="idSlideShow" value="0" size="1" pattern="[0-9]{3}" >
-  <a class="js-open-modal btn" href="#" set-slideshow-id="set-slideshow" title="Sauvegarder"><i class="fa fa-rotate-left"></i></a>
-  <br/>
-  <a class="js-open-modal btn" href="slideshowTools.html" add-media="add-media" title="Ajout M‚dia"><i class="fa fa-briefcase" ></i></a>
-  
+  <a class="js-open-modal btn" href="#" set-slideshow-id="set-slideshow" title="Sauvegarder"><i class="fa fa-rotate-left fa-2x"></i></a>
 </div>
-
-
-<div id="textes" style="display:none">
-<div class="fade"></div>
-<section class="star-wars">
-  <div class="crawl" id ="divCrawl">
-    <div class="title">
-      <p id="starwarsTitle">Episode IV</p>
-      <h1 id="starwarsSubTitle">A New Hope</h1>
-    </div>
-    <p>It is a period of civil war. Rebel spaceships, striking from a hidden base, have won their first victory against the evil Galactic Empire.</p>      
-    <p>During the battle, Rebel spies managed to steal secret plans to the Empire’s ultimate weapon, the DEATH STAR, an armored space station with enough power to destroy an entire planet.</p>
-    <p>Pursued by the Empire’s sinister agents, Princess Leia races home aboard her starship, custodian of the stolen plans that can save her people and restore freedom to the galaxy…</p>
+<div id="playSlideShow">
+  <div id="textes" style="display:none">
+    <div class="fade"></div>
+    <section class="star-wars">
+      <div class="crawl" id ="divCrawl">
+        <div class="title">
+          <p id="starwarsTitle">Episode IV</p>
+          <h1 id="starwarsSubTitle">A New Hope</h1>
+        </div>
+        <p>It is a period of civil war. Rebel spaceships, striking from a hidden base, have won their first victory against the evil Galactic Empire.</p>      
+        <p>During the battle, Rebel spies managed to steal secret plans to the Empire’s ultimate weapon, the DEATH STAR, an armored space station with enough power to destroy an entire planet.</p>
+        <p>Pursued by the Empire’s sinister agents, Princess Leia races home aboard her starship, custodian of the stolen plans that can save her people and restore freedom to the galaxy</p>
+      </div>
+    </section>  
   </div>
-</section>  
-</div>
-
-<div id="images" style="display:none">
-  <center>
-    <img id="srcImage" src=""/>
-  </center>
-</div>
-<div id="videos" style="display:none">
-  <center>
-  <video id="video" width="1280" height="720"  controls>
-      <source id="srcVideo" src="" type="video/mp4">
-  </video>
-  </center>
-</div>
-<div id="musics" style="display:none">
-  <audio id="music" controls>
-    <source id="srcMusic" src="" type="audio/mpeg">
-  </audio>
+  
+  <div id="images" style="display:none">
+    <center>
+      <img id="srcImage" src=""/>
+    </center>
+  </div>
+  <div id="videos" style="display:none">
+    <center>
+    <video id="video" width="1280" height="720"  controls>
+        <source id="srcVideo" src="" type="video/mp4">
+    </video>
+    </center>
+  </div>
+  <div id="musics" style="display:none">
+    <audio id="music" controls>
+      <source id="srcMusic" src="" type="audio/mpeg">
+    </audio>
+  </div>
 </div>
 <script src="js/jquery-3.5.0.js"></script>
 <script src="js/slideshowPlayer-1.0.0.js"></script> 
