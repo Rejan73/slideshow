@@ -1,0 +1,9 @@
+
+
+#mainSlideShow #configurationSlideShow {
+    float:left;
+    width:50%;
+}
+#mainSlideShow #previewSlideShow {
+    margin-left:50%   
+}

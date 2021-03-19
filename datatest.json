@@ -1,6 +1,6 @@
 [                                        
-{"media": "img", "duration":"3", "width":"800", "height":"600", "file":"photos/crocus.jpg"},
-{"media": "txt", "duration":"30", "title":"Titre","subTitle":"Sous-Titre",
+{"media": "img", "duration":"3", "width":"800", "height":"600", "file":"photos/crocus.jpg", "effect":"default"},
+{"media": "txt", "duration":"30", "effect":"starwars","title":"Titre","subTitle":"Sous-Titre",
   "lines":[
   {"line":"ceci est la ligne 1"},
   {"line":"ceci est la ligne 2"},
@@ -8,11 +8,11 @@
   {"line":"ceci est la ligne 1 et c'est la derniere ligne"}
   ]
 },
-{"media": "mp3", "width":"800", "height":"600", "file":"musics/001.mp3#t=2,10"},
-{"media": "img", "duration":"3", "width":"800", "height":"600", "file":"photos/igloo.jpg"},
-{"media": "img", "duration":"3", "width":"800", "height":"600", "file":"photos/igloo.jpg"},
-{"media": "mp4", "width":"800", "height":"600", "file":"videos/v_0002.mp4#t=2,5"},
-{"media": "img", "duration":"3", "width":"800", "height":"600", "file":"photos/Jonquilles.jpg"},
-{"media": "mp4", "width":"800", "height":"600", "file":"videos/v_0002.mp4"}
+{"media": "mp3", "width":"800", "height":"600", "file":"musics/001.mp3#t=2,10", "effect":"default"},
+{"media": "img", "duration":"3", "width":"800", "height":"600", "file":"photos/igloo.jpg", "effect":"default"},
+{"media": "img", "duration":"3", "width":"800", "height":"600", "file":"photos/igloo.jpg", "effect":"default"},
+{"media": "mp4", "width":"800", "height":"600", "file":"videos/v_0002.mp4#t=2,5", "effect":"default"},
+{"media": "img", "duration":"3", "width":"800", "height":"600", "file":"photos/Jonquilles.jpg", "effect":"default"},
+{"media": "mp4", "width":"800", "height":"600", "file":"videos/v_0002.mp4", "effect":"default"}
 ]
 

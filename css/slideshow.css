@@ -6,6 +6,12 @@ body {
   color: #fff;
 }
 
+i {
+  color:green;
+}
+
+
+
 .fade {
   position: relative;
   width: 100%;
