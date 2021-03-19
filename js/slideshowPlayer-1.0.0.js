@@ -22,7 +22,7 @@ var currentDataId=0;
 
 (function($) {
   $(document).ready(function(){
-    id=0;
+    currentDataId=0;
     // ajout du listener
     $('#video').get(0).addEventListener('pause', function(e) {
               $('#video').get(0).webkitExitFullscreen();
