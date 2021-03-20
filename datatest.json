@@ -1,6 +1,6 @@
 [                                        
 {"media": "img", "duration":"3", "width":"800", "height":"600", "file":"photos/crocus.jpg", "styleEffect":"none","movementEffect":"none","comeInEffect":"none","comeOutEffect":"non"},
-{"media": "txt", "duration":"30", "styleEffect":"none","movementEffect":"none","comeInEffect":"none","comeOutEffect":"none","title":"Titre","subTitle":"Sous-Titre",
+{"media": "txt", "duration":"30", "file":"Texte_1", "styleEffect":"none","movementEffect":"none","comeInEffect":"none","comeOutEffect":"none","title":"Titre","subTitle":"Sous-Titre",
   "lines":[
   {"line":"ceci est la ligne 1"},
   {"line":"ceci est la ligne 2"},
