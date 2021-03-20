@@ -1,4 +1,10 @@
-
+body {
+  width: 100%;
+  height: 100%;
+  background: #000;
+  //overflow: hidden; => for scrollbars
+  color: #fff;
+}
 
 #mainSlideShow #configurationSlideShow {
     float:left;
