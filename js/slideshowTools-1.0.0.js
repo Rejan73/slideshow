@@ -129,7 +129,9 @@ function saveAnimation(currentDataId){
   currentData.height=    $('#heightFile'+currentDataId).val();
   currentData.duration=    $('#durationFile'+currentDataId).val();
   currentData.effect=$('#effectFile'+currentDataId).val();
-  currentData.file= getFilePath(currentData.file)+'#t='+ $('#startFile'+currentDataId).val() +','+$('#endFile'+currentDataId).val();
+  if (currentData.media=='mp3' || currentData.media=='mp4'){
+    currentData.file= getFilePath(currentData.file)+'#t='+ $('#startFile'+currentDataId).val() +','+$('#endFile'+currentDataId).val();
+  }
   fillSlideShow();
 }
 
@@ -258,21 +260,30 @@ function runAnimation(currentDataId){
 function playImage(currentData){
   $('#srcImage').attr('src',currentData.file);
   $("#images").addClass(currentData["styleEffect"]);
+  $("#images").addClass(currentData["comeInEffect"]);
+  $("#images").addClass(currentData["movementEffect"]);
  // $('#srcImage').attr('width',currentData.width);
  // $('#srcImage').attr('height',currentData.height);
   $('#images').show();
   setTimeout(function() {
+    $("#images").removeClass(currentData["comeInEffect"]);
+    $("#images").removeClass(currentData["movementEffect"]);
+    $("#images").addClass(currentData["comeOutEffect"]);
+  }, currentData["duration"]*1000);
+  
+  setTimeout(function() {
     $("#images").removeClass(currentData["styleEffect"]);
-  }, currentData["duration"]*1000)
+    $("#images").removeClass(currentData["comeOutEffect"]);
+  }, currentData["duration"]*1000+2000) ;
+  
 };
 
 function playMovie(currentData){
-    $('#srcVideo').attr('src',currentData.file);
-    $('#video')[0].load();
-    $('#videos').show();
-    $('#video').get(0).play();
-    //$('#video').get(0).requestFullscreen();
-    
+  $('#srcVideo').attr('src',currentData.file);
+  $('#video')[0].load();
+  $('#videos').show();
+  $('#video').get(0).play();
+  //$('#video').get(0).requestFullscreen();
 }
   
 function playMusic(currentData){
@@ -369,7 +380,10 @@ function  saveEffectAnimation(currentDataId){
   function getMovementEffect(selectedEffect){
     var selectEffect='<select name="movementEffect" id="movementEffect">';
     selectEffect+='<option value="movementEffectNone">none</option>';
-    selectEffect+='<option value="movementEffectUpToDown" selected>Up To Down</option>';
+    selectEffect+='<option value="movementEffectUpToDown" selected>Up to Down</option>';
+    selectEffect+='<option value="movementEffectDownToUp" selected>Down to Up</option>';
+    selectEffect+='<option value="movementEffectLeftToRight" selected>Left to Right</option>';
+    selectEffect+='<option value="movementEffectRightToLeft" selected>Right to Left</option>';
     selectEffect+='</select>';
     return selectEffect;
   }
@@ -377,6 +391,7 @@ function  saveEffectAnimation(currentDataId){
   function getComeInEffect(selectedEffect){
     var selectEffect='<select name="comeInEffect" id="comeInEffect">';
     selectEffect+='<option value="comeInEffectNone">none</option>';
+    selectEffect+='<option value="comeInEffectFadeIn">Fade In</option>';
     selectEffect+='</select>';
     return selectEffect;
   }
@@ -384,6 +399,7 @@ function  saveEffectAnimation(currentDataId){
   function getComeOutEffect(selectedEffect){
     var selectEffect='<select name="comeOutEffect" id="comeOutEffect">';
     selectEffect+='<option value="comeOutEffectNone">none</option>';
+    selectEffect+='<option value="comeOutEffectFadeOut">Fade Out</option>';
     selectEffect+='</select>';
     return selectEffect;
   }
