@@ -25,7 +25,7 @@ var currentDataId=0;
     currentDataId=0;
     // ajout du listener
     $('#video').get(0).addEventListener('pause', function(e) {
-              Document.exitFullscreen();
+              //$('#video').get(0).exitFullscreen();
               currentDataId++;
               runAnimation();
     });

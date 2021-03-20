@@ -12,6 +12,11 @@ var openFile = function(event) {
           fillSlideShow();
         };
         reader.readAsText(input.files[0]);
+        /*
+        $('#video').get(0).addEventListener('pause', function(e) {
+              $('#video').get(0).currentTime;
+        });  
+        */
       };
 
 function fillSlideShow(){
@@ -20,7 +25,7 @@ function fillSlideShow(){
     var cpt=0;
     slideShowDatas.forEach(slideShowData => div_data+=printSlideShowData(slideShowData,cpt++));
     div_data+='</table>';
-    
+   div_data+='<br/><br/>Animation duration :'+calculeAnimationTime()+'s'; 
    div_data+='<br/><br/><select name="mediaToAdd" id="mediaToAdd">';
    div_data+='<option value="img">Photo</option>';
    div_data+='<option value="mp3">Music</option>';
@@ -32,6 +37,13 @@ function fillSlideShow(){
    div_data+='<br/><br/><a class="js-open-modal btn" href="#" saveall-media="saveall-media" title="save all to file" onclick="saveAllAnimation();"><i class="fa fa-save fa-5x"></i></a>'; 
      
     $('#slideShow').html(div_data);                                                                                            
+}
+
+function calculeAnimationTime(){
+  var animationTime=0;
+  slideShowDatas.filter(slideShowData => slideShowData["duration"] !=null).forEach(slideShowData => animationTime+=parseFloat(slideShowData["duration"]));
+  slideShowDatas.filter(slideShowData => parseFloat(getEndTime(slideShowData["file"]))>0 && slideShowData["media"]!="mp3").forEach(slideShowData => animationTime+=getDuration(slideShowData.file));
+  return animationTime;
 }
 
 function printSlideShowData(slideShowData,cpt){
@@ -77,17 +89,17 @@ function printSlideShowData(slideShowData,cpt){
   return '<tr>'+line+'</tr>';
 }
 
-
-
-
-
 function getFilePath(file){
   return  file.split('#t=')[0];
 }
 
+function getDuration(file){
+    return parseFloat(getEndTime(file))-parseFloat(getStartTime(file));
+}
+
 function getStartTime(file){
   if (file.split('#t=').length<2){
-    return '';
+    return 0;
   }
   return  file.split('#t=')[1].split(',')[0];
 }
