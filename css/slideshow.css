@@ -11,7 +11,7 @@ i {
 }
 
 
-
+ /* STAR WAR Text effect */
 .fade {
   position: relative;
   width: 100%;
@@ -63,3 +63,15 @@ i {
     transform: rotateX(25deg) translateZ(-2500px);
   }
 }
+
+/* Image effects  */
+#images.imageEffectNone{
+}
+#images.imageEffectSepia{
+    filter:sepia(100%);
+}
+      
+#images.imageEffectBlackAndWhite{
+    filter:grayscale(100%);
+}
+
