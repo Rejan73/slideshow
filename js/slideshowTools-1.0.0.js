@@ -296,6 +296,40 @@ function playMusic(currentData){
 };
 
 
+function playText(currentData){
+  if (currentData.styleEffect=='starwars'){
+    var div_data ='<div class="title">'
+    + '<p>'+currentData.title+'</p>'
+    + '<h1>'+currentData.subTitle+'</h1></div><div>' ;
+    currentData.lines.forEach(object => div_data=div_data+'<p>'+object.line+'<p>');
+    div_data=div_data+"</div>"   
+    $("#divCrawl").html(div_data);
+    $("#divText").html("");   
+  } else {  
+    var div_data ='<h1>'+currentData.title+'</h1><h2>'+currentData.subTitle+'</h2>' ;
+    currentData.lines.forEach(object => div_data=div_data+'<p>'+object.line+'<p>');
+    div_data+='<br>';
+    $("#textes").addClass(currentData["styleEffect"]);
+    $("#textes").addClass(currentData["comeInEffect"]);
+    $("#textes").addClass(currentData["movementEffect"]);
+    $("#divText").html(div_data);
+    $("#divCrawl").html("");
+    setTimeout(function() {
+    $("#textes").removeClass(currentData["comeInEffect"]);
+    $("#textes").removeClass(currentData["movementEffect"]);
+    $("#textes").addClass(currentData["comeOutEffect"]);
+  }, currentData["duration"]*1000);
+  
+  setTimeout(function() {
+    $("#textes").removeClass(currentData["styleEffect"]);
+    $("#textes").removeClass(currentData["comeOutEffect"]);
+  }, currentData["duration"]*1000+2000) ;
+  }                   
+  $('#textes').show(); 
+  
+}
+
+
 function  updateTextAnimation(currentDataId){
   hideAll();
   currentData=slideShowDatas[currentDataId];
@@ -320,17 +354,6 @@ function  saveTextAnimation(currentDataId){
   $('#updateTexte').hide();
 }
 
-function playText(currentData){
-  var div_data ='<div class="title">'
-  + '<p>'+currentData.title+'</p>'
-  + '<h1>'+currentData.subTitle+'</h1></div>' ;
-  currentData.lines.forEach(object => div_data=div_data+'<p>'+object.line+'<p>');
-  div_data=div_data+"</div>"                     
-
-  $("#divCrawl").html(div_data);                     
-  $('#textes').show(); 
-  
-}
 
 function  updateEffectAnimation(currentDataId){
   hideAll();
