@@ -10,7 +10,6 @@
 </head>
 <body>
 <a class="js-open-modal btn" href="#" config-id="config-id" title="Configuration"><i class="fa fa-cog fa-2x"></i></a>
-
 <div id="mainSlideShow">
   <div id="configurationSlideShow" style="display:none">
      <input type='file' accept='application/JSON' onchange='openFile(event)'><br>
@@ -49,8 +48,11 @@
     </div>
    </div>
 </div>
-
+<div id="timelines" style="display:none">
+   <div id="timelineDiv" style="position:absolute;left:100px;top:500px;"></div>
+</div>  
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="js/jquery-3.5.0.js"></script>
-<script src="js/slideshowTools-1.0.0.js"></script>
+<script src="js/slideshowTools-1.0.0.js"></script> 
 </body>
 </html>

@@ -10,6 +10,9 @@ var openFile = function(event) {
         reader.onload = function(){
           slideShowDatas = JSON.parse(reader.result);
           fillSlideShow();
+          
+google.charts.load("current", {packages:["timeline"]});
+google.charts.setOnLoadCallback(drawChart);
         };
         reader.readAsText(input.files[0]);
         /*
@@ -36,15 +39,69 @@ function fillSlideShow(){
    div_data+=' <a class="js-open-modal btn" href="#" add-media="add-media" title="add media" onclick="addAnimation();"><i class="fa fa-plus-circle fa-2x"></i></a>';
    div_data+='<br/><br/><a class="js-open-modal btn" href="#" saveall-media="saveall-media" title="save all to file" onclick="saveAllAnimation();"><i class="fa fa-save fa-5x"></i></a>'; 
      
-    $('#slideShow').html(div_data);                                                                                            
+    $('#slideShow').html(div_data); 
+                                                                                         
 }
 
 function calculeAnimationTime(){
   var animationTime=0;
   slideShowDatas.filter(slideShowData => slideShowData["duration"] !=null).forEach(slideShowData => animationTime+=parseFloat(slideShowData["duration"]));
-  slideShowDatas.filter(slideShowData => parseFloat(getEndTime(slideShowData["file"]))>0 && slideShowData["media"]!="mp3").forEach(slideShowData => animationTime+=getDuration(slideShowData.file));
+  slideShowDatas.filter(slideShowData => parseFloat(getEndTime(slideShowData["file"]))>0 && slideShowData["media"]=="mp4").forEach(slideShowData => animationTime+=getDuration(slideShowData.file));
   return animationTime;
 }
+
+function toDateTime(secs) {
+    var t = new Date(0,0,0,0,0,0);
+    t.setSeconds(secs);
+    return t;
+}
+
+var time=0;
+var timeCpt=0;
+function  buildData(slideShowData) {
+  var startTime=time;
+   timeCpt++;
+    if (slideShowData["duration"] !=null){
+      time+=parseFloat(slideShowData["duration"]);
+    } else if (slideShowData["media"]=="mp4"){
+      time+=getDuration(slideShowData.file);
+    } else{
+       return [ slideShowData.media , slideShowData.file,toDateTime(startTime),  toDateTime(startTime+getDuration(slideShowData.file))];
+    } 
+    return [ slideShowData.media , slideShowData.file, toDateTime(startTime),  toDateTime(time)];
+    
+}
+
+function drawChart(){
+    var container = document.getElementById('timelineDiv');
+    var chart = new google.visualization.Timeline(container);
+    var dataTable = new google.visualization.DataTable();
+    dataTable.addColumn({ type: 'string', id: 'Room' });
+    dataTable.addColumn({ type: 'string', id: 'Name' });
+    dataTable.addColumn({ type: 'date', id: 'Start' });
+    dataTable.addColumn({ type: 'date', id: 'End' });
+    
+    var currentData=[];
+    time=0;
+    timeMusic=0;
+    slideShowDatas.forEach(object => currentData.push(buildData(object)));
+    dataTable.addRows( currentData);
+   /* dataTable.addRows([
+      [ 'Music', 'Beginning JavaScript',       new Date(0,0,0,0,0,0),  new Date(0,0,0,0,0,30) ],
+      [ 'Image', 'Intermediate JavaScript',    new Date(0,0,0,0,0,0),  new Date(0,0,0,0,0,10) ],
+      [ 'Texte', 'Advanced JavaScript',        new Date(0,0,0,0,0,10),  new Date(0,0,0,0,0,20) ],
+      [ 'Video',   'Advanced Google Charts',   new Date(0,0,0,0,0,20), new Date(0,0,0,0,1,0) ]]);
+          */
+    var options = {
+      timeline: { colorByRowLabel: true},
+      height: 500,
+      width: 1500,
+    };
+
+    chart.draw(dataTable, options);
+     $('#timelines').show();
+}
+
 
 function printSlideShowData(slideShowData,cpt){
   var line='';
@@ -119,6 +176,8 @@ function hideAll(){
     $('#textes').hide();
     $('#updateTexte').hide();
     $('#updateEffect').hide();
+    $('#timelines').hide();
+    
 }
 
 function stopMusic(){
@@ -469,3 +528,4 @@ function  saveEffectAnimation(currentDataId){
     selectEffect+='</select>';
     return selectEffect;
   }
+  
