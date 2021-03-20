@@ -257,10 +257,13 @@ function runAnimation(currentDataId){
 
 function playImage(currentData){
   $('#srcImage').attr('src',currentData.file);
+  $("#images").addClass(currentData["styleEffect"]);
  // $('#srcImage').attr('width',currentData.width);
  // $('#srcImage').attr('height',currentData.height);
   $('#images').show();
-
+  setTimeout(function() {
+    $("#images").removeClass(currentData["styleEffect"]);
+  }, currentData["duration"]*1000)
 };
 
 function playMovie(currentData){
@@ -331,7 +334,7 @@ function  updateEffectAnimation(currentDataId){
          div_effect+=getVideoEffect(currentData.styleEffect);
          break;
     case "img":
-        div_effect+=getMusicEffect(currentData.styleEffect);
+        div_effect+=getImageEffect(currentData.styleEffect);
          break;
     case "txt":
          div_effect+=getTextEffect(currentData.styleEffect);
@@ -365,30 +368,31 @@ function  saveEffectAnimation(currentDataId){
 }
   function getMovementEffect(selectedEffect){
     var selectEffect='<select name="movementEffect" id="movementEffect">';
-    selectEffect+='<option value="none">none</option>';
-    selectEffect+='<option value="uptodown" selected>Up To Down</option>';
+    selectEffect+='<option value="movementEffectNone">none</option>';
+    selectEffect+='<option value="movementEffectUpToDown" selected>Up To Down</option>';
     selectEffect+='</select>';
     return selectEffect;
   }
 
   function getComeInEffect(selectedEffect){
     var selectEffect='<select name="comeInEffect" id="comeInEffect">';
-    selectEffect+='<option value="none">none</option>';
+    selectEffect+='<option value="comeInEffectNone">none</option>';
     selectEffect+='</select>';
     return selectEffect;
   }
   
   function getComeOutEffect(selectedEffect){
     var selectEffect='<select name="comeOutEffect" id="comeOutEffect">';
-    selectEffect+='<option value="none">none</option>';
+    selectEffect+='<option value="comeOutEffectNone">none</option>';
     selectEffect+='</select>';
     return selectEffect;
   }
 
   function getImageEffect(selectedEffect){
     var selectEffect='<select name="styleEffect" id="styleEffect">';
-    selectEffect+='<option value="none">none</option>';
-    selectEffect+='<option value="starwars" selected>starwars</option>';
+    selectEffect+='<option value="imageEffectNone">none</option>';
+    selectEffect+='<option value="imageEffectSepia">Sepia</option>';
+    selectEffect+='<option value="imageEffectBlackAndWhite">Black and White</option>';
     selectEffect+='</select>';
     return selectEffect;
   }
@@ -396,21 +400,21 @@ function  saveEffectAnimation(currentDataId){
   function getTextEffect(selectedEffect){
     var selectEffect='<select name="styleEffect" id="styleEffect">';
     selectEffect+='<option value="none">none</option>';
-    selectEffect+='<option value="starwars" selected>starwars</option>';
+    selectEffect+='<option value="starwars">starwars</option>';
     selectEffect+='</select>';
     return selectEffect;
   }
   
   function getVideoEffect(selectedEffect){
     var selectEffect='<select name="styleEffect" id="styleEffect">';
-    selectEffect+='<option value="none" selected>none</option>';
+    selectEffect+='<option value="videoEffectNone" selected>none</option>';
     selectEffect+='</select>';
     return selectEffect;
   }
 
   function getMusicEffect(selectedEffect){
     var selectEffect='<select name="styleEffect" id="styleEffect">';
-    selectEffect+='<option value="none" selected>none</option>';
+    selectEffect+='<option value="musicEffectNone" selected>none</option>';
     selectEffect+='</select>';
     return selectEffect;
   }
