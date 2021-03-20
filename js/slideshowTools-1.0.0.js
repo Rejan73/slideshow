@@ -306,9 +306,9 @@ function playText(currentData){
     $("#divCrawl").html(div_data);
     $("#divText").html("");   
   } else {  
-    var div_data ='<h1>'+currentData.title+'</h1><h2>'+currentData.subTitle+'</h2>' ;
+    var div_data ='<center><h1>'+currentData.title+'</h1><h2>'+currentData.subTitle+'</h2>' ;
     currentData.lines.forEach(object => div_data=div_data+'<p>'+object.line+'<p>');
-    div_data+='<br>';
+    div_data+='<br></center>';
     $("#textes").addClass(currentData["styleEffect"]);
     $("#textes").addClass(currentData["comeInEffect"]);
     $("#textes").addClass(currentData["movementEffect"]);
