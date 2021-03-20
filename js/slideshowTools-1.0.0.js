@@ -15,6 +15,7 @@ var openFile = function(event) {
       };
 
 function fillSlideShow(){
+    hideAll();
     var div_data='<table><th></th><th>File</th><th>Width</th><th>Height</th><th>PlayTime in s</th><th>Actions</th>';
     var cpt=0;
     slideShowDatas.forEach(slideShowData => div_data+=printSlideShowData(slideShowData,cpt++));
@@ -43,20 +44,20 @@ function printSlideShowData(slideShowData,cpt){
          line+=' end <input type="text" size="1" id="endFile'+cpt+'" value="' + getEndTime(slideShowData.file)+'"/></td>';
          break;
     case "mp4":
-         line+='<td><i class="fa fa-file-movie-o fa-2x" ></i></td><td>'+getFilePath(slideShowData.file)+'</td>'
+         line+='<td><i class="fa fa-file-movie-o fa-2x" ></i></td><td>'+getFilePath(slideShowData.file)+'</td>';
          line+='<td><input type="text" size="1" id="widthFile'+cpt+'" value="' + slideShowData.width+'"/></td>';
          line+='<td><input type="text" size="1" id="heightFile'+cpt+'" value="' + slideShowData.height+'"/></td>';
          line+='<td>start <input type="text" size="1" id="startFile'+cpt+'" value="' + getStartTime(slideShowData.file) +'"/>';
          line+=' end <input type="text" size="1" id="endFile'+cpt+'" value="' + getEndTime(slideShowData.file)+'"/></td>';
          break;
     case "img":
-         line+='<td><i class="fa fa-file-photo-o fa-2x" ></i></td><td>'+slideShowData.file+'</td>'
+         line+='<td><i class="fa fa-file-photo-o fa-2x" ></i></td><td>'+slideShowData.file+'</td>';
          line+='<td><input type="text" size="1" id="widthFile'+cpt+'" value="' + slideShowData.width+'"/></td>';
          line+='<td><input type="text" size="1" id="heightFile'+cpt+'" value="' + slideShowData.height+'"/></td>';
          line+='<td>duration <input type="text" size="1" id="durationFile'+cpt+'" value="' + slideShowData.duration +'"/></td>';
          break;
     case "txt":
-         line+='<td><i class="fa fa-file-text-o fa-2x" ></i></td><td>texte</td>';
+         line+='<td><i class="fa fa-file-text-o fa-2x" ></i></td><td>'+slideShowData.file+'</td>';
          line+='<td colspan="2"><a class="js-open-modal btn" href="#" title="Modify Text" onclick="updateTextAnimation('+cpt+');"><i class="fa fa-pencil-square fa-2x" ></i></a></td>';
          line+='<td>duration <input type="text" size="1" id="durationFile'+cpt+'" value="' + slideShowData.duration +'"/></td>';
          break; 
@@ -122,6 +123,7 @@ $('a[set-slideshow-id]').click(function(e) {
 });
 
 function saveAnimation(currentDataId){
+  hideAll();
   currentData=slideShowDatas[currentDataId];
   currentData.width=    $('#widthFile'+currentDataId).val();
   currentData.height=    $('#heightFile'+currentDataId).val();
@@ -133,13 +135,18 @@ function saveAnimation(currentDataId){
 
 
 function removeAnimation(currentDataId){
+  hideAll();
   slideShowDatas.splice(currentDataId, 1);
   fillSlideShow();
 }
 
 function moveDownAnimation(currentDataId){
+  hideAll();
   if (currentDataId<slideShowDatas.length-1){
     currentData=slideShowDatas[currentDataId];
+    if (currentData.media=='txt'){
+      currentData["file"]='Texte_'+(currentDataId+1);
+    }
     slideShowDatas[currentDataId]=slideShowDatas[currentDataId+1];
     slideShowDatas[currentDataId+1]=currentData;
   }
@@ -147,8 +154,12 @@ function moveDownAnimation(currentDataId){
 }
 
 function moveUpAnimation(currentDataId){
+  hideAll();
   if (currentDataId>0){
     currentData=slideShowDatas[currentDataId];
+    if (currentData.media=='txt'){
+      currentData["file"]='Texte_'+(currentDataId-1);
+    }
     slideShowDatas[currentDataId]=slideShowDatas[currentDataId-1];
     slideShowDatas[currentDataId-1]=currentData;
   }
@@ -159,6 +170,7 @@ function addAnimation(){
   var dataToAdd={};
   dataToAdd["media"]=$('#mediaToAdd').val();
   if (dataToAdd["media"]=='txt'){
+     dataToAdd["file"]='Texte_'+slideShowDatas.length;
      dataToAdd["title"]='Titre';
      dataToAdd["subTitle"]='Sous-Titre';
      dataToAdd["lines"]=[{"line":"ceci est une ligne"}];
@@ -166,7 +178,7 @@ function addAnimation(){
     dataToAdd.file=$('#fileToAdd').val();
   }
   
-  if (dataToAdd["media"]=='img'){
+  if (dataToAdd["media"]=='img' || dataToAdd["media"]=='txt'){
     dataToAdd["duration"]='5';
   } 
   dataToAdd["styleEffect"]="none";
@@ -181,7 +193,7 @@ function addAnimation(){
 }
 
 function saveAllAnimation(){
-  console.log(JSON.stringify(slideShowDatas));
+  hideAll();
   downAll(JSON.stringify(slideShowDatas),'slideshowData-'+Date.now()+'.json','application/json');
 }
 
@@ -273,7 +285,7 @@ function playMusic(currentData){
 function  updateTextAnimation(currentDataId){
   hideAll();
   currentData=slideShowDatas[currentDataId];
-  var div_text ='<p>Text Modification<p><br>Title : <input type="text" size="50" id="updatetitle" value="'+currentData.title+'"/><br>';
+  var div_text ='<p>Text Modification '+currentData.file+'<p><br>Title : <input type="text" size="50" id="updatetitle" value="'+currentData.title+'"/><br>';
   div_text+='SubTitle :<input type="text" size="50" id="updatesubtitle" value="'+currentData.subTitle+'"/><br>';
   div_text+='Text : <textarea id="updatelines" rows="10" cols="100">';
   currentData.lines.forEach(object => div_text=div_text+object.line+'\n');
@@ -309,7 +321,7 @@ function playText(currentData){
 function  updateEffectAnimation(currentDataId){
   hideAll();
   currentData=slideShowDatas[currentDataId];
-  var div_effect ='<p>Style Modification<p><br><label><i class="fa fa-film fa-2x"></i> Style Effect</label> ';
+  var div_effect ='<p>Style Modification '+currentData.file+'<p><br><label><i class="fa fa-film fa-2x"></i> Style Effect</label> ';
   switch (currentData.media)
   {
     case "mp3":
@@ -335,6 +347,10 @@ function  updateEffectAnimation(currentDataId){
   div_effect+=getComeOutEffect(currentData.comeOutEffect);
   div_effect+='<br><a class="js-open-modal btn" href="#" save-media="save-media" title="Modify" onclick="saveEffectAnimation('+currentDataId+');"><i class="fa fa-save fa-2x"></i></a></td>';
   $("#updateEffect").html(div_effect);  
+  $('#styleEffect').val(currentData["styleEffect"]);
+  $('#movementEffect').val(currentData["movementEffect"]);
+  $('#comeInEffect').val(currentData["comeInEffect"]);
+  $('#comeOutEffect').val(currentData["comeOutEffect"]);
   $('#updateEffect').show();
 
 }
