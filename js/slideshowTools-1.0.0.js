@@ -27,14 +27,14 @@ function fillSlideShow(){
     slideShowDatas.forEach(slideShowData => div_data+=printSlideShowData(slideShowData,cpt++));
     div_data+='</table>';
    div_data+='<br/><br/><a class="js-open-modal btn" href="#" title="show timeline" onclick="showTimeLine();"><i class="fa fa-bar-chart fa-2x"></i></a> Animation duration :'+calculeAnimationTime()+'s';
-   div_data+='<br/><br/><select name="mediaToAdd" id="mediaToAdd">';
+   div_data+='<br/><br/>Ajout Animation : <br/><select name="mediaToAdd" id="mediaToAdd">';
    div_data+='<option value="img">Photo</option>';
    div_data+='<option value="mp3">Music</option>';
    div_data+='<option value="mp4">Video</option>';
-   div_data+='<option value="txt">Texte</option>';
    div_data+='</select>';
-   div_data+=' Filename : <input type="text" size="20" id="fileToAdd" value="" title="le nom du fichier"/>'; 
-   div_data+=' <a class="js-open-modal btn" href="#" add-media="add-media" title="add media" onclick="addAnimation();"><i class="fa fa-plus-circle fa-2x"></i></a>';
+   div_data+=' Files : <input type="file" id="files" name="files" accept="audio/mp3,audio/ogg,audio/wav,audio/mpeg,video/mp4,video/ogg,video/webm,image/*" multiple>';
+   div_data+=' <a class="js-open-modal btn" href="#" add-media="add-media" title="add media" onclick="addAnimation();"><i class="fa fa-plus-circle fa-2x"></i></a><br>';
+   div_data+=' <a class="js-open-modal btn" href="#" title="add txt media" onclick="addTxtAnimation();"><i class="fa fa-file-text-o fa-2x"></i><i class="fa fa-plus-circle fa-2x"></i></a>';
    div_data+='<br/><br/><a class="js-open-modal btn" href="#" saveall-media="saveall-media" title="save all to file" onclick="saveAllAnimation();"><i class="fa fa-save fa-5x"></i></a>'; 
      
     $('#slideShow').html(div_data); 
@@ -100,7 +100,7 @@ function drawChart(){
       timeline: { colorByRowLabel: true}, 
       height: 220,
       width: 1000,
-      chartArea: {left:10, width: 800} 
+      chartArea: {left:500, width: 800} 
     };
     chart.draw(dataTable, options);
 }
@@ -249,40 +249,52 @@ function moveUpAnimation(currentDataId){
   fillSlideShow();
 }
 
-function addAnimation(){
-  var dataToAdd={};
-  dataToAdd["media"]=$('#mediaToAdd').val();
+function addTxtAnimation(){
+    var dataToAdd={};
+    dataToAdd["media"]=$('#mediaToAdd').val();
+    dataToAdd["file"]='Texte_'+slideShowDatas.length;
+    dataToAdd["title"]='Titre';
+    dataToAdd["subTitle"]='Sous-Titre';
+    dataToAdd["lines"]=[{"line":"ceci est une ligne"}];
+    dataToAdd["duration"]='5';
+    dataToAdd["styleEffect"]="none";
+    dataToAdd["movementEffect"]="none";
+    dataToAdd["comeInEffect"]="none";
+    dataToAdd["comeOutEffect"]="none";
+    dataToAdd["width"]='800';
+    dataToAdd["height"]='600'; 
+    slideShowDatas.push(dataToAdd);
+    fillSlideShow();
+}
 
-  switch (slideShowData.media)
-  {
-    case "mp3":
-        dataToAdd.file='musics/'+$('#fileToAdd').val();
-        break;
-    case "mp4":
-        dataToAdd.file='videos/'+$('#fileToAdd').val();
-        break;
-    case "img":
-        dataToAdd.file='photos/'+$('#fileToAdd').val();
-        dataToAdd["duration"]='5';
-        break;
-    case "txt":
-        dataToAdd["file"]='Texte_'+slideShowDatas.length;
-        dataToAdd["title"]='Titre';
-        dataToAdd["subTitle"]='Sous-Titre';
-        dataToAdd["lines"]=[{"line":"ceci est une ligne"}];
-        dataToAdd["duration"]='5';
-        break; 
-    defaut:
-        break; 
+function addAnimation(){
+  var files = $("#files")[0].files;
+  for (i=0;i<files.length;i++){ 
+    var dataToAdd={};
+    dataToAdd["media"]=$('#mediaToAdd').val();
+    switch (dataToAdd["media"])
+    {
+      case "mp3":
+          dataToAdd.file='musics/'+files[i].name;
+          break;
+      case "mp4":
+          dataToAdd.file='videos/'+files[i].name;
+          break;
+      case "img":
+          dataToAdd.file='photos/'+files[i].name;
+          dataToAdd["duration"]='5';
+          break;
+      defaut:
+          break; 
+    }
+    dataToAdd["styleEffect"]="none";
+    dataToAdd["movementEffect"]="none";
+    dataToAdd["comeInEffect"]="none";
+    dataToAdd["comeOutEffect"]="none";
+    dataToAdd["width"]='800';
+    dataToAdd["height"]='600'; 
+    slideShowDatas.push(dataToAdd);
   }
-  dataToAdd["styleEffect"]="none";
-  dataToAdd["movementEffect"]="none";
-  dataToAdd["comeInEffect"]="none";
-  dataToAdd["comeOutEffect"]="none";
-  dataToAdd["width"]='800';
-  dataToAdd["height"]='600'; 
-  slideShowDatas.push(dataToAdd);
-  
   fillSlideShow();
 }
 
