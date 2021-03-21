@@ -9,10 +9,8 @@ var openFile = function(event) {
         var reader = new FileReader();
         reader.onload = function(){
           slideShowDatas = JSON.parse(reader.result);
+          google.charts.load("current", {packages:["timeline"]});
           fillSlideShow();
-          
-google.charts.load("current", {packages:["timeline"]});
-google.charts.setOnLoadCallback(drawChart);
         };
         reader.readAsText(input.files[0]);
         /*
@@ -28,18 +26,19 @@ function fillSlideShow(){
     var cpt=0;
     slideShowDatas.forEach(slideShowData => div_data+=printSlideShowData(slideShowData,cpt++));
     div_data+='</table>';
-   div_data+='<br/><br/>Animation duration :'+calculeAnimationTime()+'s'; 
+   div_data+='<br/><br/><a class="js-open-modal btn" href="#" title="show timeline" onclick="showTimeLine();"><i class="fa fa-bar-chart fa-2x"></i></a> Animation duration :'+calculeAnimationTime()+'s';
    div_data+='<br/><br/><select name="mediaToAdd" id="mediaToAdd">';
    div_data+='<option value="img">Photo</option>';
    div_data+='<option value="mp3">Music</option>';
    div_data+='<option value="mp4">Video</option>';
    div_data+='<option value="txt">Texte</option>';
    div_data+='</select>';
-   div_data+=' File : <input type="text" size="20" id="fileToAdd" value="" title="avec le bon nom de dossier/fichier"/>'; 
+   div_data+=' Filename : <input type="text" size="20" id="fileToAdd" value="" title="le nom du fichier"/>'; 
    div_data+=' <a class="js-open-modal btn" href="#" add-media="add-media" title="add media" onclick="addAnimation();"><i class="fa fa-plus-circle fa-2x"></i></a>';
    div_data+='<br/><br/><a class="js-open-modal btn" href="#" saveall-media="saveall-media" title="save all to file" onclick="saveAllAnimation();"><i class="fa fa-save fa-5x"></i></a>'; 
      
     $('#slideShow').html(div_data); 
+    drawChart() ;
                                                                                          
 }
 
@@ -66,10 +65,15 @@ function  buildData(slideShowData) {
     } else if (slideShowData["media"]=="mp4"){
       time+=getDuration(slideShowData.file);
     } else{
-       return [ slideShowData.media , slideShowData.file,toDateTime(startTime),  toDateTime(startTime+getDuration(slideShowData.file))];
+       return [ slideShowData.media , getFilename(slideShowData.file),toDateTime(startTime),  toDateTime(startTime+getDuration(slideShowData.file))];
     } 
-    return [ slideShowData.media , slideShowData.file, toDateTime(startTime),  toDateTime(time)];
+    return [ slideShowData.media , getFilename(slideShowData.file), toDateTime(startTime),  toDateTime(time)];
     
+}
+
+function showTimeLine(){
+   drawChart();
+   $('#timelines').toggle();
 }
 
 function drawChart(){
@@ -93,13 +97,12 @@ function drawChart(){
       [ 'Video',   'Advanced Google Charts',   new Date(0,0,0,0,0,20), new Date(0,0,0,0,1,0) ]]);
           */
     var options = {
-      timeline: { colorByRowLabel: true},
-      height: 500,
-      width: 1500,
+      timeline: { colorByRowLabel: true}, 
+      height: 220,
+      width: 1000,
+      chartArea: {left:10, width: 800} 
     };
-
     chart.draw(dataTable, options);
-     $('#timelines').show();
 }
 
 
@@ -108,19 +111,19 @@ function printSlideShowData(slideShowData,cpt){
   switch (slideShowData.media)
   {
     case "mp3":
-         line+='<td><i class="fa fa-file-audio-o fa-2x" ></i></td><td>'+getFilePath(slideShowData.file)+'</td><td></td><td></td>';
+         line+='<td><i class="fa fa-file-audio-o fa-2x" ></i></td><td>'+getFilename(slideShowData.file)+'</td><td></td><td></td>';
          line+='<td>start <input type="text" size="1" id="startFile'+cpt+'" value="' + getStartTime(slideShowData.file) +'"/>';
          line+=' end <input type="text" size="1" id="endFile'+cpt+'" value="' + getEndTime(slideShowData.file)+'"/></td>';
          break;
     case "mp4":
-         line+='<td><i class="fa fa-file-movie-o fa-2x" ></i></td><td>'+getFilePath(slideShowData.file)+'</td>';
+         line+='<td><i class="fa fa-file-movie-o fa-2x" ></i></td><td>'+getFilename(slideShowData.file)+'</td>';
          line+='<td><input type="text" size="1" id="widthFile'+cpt+'" value="' + slideShowData.width+'"/></td>';
          line+='<td><input type="text" size="1" id="heightFile'+cpt+'" value="' + slideShowData.height+'"/></td>';
          line+='<td>start <input type="text" size="1" id="startFile'+cpt+'" value="' + getStartTime(slideShowData.file) +'"/>';
          line+=' end <input type="text" size="1" id="endFile'+cpt+'" value="' + getEndTime(slideShowData.file)+'"/></td>';
          break;
     case "img":
-         line+='<td><i class="fa fa-file-photo-o fa-2x" ></i></td><td>'+slideShowData.file+'</td>';
+         line+='<td><i class="fa fa-file-photo-o fa-2x" ></i></td><td>'+getFilename(slideShowData.file)+'</td>';
          line+='<td><input type="text" size="1" id="widthFile'+cpt+'" value="' + slideShowData.width+'"/></td>';
          line+='<td><input type="text" size="1" id="heightFile'+cpt+'" value="' + slideShowData.height+'"/></td>';
          line+='<td>duration <input type="text" size="1" id="durationFile'+cpt+'" value="' + slideShowData.duration +'"/></td>';
@@ -146,8 +149,15 @@ function printSlideShowData(slideShowData,cpt){
   return '<tr>'+line+'</tr>';
 }
 
-function getFilePath(file){
+function getFilePath(file){ 
   return  file.split('#t=')[0];
+}
+
+function getFilename(file){
+  if (file.split('#t=')[0].split('\/').length<2){
+    return file.split('#t=')[0];
+  }
+  return  file.split('#t=')[0].split('\/')[1];
 }
 
 function getDuration(file){
@@ -242,18 +252,29 @@ function moveUpAnimation(currentDataId){
 function addAnimation(){
   var dataToAdd={};
   dataToAdd["media"]=$('#mediaToAdd').val();
-  if (dataToAdd["media"]=='txt'){
-     dataToAdd["file"]='Texte_'+slideShowDatas.length;
-     dataToAdd["title"]='Titre';
-     dataToAdd["subTitle"]='Sous-Titre';
-     dataToAdd["lines"]=[{"line":"ceci est une ligne"}];
-  } else{ 
-    dataToAdd.file=$('#fileToAdd').val();
+
+  switch (slideShowData.media)
+  {
+    case "mp3":
+        dataToAdd.file='musics/'+$('#fileToAdd').val();
+        break;
+    case "mp4":
+        dataToAdd.file='videos/'+$('#fileToAdd').val();
+        break;
+    case "img":
+        dataToAdd.file='photos/'+$('#fileToAdd').val();
+        dataToAdd["duration"]='5';
+        break;
+    case "txt":
+        dataToAdd["file"]='Texte_'+slideShowDatas.length;
+        dataToAdd["title"]='Titre';
+        dataToAdd["subTitle"]='Sous-Titre';
+        dataToAdd["lines"]=[{"line":"ceci est une ligne"}];
+        dataToAdd["duration"]='5';
+        break; 
+    defaut:
+        break; 
   }
-  
-  if (dataToAdd["media"]=='img' || dataToAdd["media"]=='txt'){
-    dataToAdd["duration"]='5';
-  } 
   dataToAdd["styleEffect"]="none";
   dataToAdd["movementEffect"]="none";
   dataToAdd["comeInEffect"]="none";

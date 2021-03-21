@@ -12,3 +12,12 @@ body {
 #mainSlideShow #previewSlideShow {
     margin-left:50%;   
 }
+
+#timelineDiv {
+  background: #fff;
+  height: 220px;
+  width: 1050px;
+  left:30px;
+  top:100px;
+  position:absolute;
+}
