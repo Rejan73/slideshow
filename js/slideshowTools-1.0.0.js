@@ -11,6 +11,7 @@ var openFile = function(event) {
           slideShowDatas = JSON.parse(reader.result);
           google.charts.load("current", {packages:["timeline"]});
           fillSlideShow();
+          $('#timelines').show();
         };
         reader.readAsText(input.files[0]);
         /*
@@ -26,18 +27,8 @@ function fillSlideShow(){
     var cpt=0;
     slideShowDatas.forEach(slideShowData => div_data+=printSlideShowData(slideShowData,cpt++));
     div_data+='</table>';
-   div_data+='<br/><br/><a class="js-open-modal btn" href="#" title="show timeline" onclick="showTimeLine();"><i class="fa fa-bar-chart fa-2x"></i></a> Animation duration :'+calculeAnimationTime()+'s';
-   div_data+='<br/><br/>Ajout Animation : <br/><select name="mediaToAdd" id="mediaToAdd">';
-   div_data+='<option value="img">Photo</option>';
-   div_data+='<option value="mp3">Music</option>';
-   div_data+='<option value="mp4">Video</option>';
-   div_data+='</select>';
-   div_data+=' Files : <input type="file" id="files" name="files" accept="audio/mp3,audio/ogg,audio/wav,audio/mpeg,video/mp4,video/ogg,video/webm,image/*" multiple>';
-   div_data+=' <a class="js-open-modal btn" href="#" add-media="add-media" title="add media" onclick="addAnimation();"><i class="fa fa-plus-circle fa-2x"></i></a><br>';
-   div_data+=' <a class="js-open-modal btn" href="#" title="add txt media" onclick="addTxtAnimation();"><i class="fa fa-file-text-o fa-2x"></i><i class="fa fa-plus-circle fa-2x"></i></a>';
-   div_data+='<br/><br/><a class="js-open-modal btn" href="#" saveall-media="saveall-media" title="save all to file" onclick="saveAllAnimation();"><i class="fa fa-save fa-5x"></i></a>'; 
-     
     $('#slideShow').html(div_data); 
+    $('#slideShow').show(); 
     drawChart() ;
                                                                                          
 }
@@ -99,13 +90,11 @@ function drawChart(){
     var options = {
       timeline: { showBarLabels: false },
       height: 220,
-      width: 1000,
+      width: 10000,
       hAxis: {format: 'mm:ss'},
       chartArea: { top: 20, height: '70%' }
     };
-    
     chart.draw(dataTable, options);
-
     $('#timelineDiv div div div').attr({'style': 'position: absolute; left: 15px; top: 10px; width: 100%; height: 100%;'})
     $('#timelineDiv div div div svg g:first text').attr({'x':25,"text-anchor":"end"})
 }
@@ -152,8 +141,11 @@ function printSlideShowData(slideShowData,cpt){
   line+='<a class="js-open-modal btn" href="#" title="Remove" onclick="removeAnimation('+cpt+');"><i class="fa fa-times-circle fa-2x" style="color:red;"></i></a>';
   line+='<a class="js-open-modal btn" href="#" title="Play" onclick="runAnimation('+cpt+');"><i class="fa fa-play-circle fa-2x" ></i></a></td>';
   
-  
   return '<tr>'+line+'</tr>';
+}
+
+function changeSaveallColorRed(){
+  $("#isaveall").attr({'style': 'color:red;'});
 }
 
 function getFilePath(file){ 
@@ -193,8 +185,7 @@ function hideAll(){
     $('#textes').hide();
     $('#updateTexte').hide();
     $('#updateEffect').hide();
-    $('#timelines').hide();
-    
+    $('#addNewAnimation').hide();
 }
 
 function stopMusic(){
@@ -202,10 +193,6 @@ function stopMusic(){
     $('#srcMusic').attr('src','');
 }
 
-
-$('a[config-id]').click(function(e) {
-   $('#configurationSlideShow').toggle();
-});
 $('a[set-slideshow-id]').click(function(e) {
    id =$('#idSlideShow').val();
 });
@@ -220,6 +207,7 @@ function saveAnimation(currentDataId){
   if (currentData.media=='mp3' || currentData.media=='mp4'){
     currentData.file= getFilePath(currentData.file)+'#t='+ $('#startFile'+currentDataId).val() +','+$('#endFile'+currentDataId).val();
   }
+  changeSaveallColorRed();
   fillSlideShow();
 }
 
@@ -227,6 +215,7 @@ function saveAnimation(currentDataId){
 function removeAnimation(currentDataId){
   hideAll();
   slideShowDatas.splice(currentDataId, 1);
+  changeSaveallColorRed();
   fillSlideShow();
 }
 
@@ -239,6 +228,7 @@ function moveDownAnimation(currentDataId){
     }
     slideShowDatas[currentDataId]=slideShowDatas[currentDataId+1];
     slideShowDatas[currentDataId+1]=currentData;
+    changeSaveallColorRed();
   }
   fillSlideShow();
 }
@@ -252,6 +242,7 @@ function moveUpAnimation(currentDataId){
     }
     slideShowDatas[currentDataId]=slideShowDatas[currentDataId-1];
     slideShowDatas[currentDataId-1]=currentData;
+    changeSaveallColorRed();
   }
   fillSlideShow();
 }
@@ -271,6 +262,7 @@ function addTxtAnimation(){
     dataToAdd["width"]='800';
     dataToAdd["height"]='600'; 
     slideShowDatas.push(dataToAdd);
+    changeSaveallColorRed();
     fillSlideShow();
 }
 
@@ -302,12 +294,14 @@ function addAnimation(){
     dataToAdd["height"]='600'; 
     slideShowDatas.push(dataToAdd);
   }
+  changeSaveallColorRed();
   fillSlideShow();
 }
 
 function saveAllAnimation(){
   hideAll();
   downAll(JSON.stringify(slideShowDatas),'slideshowData-'+Date.now()+'.json','application/json');
+  $("#isaveall").attr({'style':'color:green;'});
 }
 
 function downAll(data, filename, mime) {
@@ -449,7 +443,8 @@ function  updateTextAnimation(currentDataId){
   div_text+='Text : <textarea id="updatelines" rows="10" cols="100">';
   currentData.lines.forEach(object => div_text=div_text+object.line+'\n');
   div_text+='</textarea>'; 
-  div_text+='<br><a class="js-open-modal btn" href="#" save-media="save-media" title="Modify" onclick="saveTextAnimation('+currentDataId+');"><i class="fa fa-pencil-square fa-2x"></i></a></td>';
+  div_text+='<br><center><a class="js-open-modal btn" href="#" title="Modify" onclick="saveTextAnimation('+currentDataId+');"><i class="fa fa-pencil-square fa-2x"></i></a>';
+  div_text+='<a class="js-open-modal btn" href="#"  title="Cancel" onclick="hideTextAnimation();"><i class="fa fa-times-circle fa-2x"></i></a></center>';
   $("#updateTexte").html(div_text);  
   $('#updateTexte').show();
 
@@ -461,8 +456,20 @@ function  saveTextAnimation(currentDataId){
   var dataLine= $('#updatelines').val().split('\n');
   currentData["lines"]=[];
   dataLine.forEach(object => currentData["lines"].push({"line": object }));
-  
+  changeSaveallColorRed();
   $('#updateTexte').hide();
+}
+
+function hideTextAnimation(){
+  $('#updateTexte').hide();
+}
+
+function addNewAnimation(){
+  $('#addNewAnimation').show();
+}
+
+function hideAddNewAnimation(){
+  $('#addNewAnimation').hide();
 }
 
 
@@ -493,7 +500,8 @@ function  updateEffectAnimation(currentDataId){
   div_effect+=getComeInEffect(currentData.comeInEffect);
   div_effect+='<br><label><i class="fa fa-film fa-2x"></i> Come Out Effect</label> ';
   div_effect+=getComeOutEffect(currentData.comeOutEffect);
-  div_effect+='<br><a class="js-open-modal btn" href="#" save-media="save-media" title="Modify" onclick="saveEffectAnimation('+currentDataId+');"><i class="fa fa-save fa-2x"></i></a></td>';
+  div_effect+='<br><center><a class="js-open-modal btn" href="#" save-media="save-media" title="Modify" onclick="saveEffectAnimation('+currentDataId+');"><i class="fa fa-save fa-2x"></i></a>';
+  div_effect+='<a class="js-open-modal btn" href="#"  title="Cancel" onclick="hideEffectAnimation();"><i class="fa fa-times-circle fa-2x"></i></a></center>';
   $("#updateEffect").html(div_effect);  
   $('#styleEffect').val(currentData["styleEffect"]);
   $('#movementEffect').val(currentData["movementEffect"]);
@@ -508,9 +516,17 @@ function  saveEffectAnimation(currentDataId){
   currentData["movementEffect"]=$('#movementEffect').val();
   currentData["comeInEffect"]=$('#comeInEffect').val();
   currentData["comeOutEffect"]=$('#comeOutEffect').val();
-  
+  changeSaveallColorRed();
   $('#updateEffect').hide();
 }
+
+function hideEffectAnimation(){
+  $('#updateEffect').hide();
+}
+
+
+
+
   function getMovementEffect(selectedEffect){
     var selectEffect='<select name="movementEffect" id="movementEffect">';
     selectEffect+='<option value="movementEffectNone">none</option>';

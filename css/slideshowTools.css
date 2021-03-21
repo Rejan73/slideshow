@@ -8,6 +8,9 @@ body {
 #mainSlideShow #configurationSlideShow {
     float:left;
     width:50%;
+    left:50px;
+  top:300px;
+  position:absolute;
 }
 #mainSlideShow #previewSlideShow {
     margin-left:50%;   
@@ -16,12 +19,53 @@ body {
 #timelineDiv {
   background: #fff;
   height: 220px;
-  width: 1030px;
-  left:30px;
-  top:100px;
+  left:50px;
+  top:80px;
   position:absolute;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  width: 800px;
 }
-    
+
+#slideShow {
+  left:0px;
+  top:30px;
+  height: 600px;
+  position:absolute;
+  overflow-x: hidden;
+  overflow-y: scroll;
+} 
+#updateEffect{
+  position: fixed; /* or absolute */
+  top: 50%;
+  left: 50%;
+  padding-left: 20px;
+  border: 2px solid green;
+  background: #000;
+  z-index:10;
+  width: 300px;
+}
+#updateTexte{
+  position: fixed; /* or absolute */
+  top: 50%;
+  left: 50%;
+  padding-left: 20px;
+  border: 2px solid green;
+  background: #000;
+  width: 800px;
+} 
+
+#addNewAnimation {
+  position: fixed; /* or absolute */
+  top: 50%;
+  left: 50%;
+  padding-left: 20px;
+  border: 2px solid green;
+  background: #000;
+  z-index:10;
+  width: 400px;
+}
+
 .tooltip .tooltiptext {
   visibility: hidden;
   width: 110px;
