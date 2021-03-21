@@ -97,14 +97,11 @@ function drawChart(){
       [ 'Video',   'Advanced Google Charts',   new Date(0,0,0,0,0,20), new Date(0,0,0,0,1,0) ]]);
           */
     var options = {
-      timeline: { colorByRowLabel: true}, 
+      timeline: { showBarLabels: false },
       height: 220,
       width: 1000,
-
-      chartArea: {
-    top: 20,
-    height: '70%'
-}
+      hAxis: {format: 'mm:ss'},
+      chartArea: { top: 20, height: '70%' }
     };
     
     chart.draw(dataTable, options);
