@@ -19,7 +19,9 @@ var openFile = function(event) {
               $('#video').get(0).currentTime;
         });  
         */
+        
       };
+      
 
 function fillSlideShow(){
     hideAll();
@@ -47,7 +49,7 @@ function toDateTime(secs) {
 }
 
 var time=0;
-var timeCpt=0;
+var timeCpt=-1;
 function  buildData(slideShowData) {
   var startTime=time;
    timeCpt++;
@@ -56,9 +58,9 @@ function  buildData(slideShowData) {
     } else if (slideShowData["media"]=="mp4"){
       time+=getDuration(slideShowData.file);
     } else{
-       return [ slideShowData.media , getFilename(slideShowData.file),toDateTime(startTime),  toDateTime(startTime+getDuration(slideShowData.file))];
+       return [ slideShowData.media ,'['+timeCpt+']'+ getFilename(slideShowData.file),toDateTime(startTime), toDateTime(startTime+getDuration(slideShowData.file))];
     } 
-    return [ slideShowData.media , getFilename(slideShowData.file), toDateTime(startTime),  toDateTime(time)];
+    return [ slideShowData.media ,'['+timeCpt+']'+ getFilename(slideShowData.file), toDateTime(startTime),  toDateTime(time)];
     
 }
 
@@ -68,6 +70,7 @@ function showTimeLine(){
 }
 
 function drawChart(){
+
     var container = document.getElementById('timelineDiv');
     var chart = new google.visualization.Timeline(container);
     var dataTable = new google.visualization.DataTable();
@@ -78,7 +81,7 @@ function drawChart(){
     
     var currentData=[];
     time=0;
-    timeMusic=0;
+    timeCpt=-1;
     slideShowDatas.forEach(object => currentData.push(buildData(object)));
     dataTable.addRows( currentData);
    /* dataTable.addRows([
@@ -92,11 +95,17 @@ function drawChart(){
       height: 220,
       width: 10000,
       hAxis: {format: 'mm:ss'},
+      colors: ['blue', 'red', 'green'],
       chartArea: { top: 20, height: '70%' }
     };
     chart.draw(dataTable, options);
     $('#timelineDiv div div div').attr({'style': 'position: absolute; left: 15px; top: 10px; width: 100%; height: 100%;'})
     $('#timelineDiv div div div svg g:first text').attr({'x':25,"text-anchor":"end"})
+
+    google.visualization.events.addListener(chart, 'select', function() {
+      var row = chart.getSelection()[0].row;
+      alert('You selected ' + dataTable.getValue(row, 1));
+  });
 }
 
 
