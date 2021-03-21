@@ -131,7 +131,9 @@ function printSlideShowData(slideShowData,cpt){
          line+=' end <input type="text" size="1" id="endFile'+cpt+'" value="' + getEndTime(slideShowData.file)+'"/></td>';
          break;
     case "img":
-         line+='<td><i class="fa fa-file-photo-o fa-2x" ></i></td><td>'+getFilename(slideShowData.file)+'</td>';
+         line+='<td><div class="tooltip"><i class="fa fa-file-photo-o fa-2x" ></i><span class="tooltiptext">';
+         line+='<img width="100" heigth="100" src="'+slideShowData.file+'"></span></div></td>';
+         line+='<td>'+getFilename(slideShowData.file)+'</td>';
          line+='<td><input type="text" size="1" id="widthFile'+cpt+'" value="' + slideShowData.width+'"/></td>';
          line+='<td><input type="text" size="1" id="heightFile'+cpt+'" value="' + slideShowData.height+'"/></td>';
          line+='<td>duration <input type="text" size="1" id="durationFile'+cpt+'" value="' + slideShowData.duration +'"/></td>';
