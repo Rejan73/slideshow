@@ -80,8 +80,8 @@ function drawChart(){
     var container = document.getElementById('timelineDiv');
     var chart = new google.visualization.Timeline(container);
     var dataTable = new google.visualization.DataTable();
-    dataTable.addColumn({ type: 'string', id: 'Room' });
-    dataTable.addColumn({ type: 'string', id: 'Name' });
+    dataTable.addColumn({ type: 'string', id: 'Media' });
+    dataTable.addColumn({ type: 'string', id: 'Filename' });
     dataTable.addColumn({ type: 'date', id: 'Start' });
     dataTable.addColumn({ type: 'date', id: 'End' });
     
@@ -100,9 +100,17 @@ function drawChart(){
       timeline: { colorByRowLabel: true}, 
       height: 220,
       width: 1000,
-      chartArea: {left:500, width: 800} 
+
+      chartArea: {
+    top: 20,
+    height: '70%'
+}
     };
+    
     chart.draw(dataTable, options);
+
+    $('#timelineDiv div div div').attr({'style': 'position: absolute; left: 15px; top: 10px; width: 100%; height: 100%;'})
+    $('#timelineDiv div div div svg g:first text').attr({'x':25,"text-anchor":"end"})
 }
 
 
