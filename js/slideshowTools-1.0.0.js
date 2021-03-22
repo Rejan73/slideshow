@@ -58,9 +58,9 @@ function  buildData(slideShowData) {
     } else if (slideShowData["media"]=="mp4"){
       time+=getDuration(slideShowData.file);
     } else{
-       return [ slideShowData.media ,'['+timeCpt+']'+ getFilename(slideShowData.file),toDateTime(startTime), toDateTime(startTime+getDuration(slideShowData.file))];
+       return [ slideShowData.media ,timeCpt+':'+ getFilename(slideShowData.file),toDateTime(startTime), toDateTime(startTime+getDuration(slideShowData.file))];
     } 
-    return [ slideShowData.media ,'['+timeCpt+']'+ getFilename(slideShowData.file), toDateTime(startTime),  toDateTime(time)];
+    return [ slideShowData.media ,timeCpt+':'+ getFilename(slideShowData.file), toDateTime(startTime),  toDateTime(time)];
     
 }
 
@@ -104,7 +104,18 @@ function drawChart(){
 
     google.visualization.events.addListener(chart, 'select', function() {
       var row = chart.getSelection()[0].row;
-      alert('You selected ' + dataTable.getValue(row, 1));
+      var elt;
+      var cpt=dataTable.getValue(row, 1).split(":")[0];
+      $('#icon'+cpt).attr({'style': 'color:yellow;'});
+      setTimeout(function() {
+            $('#icon'+cpt).attr({'style': 'color:green;'});
+        }, 1000);
+      if (dataTable.getValue(row, 0)=='mp3' || dataTable.getValue(row, 0)=='mp4'){
+        elt= '#startFile'+cpt;
+      } else {
+        elt= '#durationFile'+cpt;
+      }
+      $(elt).focus();
   });
 }
 
@@ -114,19 +125,19 @@ function printSlideShowData(slideShowData,cpt){
   switch (slideShowData.media)
   {
     case "mp3":
-         line+='<td><i class="fa fa-file-audio-o fa-2x" ></i></td><td>'+getFilename(slideShowData.file)+'</td><td></td><td></td>';
+         line+='<td><i id="icon'+cpt+'" class="fa fa-file-audio-o fa-2x" ></i></td><td>'+getFilename(slideShowData.file)+'</td><td></td><td></td>';
          line+='<td>start <input type="text" size="1" id="startFile'+cpt+'" value="' + getStartTime(slideShowData.file) +'"/>';
          line+=' end <input type="text" size="1" id="endFile'+cpt+'" value="' + getEndTime(slideShowData.file)+'"/></td>';
          break;
     case "mp4":
-         line+='<td><i class="fa fa-file-movie-o fa-2x" ></i></td><td>'+getFilename(slideShowData.file)+'</td>';
+         line+='<td><i id="icon'+cpt+'"class="fa fa-file-movie-o fa-2x" ></i></td><td>'+getFilename(slideShowData.file)+'</td>';
          line+='<td><input type="text" size="1" id="widthFile'+cpt+'" value="' + slideShowData.width+'"/></td>';
          line+='<td><input type="text" size="1" id="heightFile'+cpt+'" value="' + slideShowData.height+'"/></td>';
          line+='<td>start <input type="text" size="1" id="startFile'+cpt+'" value="' + getStartTime(slideShowData.file) +'"/>';
          line+=' end <input type="text" size="1" id="endFile'+cpt+'" value="' + getEndTime(slideShowData.file)+'"/></td>';
          break;
     case "img":
-         line+='<td><div class="tooltip"><i class="fa fa-file-photo-o fa-2x" ></i><span class="tooltiptext">';
+         line+='<td><div class="tooltip"><i id="icon'+cpt+'"class="fa fa-file-photo-o fa-2x" ></i><span class="tooltiptext">';
          line+='<img width="100" heigth="100" src="'+slideShowData.file+'"></span></div></td>';
          line+='<td>'+getFilename(slideShowData.file)+'</td>';
          line+='<td><input type="text" size="1" id="widthFile'+cpt+'" value="' + slideShowData.width+'"/></td>';
@@ -134,7 +145,7 @@ function printSlideShowData(slideShowData,cpt){
          line+='<td>duration <input type="text" size="1" id="durationFile'+cpt+'" value="' + slideShowData.duration +'"/></td>';
          break;
     case "txt":
-         line+='<td><i class="fa fa-file-text-o fa-2x" ></i></td><td>'+slideShowData.file+'</td>';
+         line+='<td><i id="icon'+cpt+'"class="fa fa-file-text-o fa-2x" ></i></td><td>'+slideShowData.file+'</td>';
          line+='<td colspan="2"><a class="js-open-modal btn" href="#" title="Modify Text" onclick="updateTextAnimation('+cpt+');"><i class="fa fa-pencil-square fa-2x" ></i></a></td>';
          line+='<td>duration <input type="text" size="1" id="durationFile'+cpt+'" value="' + slideShowData.duration +'"/></td>';
          break; 
