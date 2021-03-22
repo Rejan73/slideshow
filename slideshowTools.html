@@ -9,15 +9,35 @@
 
 </head>
 <body>
-<a class="js-open-modal btn" href="#" config-id="config-id" title="Configuration"><i class="fa fa-cog fa-2x"></i></a>
-
+<h4><i class="fa fa-cog fa-2x"></i> Slideshow Tools by Rod <input type='file' accept='application/JSON' onchange='openFile(event)'></h4>
+<br><br><a class="js-open-modal btn" href="#" title="show timeline" onclick="showTimeLine();"><i class="fa fa-bar-chart fa-2x"></i></a><br>
+<br><a class="js-open-modal btn" href="#" title="add animation" onclick="addNewAnimation();"><i class="fa fa-plus-circle fa-2x"></i></a><br>
+<br><a class="js-open-modal btn" href="#" title="save all" onclick="saveAllAnimation();"><i id="isaveall" class="fa fa-save fa-2x"></i></a><br>
+<div id="timelines" style="display:none">
+   <div id="timelineDiv"></div>
+</div>
 <div id="mainSlideShow">
-  <div id="configurationSlideShow" style="display:none">
-     <input type='file' accept='application/JSON' onchange='openFile(event)'><br>
-     <div id='slideShow'></div>
-     <div id="updateTexte" style="display:none"></div>
-     <div id="updateEffect" style="display:none"></div>
+  <div id="configurationSlideShow">
+     <div id="slideShow" style="display:none"></div>
   </div>
+  <div id="updateTexte" style="display:none">
+  </div>
+  <div id="updateEffect" style="display:none">
+  </div>
+  <div id="addNewAnimation" style="display:none">
+     Ajout Animation : <br><br>
+     Type : <select name="mediaToAdd" id="mediaToAdd">';
+       <option value="img">Photo</option>
+       <option value="mp3">Music</option>
+       <option value="mp4">Video</option>
+     </select>
+     <input type="file" id="files" name="files" accept="audio/mp3,audio/ogg,audio/wav,audio/mpeg,video/mp4,video/ogg,video/webm,image/*" multiple>
+     <a class="js-open-modal btn" href="#" add-media="add-media" title="add media" onclick="addAnimation();"><i class="fa fa fa-save fa-2x"></i></a><br><br>
+     ou Text :  <a class="js-open-modal btn" href="#" title="add txt media" onclick="addTxtAnimation();"><i class="fa fa fa-save fa-2x"></i></a>
+     <br><center><a class="js-open-modal btn" href="#"  title="Cancel" onclick="hideAddNewAnimation();"><i class="fa fa-times-circle fa-2x"></i></a></center>  
+  </div>
+  
+  
   <div id="previewSlideShow">
     <div id="images" style="display:none">
       <center>
@@ -40,23 +60,18 @@
     </div>
     
     <div id="textes" style="display:none">
+      <div id ="divText"></div>
       <div class="fade"></div>
       <section class="star-wars">
         <div class="crawl" id ="divCrawl">
-          <div class="title">
-            <p id="starwarsTitle">Episode IV</p>
-            <h1 id="starwarsSubTitle">A New Hope</h1>
-          </div>
-          <p>It is a period of civil war. Rebel spaceships, striking from a hidden base, have won their first victory against the evil Galactic Empire.</p>      
-          <p>During the battle, Rebel spies managed to steal secret plans to the Empire’s ultimate weapon, the DEATH STAR, an armored space station with enough power to destroy an entire planet.</p>
-          <p>Pursued by the Empire’s sinister agents, Princess Leia races home aboard her starship, custodian of the stolen plans that can save her people and restore freedom to the galaxy…</p>
         </div>
       </section>  
     </div>
    </div>
 </div>
-
+  
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="js/jquery-3.5.0.js"></script>
-<script src="js/slideshowTools-1.0.0.js"></script>
+<script src="js/slideshowTools-1.0.0.js"></script> 
 </body>
 </html>

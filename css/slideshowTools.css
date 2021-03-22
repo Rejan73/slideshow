@@ -1,9 +1,85 @@
-
+body {
+  width: 100%;
+  height: 100%;
+  background: #000;
+  color: #fff;
+}
 
 #mainSlideShow #configurationSlideShow {
     float:left;
     width:50%;
+    left:50px;
+  top:300px;
+  position:absolute;
 }
 #mainSlideShow #previewSlideShow {
-    margin-left:50%   
+    margin-left:50%;   
+}
+
+#timelineDiv {
+  background: #fff;
+  height: 220px;
+  left:50px;
+  top:80px;
+  position:absolute;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  width: 800px;
+}
+
+#slideShow {
+  left:0px;
+  top:30px;
+  height: 600px;
+  position:absolute;
+  overflow-x: hidden;
+  overflow-y: scroll;
+} 
+#updateEffect{
+  position: fixed; /* or absolute */
+  top: 50%;
+  left: 50%;
+  padding-left: 20px;
+  border: 2px solid green;
+  background: #000;
+  z-index:10;
+  width: 300px;
+}
+#updateTexte{
+  position: fixed; /* or absolute */
+  top: 50%;
+  left: 50%;
+  padding-left: 20px;
+  border: 2px solid green;
+  background: #000;
+  width: 800px;
+} 
+
+#addNewAnimation {
+  position: fixed; /* or absolute */
+  top: 50%;
+  left: 50%;
+  padding-left: 20px;
+  border: 2px solid green;
+  background: #000;
+  z-index:10;
+  width: 400px;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 110px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }

@@ -1,11 +1,3 @@
-body {
-  width: 100%;
-  height: 100%;
-  background: #000;
-  overflow: hidden;
-  color: #fff;
-}
-
 i {
   color:green;
 }
@@ -70,8 +62,104 @@ i {
 #images.imageEffectSepia{
     filter:sepia(100%);
 }
-      
 #images.imageEffectBlackAndWhite{
     filter:grayscale(100%);
 }
 
+/* Come In effects  */
+.comeInEffectNone{
+
+}
+
+.comeInEffectFadeIn{
+  animation: fadeInAnimation 3s;
+}
+
+@keyframes fadeInAnimation {
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+
+/* Come Out effects  */
+.comeOutEffectNone{
+}
+
+.comeOutEffectFadeOut{
+  animation: fadeOutAnimation 3s;
+}
+
+@keyframes fadeOutAnimation {
+    from {
+        opacity:1;
+    }
+    to {
+        opacity:0;
+    }
+}
+
+/* Mouvement effects  */
+.movementEffectNone{
+}
+.movementEffectUpToDown{
+  position: relative;
+  top: 0;
+  animation: upToDownAnimation 3s;
+}
+
+@keyframes upToDownAnimation {
+    from {
+        top: -1000px;
+    }
+    to {
+        top: 0px;
+    }
+}
+
+.movementEffectDownToUp{
+  position: relative;
+  top: 0;
+  animation: downToUpAnimation 3s;
+}
+
+@keyframes downToUpAnimation {
+    from {
+        top: 2000px;
+    }
+    to {
+        top: 0px;
+    }
+}
+
+.movementEffectLeftToRight {
+  position: relative;
+  left: 0;
+  animation: leftToRightAnimation 3s;
+}
+
+@keyframes leftToRightAnimation {
+    from {
+        left: -2000px;
+    }
+    to {
+        left: 0px;
+    }
+}
+
+.movementEffectRightToLeft {
+  position: relative;
+  left: 0;
+  animation: rightToLeftAnimation 3s;
+}
+
+@keyframes rightToLeftAnimation {
+    from {
+        left: 2000px;
+    }
+    to {
+        left: 0px;
+    }
+}

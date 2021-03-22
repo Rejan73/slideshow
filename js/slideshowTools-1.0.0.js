@@ -9,10 +9,19 @@ var openFile = function(event) {
         var reader = new FileReader();
         reader.onload = function(){
           slideShowDatas = JSON.parse(reader.result);
+          google.charts.load("current", {packages:["timeline"]});
           fillSlideShow();
+          $('#timelines').show();
         };
         reader.readAsText(input.files[0]);
+        /*
+        $('#video').get(0).addEventListener('pause', function(e) {
+              $('#video').get(0).currentTime;
+        });  
+        */
+        
       };
+      
 
 function fillSlideShow(){
     hideAll();
@@ -20,44 +29,123 @@ function fillSlideShow(){
     var cpt=0;
     slideShowDatas.forEach(slideShowData => div_data+=printSlideShowData(slideShowData,cpt++));
     div_data+='</table>';
-    
-   div_data+='<br/><br/><select name="mediaToAdd" id="mediaToAdd">';
-   div_data+='<option value="img">Photo</option>';
-   div_data+='<option value="mp3">Music</option>';
-   div_data+='<option value="mp4">Video</option>';
-   div_data+='<option value="txt">Texte</option>';
-   div_data+='</select>';
-   div_data+=' File : <input type="text" size="20" id="fileToAdd" value="" title="avec le bon nom de dossier/fichier"/>'; 
-   div_data+=' <a class="js-open-modal btn" href="#" add-media="add-media" title="add media" onclick="addAnimation();"><i class="fa fa-plus-circle fa-2x"></i></a>';
-   div_data+='<br/><br/><a class="js-open-modal btn" href="#" saveall-media="saveall-media" title="save all to file" onclick="saveAllAnimation();"><i class="fa fa-save fa-5x"></i></a>'; 
-     
-    $('#slideShow').html(div_data);                                                                                            
+    $('#slideShow').html(div_data); 
+    $('#slideShow').show(); 
+    drawChart() ;
+                                                                                         
 }
+
+function calculeAnimationTime(){
+  var animationTime=0;
+  slideShowDatas.filter(slideShowData => slideShowData["duration"] !=null).forEach(slideShowData => animationTime+=parseFloat(slideShowData["duration"]));
+  slideShowDatas.filter(slideShowData => parseFloat(getEndTime(slideShowData["file"]))>0 && slideShowData["media"]=="mp4").forEach(slideShowData => animationTime+=getDuration(slideShowData.file));
+  return animationTime;
+}
+
+function toDateTime(secs) {
+    var t = new Date(0,0,0,0,0,0);
+    t.setSeconds(secs);
+    return t;
+}
+
+var time=0;
+var timeCpt=-1;
+function  buildData(slideShowData) {
+  var startTime=time;
+   timeCpt++;
+    if (slideShowData["duration"] !=null){
+      time+=parseFloat(slideShowData["duration"]);
+    } else if (slideShowData["media"]=="mp4"){
+      time+=getDuration(slideShowData.file);
+    } else{
+       return [ slideShowData.media ,timeCpt+':'+ getFilename(slideShowData.file),toDateTime(startTime), toDateTime(startTime+getDuration(slideShowData.file))];
+    } 
+    return [ slideShowData.media ,timeCpt+':'+ getFilename(slideShowData.file), toDateTime(startTime),  toDateTime(time)];
+    
+}
+
+function showTimeLine(){
+   drawChart();
+   $('#timelines').toggle();
+}
+
+function drawChart(){
+
+    var container = document.getElementById('timelineDiv');
+    var chart = new google.visualization.Timeline(container);
+    var dataTable = new google.visualization.DataTable();
+    dataTable.addColumn({ type: 'string', id: 'Media' });
+    dataTable.addColumn({ type: 'string', id: 'Filename' });
+    dataTable.addColumn({ type: 'date', id: 'Start' });
+    dataTable.addColumn({ type: 'date', id: 'End' });
+    
+    var currentData=[];
+    time=0;
+    timeCpt=-1;
+    slideShowDatas.forEach(object => currentData.push(buildData(object)));
+    dataTable.addRows( currentData);
+   /* dataTable.addRows([
+      [ 'Music', 'Beginning JavaScript',       new Date(0,0,0,0,0,0),  new Date(0,0,0,0,0,30) ],
+      [ 'Image', 'Intermediate JavaScript',    new Date(0,0,0,0,0,0),  new Date(0,0,0,0,0,10) ],
+      [ 'Texte', 'Advanced JavaScript',        new Date(0,0,0,0,0,10),  new Date(0,0,0,0,0,20) ],
+      [ 'Video',   'Advanced Google Charts',   new Date(0,0,0,0,0,20), new Date(0,0,0,0,1,0) ]]);
+          */
+    var options = {
+      timeline: { showBarLabels: false },
+      height: 220,
+      width: 10000,
+      hAxis: {format: 'mm:ss'},
+      colors: ['blue', 'red', 'green'],
+      chartArea: { top: 20, height: '70%' }
+    };
+    chart.draw(dataTable, options);
+    $('#timelineDiv div div div').attr({'style': 'position: absolute; left: 15px; top: 10px; width: 100%; height: 100%;'})
+    $('#timelineDiv div div div svg g:first text').attr({'x':25,"text-anchor":"end"})
+
+    google.visualization.events.addListener(chart, 'select', function() {
+      var row = chart.getSelection()[0].row;
+      var elt;
+      var cpt=dataTable.getValue(row, 1).split(":")[0];
+      $('#icon'+cpt).attr({'style': 'color:yellow;'});
+      setTimeout(function() {
+            $('#icon'+cpt).attr({'style': 'color:green;'});
+        }, 1000);
+      if (dataTable.getValue(row, 0)=='mp3' || dataTable.getValue(row, 0)=='mp4'){
+        elt= '#startFile'+cpt;
+      } else {
+        elt= '#durationFile'+cpt;
+      }
+      $(elt).focus();
+  });
+}
+
 
 function printSlideShowData(slideShowData,cpt){
   var line='';
   switch (slideShowData.media)
   {
     case "mp3":
-         line+='<td><i class="fa fa-file-audio-o fa-2x" ></i></td><td>'+getFilePath(slideShowData.file)+'</td><td></td><td></td>';
+         line+='<td><i id="icon'+cpt+'" class="fa fa-file-audio-o fa-2x" ></i></td><td>'+getFilename(slideShowData.file)+'</td><td></td><td></td>';
          line+='<td>start <input type="text" size="1" id="startFile'+cpt+'" value="' + getStartTime(slideShowData.file) +'"/>';
          line+=' end <input type="text" size="1" id="endFile'+cpt+'" value="' + getEndTime(slideShowData.file)+'"/></td>';
          break;
     case "mp4":
-         line+='<td><i class="fa fa-file-movie-o fa-2x" ></i></td><td>'+getFilePath(slideShowData.file)+'</td>';
+         line+='<td><i id="icon'+cpt+'"class="fa fa-file-movie-o fa-2x" ></i></td><td>'+getFilename(slideShowData.file)+'</td>';
          line+='<td><input type="text" size="1" id="widthFile'+cpt+'" value="' + slideShowData.width+'"/></td>';
          line+='<td><input type="text" size="1" id="heightFile'+cpt+'" value="' + slideShowData.height+'"/></td>';
          line+='<td>start <input type="text" size="1" id="startFile'+cpt+'" value="' + getStartTime(slideShowData.file) +'"/>';
          line+=' end <input type="text" size="1" id="endFile'+cpt+'" value="' + getEndTime(slideShowData.file)+'"/></td>';
          break;
     case "img":
-         line+='<td><i class="fa fa-file-photo-o fa-2x" ></i></td><td>'+slideShowData.file+'</td>';
+         line+='<td><div class="tooltip"><i id="icon'+cpt+'"class="fa fa-file-photo-o fa-2x" ></i><span class="tooltiptext">';
+         line+='<img width="100" heigth="100" src="'+slideShowData.file+'"></span></div></td>';
+         line+='<td>'+getFilename(slideShowData.file)+'</td>';
          line+='<td><input type="text" size="1" id="widthFile'+cpt+'" value="' + slideShowData.width+'"/></td>';
          line+='<td><input type="text" size="1" id="heightFile'+cpt+'" value="' + slideShowData.height+'"/></td>';
          line+='<td>duration <input type="text" size="1" id="durationFile'+cpt+'" value="' + slideShowData.duration +'"/></td>';
          break;
     case "txt":
-         line+='<td><i class="fa fa-file-text-o fa-2x" ></i></td><td>'+slideShowData.file+'</td>';
+         line+='<td><i id="icon'+cpt+'"class="fa fa-file-text-o fa-2x" ></i></td><td>'+slideShowData.file+'</td>';
          line+='<td colspan="2"><a class="js-open-modal btn" href="#" title="Modify Text" onclick="updateTextAnimation('+cpt+');"><i class="fa fa-pencil-square fa-2x" ></i></a></td>';
          line+='<td>duration <input type="text" size="1" id="durationFile'+cpt+'" value="' + slideShowData.duration +'"/></td>';
          break; 
@@ -73,21 +161,31 @@ function printSlideShowData(slideShowData,cpt){
   line+='<a class="js-open-modal btn" href="#" title="Remove" onclick="removeAnimation('+cpt+');"><i class="fa fa-times-circle fa-2x" style="color:red;"></i></a>';
   line+='<a class="js-open-modal btn" href="#" title="Play" onclick="runAnimation('+cpt+');"><i class="fa fa-play-circle fa-2x" ></i></a></td>';
   
-  
   return '<tr>'+line+'</tr>';
 }
 
+function changeSaveallColorRed(){
+  $("#isaveall").attr({'style': 'color:red;'});
+}
 
-
-
-
-function getFilePath(file){
+function getFilePath(file){ 
   return  file.split('#t=')[0];
+}
+
+function getFilename(file){
+  if (file.split('#t=')[0].split('\/').length<2){
+    return file.split('#t=')[0];
+  }
+  return  file.split('#t=')[0].split('\/')[1];
+}
+
+function getDuration(file){
+    return parseFloat(getEndTime(file))-parseFloat(getStartTime(file));
 }
 
 function getStartTime(file){
   if (file.split('#t=').length<2){
-    return '';
+    return 0;
   }
   return  file.split('#t=')[1].split(',')[0];
 }
@@ -107,6 +205,7 @@ function hideAll(){
     $('#textes').hide();
     $('#updateTexte').hide();
     $('#updateEffect').hide();
+    $('#addNewAnimation').hide();
 }
 
 function stopMusic(){
@@ -114,10 +213,6 @@ function stopMusic(){
     $('#srcMusic').attr('src','');
 }
 
-
-$('a[config-id]').click(function(e) {
-   $('#configurationSlideShow').toggle();
-});
 $('a[set-slideshow-id]').click(function(e) {
    id =$('#idSlideShow').val();
 });
@@ -129,7 +224,10 @@ function saveAnimation(currentDataId){
   currentData.height=    $('#heightFile'+currentDataId).val();
   currentData.duration=    $('#durationFile'+currentDataId).val();
   currentData.effect=$('#effectFile'+currentDataId).val();
-  currentData.file= getFilePath(currentData.file)+'#t='+ $('#startFile'+currentDataId).val() +','+$('#endFile'+currentDataId).val();
+  if (currentData.media=='mp3' || currentData.media=='mp4'){
+    currentData.file= getFilePath(currentData.file)+'#t='+ $('#startFile'+currentDataId).val() +','+$('#endFile'+currentDataId).val();
+  }
+  changeSaveallColorRed();
   fillSlideShow();
 }
 
@@ -137,6 +235,7 @@ function saveAnimation(currentDataId){
 function removeAnimation(currentDataId){
   hideAll();
   slideShowDatas.splice(currentDataId, 1);
+  changeSaveallColorRed();
   fillSlideShow();
 }
 
@@ -149,6 +248,7 @@ function moveDownAnimation(currentDataId){
     }
     slideShowDatas[currentDataId]=slideShowDatas[currentDataId+1];
     slideShowDatas[currentDataId+1]=currentData;
+    changeSaveallColorRed();
   }
   fillSlideShow();
 }
@@ -162,39 +262,66 @@ function moveUpAnimation(currentDataId){
     }
     slideShowDatas[currentDataId]=slideShowDatas[currentDataId-1];
     slideShowDatas[currentDataId-1]=currentData;
+    changeSaveallColorRed();
   }
   fillSlideShow();
 }
 
-function addAnimation(){
-  var dataToAdd={};
-  dataToAdd["media"]=$('#mediaToAdd').val();
-  if (dataToAdd["media"]=='txt'){
-     dataToAdd["file"]='Texte_'+slideShowDatas.length;
-     dataToAdd["title"]='Titre';
-     dataToAdd["subTitle"]='Sous-Titre';
-     dataToAdd["lines"]=[{"line":"ceci est une ligne"}];
-  } else{ 
-    dataToAdd.file=$('#fileToAdd').val();
-  }
-  
-  if (dataToAdd["media"]=='img' || dataToAdd["media"]=='txt'){
+function addTxtAnimation(){
+    var dataToAdd={};
+    dataToAdd["media"]=$('#mediaToAdd').val();
+    dataToAdd["file"]='Texte_'+slideShowDatas.length;
+    dataToAdd["title"]='Titre';
+    dataToAdd["subTitle"]='Sous-Titre';
+    dataToAdd["lines"]=[{"line":"ceci est une ligne"}];
     dataToAdd["duration"]='5';
-  } 
-  dataToAdd["styleEffect"]="none";
-  dataToAdd["movementEffect"]="none";
-  dataToAdd["comeInEffect"]="none";
-  dataToAdd["comeOutEffect"]="none";
-  dataToAdd["width"]='800';
-  dataToAdd["height"]='600'; 
-  slideShowDatas.push(dataToAdd);
-  
+    dataToAdd["styleEffect"]="none";
+    dataToAdd["movementEffect"]="none";
+    dataToAdd["comeInEffect"]="none";
+    dataToAdd["comeOutEffect"]="none";
+    dataToAdd["width"]='800';
+    dataToAdd["height"]='600'; 
+    slideShowDatas.push(dataToAdd);
+    changeSaveallColorRed();
+    fillSlideShow();
+}
+
+function addAnimation(){
+  var files = $("#files")[0].files;
+  for (i=0;i<files.length;i++){ 
+    var dataToAdd={};
+    dataToAdd["media"]=$('#mediaToAdd').val();
+    switch (dataToAdd["media"])
+    {
+      case "mp3":
+          dataToAdd.file='musics/'+files[i].name;
+          break;
+      case "mp4":
+          dataToAdd.file='videos/'+files[i].name;
+          break;
+      case "img":
+          dataToAdd.file='photos/'+files[i].name;
+          dataToAdd["duration"]='5';
+          break;
+      defaut:
+          break; 
+    }
+    dataToAdd["styleEffect"]="none";
+    dataToAdd["movementEffect"]="none";
+    dataToAdd["comeInEffect"]="none";
+    dataToAdd["comeOutEffect"]="none";
+    dataToAdd["width"]='800';
+    dataToAdd["height"]='600'; 
+    slideShowDatas.push(dataToAdd);
+  }
+  changeSaveallColorRed();
   fillSlideShow();
 }
 
 function saveAllAnimation(){
   hideAll();
   downAll(JSON.stringify(slideShowDatas),'slideshowData-'+Date.now()+'.json','application/json');
+  $("#isaveall").attr({'style':'color:green;'});
 }
 
 function downAll(data, filename, mime) {
@@ -258,21 +385,30 @@ function runAnimation(currentDataId){
 function playImage(currentData){
   $('#srcImage').attr('src',currentData.file);
   $("#images").addClass(currentData["styleEffect"]);
+  $("#images").addClass(currentData["comeInEffect"]);
+  $("#images").addClass(currentData["movementEffect"]);
  // $('#srcImage').attr('width',currentData.width);
  // $('#srcImage').attr('height',currentData.height);
   $('#images').show();
   setTimeout(function() {
+    $("#images").removeClass(currentData["comeInEffect"]);
+    $("#images").removeClass(currentData["movementEffect"]);
+    $("#images").addClass(currentData["comeOutEffect"]);
+  }, currentData["duration"]*1000);
+  
+  setTimeout(function() {
     $("#images").removeClass(currentData["styleEffect"]);
-  }, currentData["duration"]*1000)
+    $("#images").removeClass(currentData["comeOutEffect"]);
+  }, currentData["duration"]*1000+2000) ;
+  
 };
 
 function playMovie(currentData){
-    $('#srcVideo').attr('src',currentData.file);
-    $('#video')[0].load();
-    $('#videos').show();
-    $('#video').get(0).play();
-    //$('#video').get(0).requestFullscreen();
-    
+  $('#srcVideo').attr('src',currentData.file);
+  $('#video')[0].load();
+  $('#videos').show();
+  $('#video').get(0).play();
+  //$('#video').get(0).requestFullscreen();
 }
   
 function playMusic(currentData){
@@ -285,6 +421,40 @@ function playMusic(currentData){
 };
 
 
+function playText(currentData){
+  if (currentData.styleEffect=='starwars'){
+    var div_data ='<div class="title">'
+    + '<p>'+currentData.title+'</p>'
+    + '<h1>'+currentData.subTitle+'</h1></div><div>' ;
+    currentData.lines.forEach(object => div_data=div_data+'<p>'+object.line+'<p>');
+    div_data=div_data+"</div>"   
+    $("#divCrawl").html(div_data);
+    $("#divText").html("");   
+  } else {  
+    var div_data ='<center><h1>'+currentData.title+'</h1><h2>'+currentData.subTitle+'</h2>' ;
+    currentData.lines.forEach(object => div_data=div_data+'<p>'+object.line+'<p>');
+    div_data+='<br></center>';
+    $("#textes").addClass(currentData["styleEffect"]);
+    $("#textes").addClass(currentData["comeInEffect"]);
+    $("#textes").addClass(currentData["movementEffect"]);
+    $("#divText").html(div_data);
+    $("#divCrawl").html("");
+    setTimeout(function() {
+    $("#textes").removeClass(currentData["comeInEffect"]);
+    $("#textes").removeClass(currentData["movementEffect"]);
+    $("#textes").addClass(currentData["comeOutEffect"]);
+  }, currentData["duration"]*1000);
+  
+  setTimeout(function() {
+    $("#textes").removeClass(currentData["styleEffect"]);
+    $("#textes").removeClass(currentData["comeOutEffect"]);
+  }, currentData["duration"]*1000+2000) ;
+  }                   
+  $('#textes').show(); 
+  
+}
+
+
 function  updateTextAnimation(currentDataId){
   hideAll();
   currentData=slideShowDatas[currentDataId];
@@ -293,7 +463,8 @@ function  updateTextAnimation(currentDataId){
   div_text+='Text : <textarea id="updatelines" rows="10" cols="100">';
   currentData.lines.forEach(object => div_text=div_text+object.line+'\n');
   div_text+='</textarea>'; 
-  div_text+='<br><a class="js-open-modal btn" href="#" save-media="save-media" title="Modify" onclick="saveTextAnimation('+currentDataId+');"><i class="fa fa-pencil-square fa-2x"></i></a></td>';
+  div_text+='<br><center><a class="js-open-modal btn" href="#" title="Modify" onclick="saveTextAnimation('+currentDataId+');"><i class="fa fa-pencil-square fa-2x"></i></a>';
+  div_text+='<a class="js-open-modal btn" href="#"  title="Cancel" onclick="hideTextAnimation();"><i class="fa fa-times-circle fa-2x"></i></a></center>';
   $("#updateTexte").html(div_text);  
   $('#updateTexte').show();
 
@@ -305,21 +476,22 @@ function  saveTextAnimation(currentDataId){
   var dataLine= $('#updatelines').val().split('\n');
   currentData["lines"]=[];
   dataLine.forEach(object => currentData["lines"].push({"line": object }));
-  
+  changeSaveallColorRed();
   $('#updateTexte').hide();
 }
 
-function playText(currentData){
-  var div_data ='<div class="title">'
-  + '<p>'+currentData.title+'</p>'
-  + '<h1>'+currentData.subTitle+'</h1></div>' ;
-  currentData.lines.forEach(object => div_data=div_data+'<p>'+object.line+'<p>');
-  div_data=div_data+"</div>"                     
-
-  $("#divCrawl").html(div_data);                     
-  $('#textes').show(); 
-  
+function hideTextAnimation(){
+  $('#updateTexte').hide();
 }
+
+function addNewAnimation(){
+  $('#addNewAnimation').show();
+}
+
+function hideAddNewAnimation(){
+  $('#addNewAnimation').hide();
+}
+
 
 function  updateEffectAnimation(currentDataId){
   hideAll();
@@ -348,7 +520,8 @@ function  updateEffectAnimation(currentDataId){
   div_effect+=getComeInEffect(currentData.comeInEffect);
   div_effect+='<br><label><i class="fa fa-film fa-2x"></i> Come Out Effect</label> ';
   div_effect+=getComeOutEffect(currentData.comeOutEffect);
-  div_effect+='<br><a class="js-open-modal btn" href="#" save-media="save-media" title="Modify" onclick="saveEffectAnimation('+currentDataId+');"><i class="fa fa-save fa-2x"></i></a></td>';
+  div_effect+='<br><center><a class="js-open-modal btn" href="#" save-media="save-media" title="Modify" onclick="saveEffectAnimation('+currentDataId+');"><i class="fa fa-save fa-2x"></i></a>';
+  div_effect+='<a class="js-open-modal btn" href="#"  title="Cancel" onclick="hideEffectAnimation();"><i class="fa fa-times-circle fa-2x"></i></a></center>';
   $("#updateEffect").html(div_effect);  
   $('#styleEffect').val(currentData["styleEffect"]);
   $('#movementEffect').val(currentData["movementEffect"]);
@@ -363,13 +536,24 @@ function  saveEffectAnimation(currentDataId){
   currentData["movementEffect"]=$('#movementEffect').val();
   currentData["comeInEffect"]=$('#comeInEffect').val();
   currentData["comeOutEffect"]=$('#comeOutEffect').val();
-  
+  changeSaveallColorRed();
   $('#updateEffect').hide();
 }
+
+function hideEffectAnimation(){
+  $('#updateEffect').hide();
+}
+
+
+
+
   function getMovementEffect(selectedEffect){
     var selectEffect='<select name="movementEffect" id="movementEffect">';
     selectEffect+='<option value="movementEffectNone">none</option>';
-    selectEffect+='<option value="movementEffectUpToDown" selected>Up To Down</option>';
+    selectEffect+='<option value="movementEffectUpToDown" selected>Up to Down</option>';
+    selectEffect+='<option value="movementEffectDownToUp" selected>Down to Up</option>';
+    selectEffect+='<option value="movementEffectLeftToRight" selected>Left to Right</option>';
+    selectEffect+='<option value="movementEffectRightToLeft" selected>Right to Left</option>';
     selectEffect+='</select>';
     return selectEffect;
   }
@@ -377,6 +561,7 @@ function  saveEffectAnimation(currentDataId){
   function getComeInEffect(selectedEffect){
     var selectEffect='<select name="comeInEffect" id="comeInEffect">';
     selectEffect+='<option value="comeInEffectNone">none</option>';
+    selectEffect+='<option value="comeInEffectFadeIn">Fade In</option>';
     selectEffect+='</select>';
     return selectEffect;
   }
@@ -384,6 +569,7 @@ function  saveEffectAnimation(currentDataId){
   function getComeOutEffect(selectedEffect){
     var selectEffect='<select name="comeOutEffect" id="comeOutEffect">';
     selectEffect+='<option value="comeOutEffectNone">none</option>';
+    selectEffect+='<option value="comeOutEffectFadeOut">Fade Out</option>';
     selectEffect+='</select>';
     return selectEffect;
   }
@@ -418,3 +604,4 @@ function  saveEffectAnimation(currentDataId){
     selectEffect+='</select>';
     return selectEffect;
   }
+  
