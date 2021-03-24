@@ -34,4 +34,8 @@ ou
 
 # Versions
 
-## [1.0.0](releases/tag/1.0.0)
+Les versions sont disponibles [ici](https://github.com/Rejan73/slideshow/releases/)
+
+## 1.0.0
+
+
