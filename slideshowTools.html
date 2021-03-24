@@ -9,10 +9,12 @@
 
 </head>
 <body>
-<h4><i class="fa fa-cog fa-2x"></i> Slideshow Tools by Rod <input type='file' accept='application/JSON' onchange='openFile(event)'></h4>
+<i class="fa fa-cog fa-2x"></i> Slideshow Tools by Rod <input type='file' accept='application/JSON' onchange='openFile(event)'>
 <br><br><a class="js-open-modal btn" href="#" title="show timeline" onclick="showTimeLine();"><i class="fa fa-bar-chart fa-2x"></i></a><br>
 <br><a class="js-open-modal btn" href="#" title="add animation" onclick="addNewAnimation();"><i class="fa fa-plus-circle fa-2x"></i></a><br>
 <br><a class="js-open-modal btn" href="#" title="save all" onclick="saveAllAnimation();"><i id="isaveall" class="fa fa-save fa-2x"></i></a><br>
+<br><a class="js-open-modal btn" href="slideshowPlayer.html" target="_blank" title="start player"><i class="fa fa-play-circle fa-2x"></i></a><br>
+<br><a class="js-open-modal btn" href="https://github.com/Rejan73/slideshow/blob/main/README.md" target="_blank" title="info"><i class="fa fa-info-circle fa-2x"></i></a><br>
 <div id="timelines" style="display:none">
    <div id="timelineDiv"></div>
 </div>
@@ -69,7 +71,6 @@
     </div>
    </div>
 </div>
-  
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="js/jquery-3.5.0.js"></script>
 <script src="js/slideshowTools-1.0.0.js"></script> 
