@@ -34,6 +34,8 @@
 
 ## Timeline 
 
+- Permet de visualiser facilement la chronologie de l'animation
+
 ## Liste des annimations
 
 - Vous pouvez modifier : 
