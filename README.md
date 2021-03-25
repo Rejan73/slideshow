@@ -28,7 +28,7 @@ Pour exporter votre animation,
 # Démarrage
 Lancement du player : 
 - Lancez dans le navigateur la page slideshowPlayer.html pour le player
-- Cliquez sur l'icône et sélectionnez le fichier du dossier datatest.json
+- Cliquez sur l'icône et sélectionnez le fichier du dossier slideshowDataDemo.json
 - Cliquez sur l'icône play
 
 Lancement de la boite à outils :
@@ -38,6 +38,10 @@ Lancement de la boite à outils :
 # Versions
 
 Les versions sont disponibles [ici](https://github.com/Rejan73/slideshow/releases/)
+
+## Next version 
+- ajout d'un fichier de démo
+- offline version (pas besoin de connexion internet pour fonctionner)
 
 ## 1.0.0
 Première version qui contient le slideshowPlayer et le slideshowTools 
