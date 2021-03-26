@@ -30,7 +30,7 @@ var currentDataId=0;
               runAnimation();
     });
     $.getJSON('slideshowDataDemo.json', function(data) {         
-        slideShowDatas = JSON.parse(data);
+        slideShowDatas = data;
     });  
   });
 })(jQuery);
