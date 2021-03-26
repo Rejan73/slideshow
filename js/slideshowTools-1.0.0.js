@@ -4,6 +4,17 @@
  * Date: 2021-03-19T08:00Z
  */
 var slideShowDatas;
+
+(function($) {
+  $(document).ready(function(){
+    currentDataId=0;
+    // ajout du listener
+    $.getJSON('slideshowDataDemo.json', function(data) {         
+        slideShowDatas = data;
+    });  
+  });
+})(jQuery);
+
 var openFile = function(event) {
         var input = event.target;
         var reader = new FileReader();
