@@ -29,6 +29,9 @@ var currentDataId=0;
               currentDataId++;
               runAnimation();
     });
+    $.getJSON('slideshowDataDemo.json', function(data) {         
+        slideShowDatas = JSON.parse(data);
+    });  
   });
 })(jQuery);
 
