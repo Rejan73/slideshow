@@ -11,6 +11,9 @@ var slideShowDatas;
     // ajout du listener
     $.getJSON('slideshowDataDemo.json', function(data) {         
         slideShowDatas = data;
+        google.charts.load("current", {packages:["timeline"]});
+        fillSlideShow();
+        $('#timelines').show();
     });  
   });
 })(jQuery);
