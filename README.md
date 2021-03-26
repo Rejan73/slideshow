@@ -17,6 +17,10 @@ Pour exporter votre animation,
 - copir le dernier fichier sauvegardé : slideshowData-1616342130635.json qui se situe dans votre répertoire de téléchargement dans le répertoire d'installation.
 - puis de zipper tout le dossier 
 
+# Demo on line
+
+- Cliquez [ici](https://rejan73.github.io/slideshow/)
+
 # Pré-requis
 - Navigateur web google chrome (les tests ont été fait que sous google chrome)
 
