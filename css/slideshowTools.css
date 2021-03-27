@@ -11,15 +11,21 @@ body {
   border: solid green;
   overflow: hidden;
 }
-#srcImage, #text, #video, #divText {
-  position:absolute;
+#srcImage, #video {
   height: 360px;
   width: 640px;
   object-fit: cover;
   border: solid red;
   overflow: hidden;
 }
-
+#text, #divText {
+  height: 360px;
+  width: 640px;
+  object-fit: cover;
+  border: solid red;
+  overflow: hidden;
+  position:absolute;
+}
 #mainSlideShow #configurationSlideShow {
     float:left;
     width:50%;
@@ -33,7 +39,7 @@ body {
 
 #timelineDiv {
   background: #fff;
-  height: 220px;
+  height: 230px;
   left:50px;
   top:80px;
   position:absolute;

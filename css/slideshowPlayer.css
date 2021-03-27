@@ -11,9 +11,16 @@ body {
   width: 100%;
   overflow: hidden;
 }
-#srcImage, #text, #video, #divText {
+#srcImage,  #video  {
   height: 100%;
   width: 100%;
   object-fit: cover;
   overflow: hidden;
+}
+#text, #divText {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  overflow: hidden;
+  position:absolute;
 }
