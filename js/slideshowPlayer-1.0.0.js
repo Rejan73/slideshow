@@ -125,13 +125,15 @@ function playMusic(currentData){
 
 function playText(currentData){
   if (currentData.styleEffect=='starwars'){
-    var div_data ='<div class="title">'
-    + '<p>'+currentData.title+'</p>'
-    + '<h1>'+currentData.subTitle+'</h1></div><div>' ;
+    var div_data ='<p id="startStarWars">Il y a bien longtemps, dans une galaxie lointaine, tr&egrave;s lontaine</p>';
+    div_data+='<h1 id="h1StarWars">'+currentData.title+'</h1>';
+    div_data+='<div id="titlesStarWars">';
+    div_data+='<div id="titlecontentStarWars">';
+    div_data+='<p class="centerStarWars">'+currentData.subTitle+'</p>';
     currentData.lines.forEach(object => div_data=div_data+'<p>'+object.line+'<p>');
-    div_data=div_data+"</div>"   
-    $("#divCrawl").html(div_data);
-    $("#divText").html("");   
+    div_data+="</div></div>";   
+    $("#divText").html(div_data);    
+    $('#textes').show();
   } else {  
     var div_data ='<center><h1>'+currentData.title+'</h1><h2>'+currentData.subTitle+'</h2>' ;
     currentData.lines.forEach(object => div_data=div_data+'<p>'+object.line+'<p>');
@@ -142,6 +144,7 @@ function playText(currentData){
     $("#divText").html(div_data);
     $("#divCrawl").html("");
     $('#textes').show();
+  }    
     currentDataId++;
     
     setTimeout(function() {
@@ -155,5 +158,5 @@ function playText(currentData){
       $("#images").removeClass(currentData["comeOutEffect"]);
       runAnimation();
     }, currentData["duration"]*1000+2000) ;
-  }
+  
 };

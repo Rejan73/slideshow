@@ -5,3 +5,15 @@ body {
   overflow: hidden;
   color: #fff;
 }
+/*1280 x 720*/
+#playSlideShow {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+#srcImage, #text, #video, #divText {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  overflow: hidden;
+}
