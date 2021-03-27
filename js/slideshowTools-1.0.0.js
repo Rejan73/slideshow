@@ -401,8 +401,9 @@ function playImage(currentData){
   $("#images").addClass(currentData["styleEffect"]);
   $("#images").addClass(currentData["comeInEffect"]);
   $("#images").addClass(currentData["movementEffect"]);
- // $('#srcImage').attr('width',currentData.width);
- // $('#srcImage').attr('height',currentData.height);
+// $('#srcImage').attr('width',currentData.width);
+// $('#srcImage').attr('height',currentData.height);
+
   $('#images').show();
   setTimeout(function() {
     $("#images").removeClass(currentData["comeInEffect"]);
@@ -437,13 +438,17 @@ function playMusic(currentData){
 
 function playText(currentData){
   if (currentData.styleEffect=='starwars'){
-    var div_data ='<div class="title">'
-    + '<p>'+currentData.title+'</p>'
-    + '<h1>'+currentData.subTitle+'</h1></div><div>' ;
+    var div_data ='<p id="startStarWars">Il y a bien longtemps, dans une galaxie lointaine, tr&egrave;s lontaine</p>';
+    div_data+='<h1 id="h1StarWars">'+currentData.title+'</h1>';
+    div_data+='<div id="titlesStarWars">';
+    div_data+='<div id="titlecontentStarWars">';
+    div_data+='<p class="centerStarWars">'+currentData.subTitle+'</p>';
+
     currentData.lines.forEach(object => div_data=div_data+'<p>'+object.line+'<p>');
-    div_data=div_data+"</div>"   
-    $("#divCrawl").html(div_data);
-    $("#divText").html("");   
+    
+    div_data+="</div></div>";   
+    $("#divText").html(div_data);
+       
   } else {  
     var div_data ='<center><h1>'+currentData.title+'</h1><h2>'+currentData.subTitle+'</h2>' ;
     currentData.lines.forEach(object => div_data=div_data+'<p>'+object.line+'<p>');
@@ -578,7 +583,7 @@ function hideEffectAnimation(){
     selectEffect+='<option value="comeInEffectFadeIn">Fade In</option>';
     selectEffect+='<option value="comeInEffectZoomIn">Zoom In</option>';
     selectEffect+='<option value="comeInEffectZoomInWithRotate">Zoom In with Rotate</option>';
-  //  selectEffect+='<option value="comeInEffectZoomInSlowMotion">Zoom in slow-motion</option>';
+    selectEffect+='<option value="comeInEffectZoomInSlowMotion">Zoom in slow-motion</option>';
     selectEffect+='</select>';
     return selectEffect;
   }
@@ -589,7 +594,7 @@ function hideEffectAnimation(){
     selectEffect+='<option value="comeOutEffectFadeOut">Fade Out</option>';
     selectEffect+='<option value="comeOutEffectZoomOut">Zoom Out</option>';
     selectEffect+='<option value="comeOutEffectZoomOutWithRotate">Zoom Out with Rotate</option>';
- //   selectEffect+='<option value="comeOutEffectZoomOutSlowMotion">Zoom Out slow-motion</option>';
+    selectEffect+='<option value="comeOutEffectZoomOutSlowMotion">Zoom Out slow-motion</option>';
     selectEffect+='</select>';
     return selectEffect;
   }

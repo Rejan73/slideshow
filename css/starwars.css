@@ -6,18 +6,13 @@
 ** Blame me for the music via embedded video bit
 */
 
-@import url(https://fonts.googleapis.com/css?family=Droid+Sans:400,700);
+@import url(fontstarwars.css);
 
-
-body, html
+p#startStarWars
 {
   font-family: "Droid Sans", arial, verdana, sans-serif;
 	font-weight: 700;
 	color: #ff6;
-}
-
-p#startStarWars
-{
   padding: 0;
   margin: 0;
 	width: 16em;
@@ -39,6 +34,9 @@ p#startStarWars
 
 #h1StarWars
 {
+  font-family: "Droid Sans", arial, verdana, sans-serif;
+	font-weight: 700;
+	color: #ff6;
   padding: 0;
   margin: 0;
   position:absolute;
@@ -66,6 +64,9 @@ p#startStarWars
 /* the interesting 3D scrolling stuff */
 #titlesStarWars
 {
+  font-family: "Droid Sans", arial, verdana, sans-serif;
+	font-weight: 700;
+	color: #ff6;
   padding: 0;
   margin: 0;
   position:absolute;
@@ -83,6 +84,9 @@ p#startStarWars
 
 #titlesStarWars:after
 {
+  font-family: "Droid Sans", arial, verdana, sans-serif;
+	font-weight: 700;
+	color: #ff6;
   padding: 0;
   margin: 0;
   position:absolute;
@@ -97,6 +101,9 @@ p#startStarWars
 
 #titlesStarWars p
 {
+  font-family: "Droid Sans", arial, verdana, sans-serif;
+	font-weight: 700;
+	color: #ff6;
   padding: 0;
   margin: 0;
 	text-align: justify;
@@ -105,6 +112,9 @@ p#startStarWars
 
 #titlesStarWars p.centerStarWars
 { 
+  font-family: "Droid Sans", arial, verdana, sans-serif;
+	font-weight: 700;
+	color: #ff6;
   padding: 0;
   margin: 0;
 	text-align: center;
@@ -112,6 +122,9 @@ p#startStarWars
 
 #titlecontentStarWars
 {
+  font-family: "Droid Sans", arial, verdana, sans-serif;
+	font-weight: 700;
+	color: #ff6;
   padding: 0;
   margin: 0;
   position:absolute;
