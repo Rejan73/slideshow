@@ -4,6 +4,21 @@ body {
   background: #000;
   color: #fff;
 }
+/*1280 x 720*/
+#previewSlideShow {
+  height: 360px;
+  width: 640px;
+  border: solid green;
+  overflow: hidden;
+}
+#srcImage, #text, #video, #divText {
+  position:absolute;
+  height: 360px;
+  width: 640px;
+  object-fit: cover;
+  border: solid red;
+  overflow: hidden;
+}
 
 #mainSlideShow #configurationSlideShow {
     float:left;
