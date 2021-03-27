@@ -43,7 +43,7 @@ body {
   border: 2px solid green;
   background: #000;
   z-index:10;
-  width: 300px;
+  width: 400px;
 }
 #updateTexte{
   position: fixed; /* or absolute */

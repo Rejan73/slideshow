@@ -576,6 +576,9 @@ function hideEffectAnimation(){
     var selectEffect='<select name="comeInEffect" id="comeInEffect">';
     selectEffect+='<option value="comeInEffectNone">none</option>';
     selectEffect+='<option value="comeInEffectFadeIn">Fade In</option>';
+    selectEffect+='<option value="comeInEffectZoomIn">Zoom In</option>';
+    selectEffect+='<option value="comeInEffectZoomInWithRotate">Zoom In with Rotate</option>';
+  //  selectEffect+='<option value="comeInEffectZoomInSlowMotion">Zoom in slow-motion</option>';
     selectEffect+='</select>';
     return selectEffect;
   }
@@ -584,6 +587,9 @@ function hideEffectAnimation(){
     var selectEffect='<select name="comeOutEffect" id="comeOutEffect">';
     selectEffect+='<option value="comeOutEffectNone">none</option>';
     selectEffect+='<option value="comeOutEffectFadeOut">Fade Out</option>';
+    selectEffect+='<option value="comeOutEffectZoomOut">Zoom Out</option>';
+    selectEffect+='<option value="comeOutEffectZoomOutWithRotate">Zoom Out with Rotate</option>';
+ //   selectEffect+='<option value="comeOutEffectZoomOutSlowMotion">Zoom Out slow-motion</option>';
     selectEffect+='</select>';
     return selectEffect;
   }

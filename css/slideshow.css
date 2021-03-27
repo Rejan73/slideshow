@@ -84,6 +84,51 @@ i {
     }
 }
 
+.comeInEffectZoomIn{
+  animation: zoomInAnimation 3s;
+}
+
+@keyframes zoomInAnimation {
+  0% {
+    transform: scale(0);
+  }
+  100%{
+    transform: scale(1);
+  }
+}
+.comeInEffectZoomInWithRotate {
+  animation: zoomInWithRotateAnimation 3s;
+}
+
+@keyframes zoomInWithRotateAnimation {
+  0% {
+    transform: scale(0);
+  }
+  100%{
+    transform: scale(1) rotate(360deg);
+  }
+}
+
+.comeinEffectZoomInSlowMotion{
+  height: 300px;
+  transform-origin: 50% 65%;
+    transition: transform 5s, filter 3s ease-in-out;
+    filter: brightness(150%);
+  animation: zoomInSlowMotionAnimation 3s;
+}
+
+@keyframes zoomInSlowMotionAnimation {
+  0% {
+    transform-origin: 50% 65%;
+    transition: transform 5s, filter 3s ease-in-out;
+    filter: brightness(150%);
+  }
+  100%{
+    filter: brightness(100%);
+    transform: scale(3)
+  }
+}
+
 /* Come Out effects  */
 .comeOutEffectNone{
 }
@@ -100,6 +145,50 @@ i {
         opacity:0;
     }
 }
+
+.comeOutEffectZoomOut{
+  animation: zoomOutAnimation 3s;
+}
+
+@keyframes zoomOutAnimation {
+  0% {
+    transform: scale(1);
+  }
+  100%{
+    transform: scale(0);
+  }
+}
+
+.comeOutEffectZoomOutWithRotate {
+  animation: zoomOutWithRotateAnimation 3s;
+}
+
+@keyframes zoomOutWithRotateAnimation {
+  0% {
+    transform: scale(1);
+  }
+  100%{
+    transform: scale(0) rotate(360deg);
+  }
+}
+
+.comeOutEffectZoomOutSlowMotion{
+  height: 300px;
+  animation: zoomOutSlowMotionAnimation 3s;
+}
+
+@keyframes zoomOutSlowMotionAnimation {
+  0% {
+    transform-origin: 50% 65%;
+    transition: transform 5s, filter 3s ease-in-out;
+    filter: brightness(150%);
+  }
+  100%{
+    filter: brightness(100%);
+    transform: scale(3)
+  }
+}
+
 
 /* Mouvement effects  */
 .movementEffectNone{
