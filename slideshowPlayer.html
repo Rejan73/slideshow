@@ -6,17 +6,17 @@
   <link rel="stylesheet" href="css/slideshow.css">
   <link rel="stylesheet" href="css/slideshowPlayer.css">
   <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/starwars.css">
   <script src="js/jquery-3.5.0.js"></script>
 </head>
 <body>
 
 <a class="js-open-modal btn" href="#" start-slideshow-id="start-slideshow" title="Start"><i class="fa fa-play-circle fa-2x"></i></a>
-<br>
 <a class="js-open-modal btn" href="#" config-id="config-id" title="Configuration"><i class="fa fa-cog fa-2x"></i></a>
 
 <div id="configurationSlideShow" style="display:none">
   <input type='file' accept='application/JSON' onchange='openFile(event)'><br>
-  <a class="js-open-modal btn" href="slideshowTools.html" add-media="add-media" title="Ajout M‚dia"><i class="fa fa-briefcase fa-2x" ></i></a>
+  <a class="js-open-modal btn" href="slideshowTools.html" add-media="add-media" title="Ajout Média"><i class="fa fa-briefcase fa-2x" ></i></a>
   <br><br>
   <label for="fname"><i class="fa fa-film fa-2x"></i></label>                                            
   <input type="text" id="idSlideShow" value="0" size="1" pattern="[0-9]{3}" >
@@ -25,13 +25,7 @@
 <div id="playSlideShow">
   <div id="textes" style="display:none">
       <div id ="divText"></div>
-      <div class="fade"></div>
-      <section class="star-wars">
-        <div class="crawl" id ="divCrawl">
-        </div>
-      </section>  
   </div>
-  
   <div id="images" style="display:none">
     <center>
       <img id="srcImage" src=""/>
@@ -39,7 +33,7 @@
   </div>
   <div id="videos" style="display:none">
     <center>
-    <video id="video" width="1280" height="720"  controls>
+    <video id="video" controls>
         <source id="srcVideo" src="" type="video/mp4">
     </video>
     </center>

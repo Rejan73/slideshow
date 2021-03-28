@@ -1,62 +1,12 @@
+
+
 i {
   color:green;
 }
 
-
- /* STAR WAR Text effect */
-.fade {
-  position: relative;
-  width: 100%;
-  min-height: 60vh;
-  top: -25px;
-  background-image: linear-gradient(0deg, transparent, black 75%);
-  z-index: 1;
-}
-
-.star-wars {
-  display: flex;
-  justify-content: center;
-  position: relative;
-  height: 800px;
-  color: #feda4a;
-  font-family: 'Pathway Gothic One', sans-serif;
-  font-size: 500%;
-  font-weight: 600;
-  letter-spacing: 6px;
-  line-height: 150%;
-  perspective: 400px;
-  text-align: justify;
-}
-
-.crawl {
-  position: relative;
-  top: 9999px;
-  transform-origin: 50% 100%;
-  animation: crawl 60s linear;
-}
-
-.crawl > .title {
-  font-size: 90%;
-  text-align: center;
-}
-
-.crawl > .title h1 {
-  margin: 0 0 100px;
-  text-transform: uppercase;
-}
-
-@keyframes crawl {
-  0% {
-    top: 0;
-    transform: rotateX(20deg)  translateZ(0);
-  }
-  100% { 
-    top: -6000px;
-    transform: rotateX(25deg) translateZ(-2500px);
-  }
-}
-
-/* Image effects  */
+/*****************/
+/* Image effects */
+/*****************/
 #images.imageEffectNone{
 }
 #images.imageEffectSepia{
@@ -65,43 +15,92 @@ i {
 #images.imageEffectBlackAndWhite{
     filter:grayscale(100%);
 }
-
-/* Come In effects  */
-.comeInEffectNone{
-
-}
-
+/***********************/
+/* Come In/out effects */
+/***********************/
+.comeInEffectNone{}
+.comeOutEffectNone{}
+/***********************/
 .comeInEffectFadeIn{
   animation: fadeInAnimation 3s;
 }
-
 @keyframes fadeInAnimation {
-    from {
-        opacity:0;
-    }
-    to {
-        opacity:1;
-    }
+    from { opacity:0; }
+    to { opacity:1; }
 }
-
-/* Come Out effects  */
-.comeOutEffectNone{
-}
-
 .comeOutEffectFadeOut{
   animation: fadeOutAnimation 3s;
 }
-
 @keyframes fadeOutAnimation {
-    from {
-        opacity:1;
-    }
-    to {
-        opacity:0;
-    }
+    from { opacity:1; }
+    to { opacity:0; }
 }
-
-/* Mouvement effects  */
+/***********************/
+.comeInEffectZoomIn{
+  animation: zoomInAnimation 3s;
+}
+@keyframes zoomInAnimation {
+  0% { transform: scale(0); }
+  100%{transform: scale(1); }
+}
+.comeOutEffectZoomOut{
+  animation: zoomOutAnimation 3s;
+}
+@keyframes zoomOutAnimation {
+  0% {transform: scale(1); }
+  100%{transform: scale(0);}
+}
+/***********************/
+.comeInEffectZoomInWithRotate {
+  animation: zoomInWithRotateAnimation 3s;
+}
+@keyframes zoomInWithRotateAnimation {
+  0% { transform: scale(0); }
+  100%{ transform: scale(1) rotate(360deg); }
+}
+.comeOutEffectZoomOutWithRotate {
+  animation: zoomOutWithRotateAnimation 3s;
+}
+@keyframes zoomOutWithRotateAnimation {
+  0% { transform: scale(1); }
+  100%{ transform: scale(0) rotate(360deg); }
+}
+/***********************/
+.comeInEffectZoomInSlowMotion{
+  max-width: 100%;
+  vertical-align: middle;
+  animation: zoomInSlowMotionAnimation 3s forwards;  
+}
+@keyframes zoomInSlowMotionAnimation {
+  0% {
+    transform-origin: 50% 65%;
+    transform: scale(1);
+    transition: transform 5s, filter 3s ease-in-out;
+    filter: brightness(150%);
+  }
+  100%{
+    filter: brightness(100%);
+    transform: scale(3);
+  }
+}
+.comeOutEffectZoomOutSlowMotion{
+  transform: scale(3);
+  animation: zoomOutSlowMotionAnimation 3s forwards;
+}
+@keyframes zoomOutSlowMotionAnimation {
+  0% {
+    transform: scale(3);
+  }
+  100%{
+    transform: scale(1);
+    transform-origin: 50% 65%;
+    transition: transform 5s, filter 3s ease-in-out;
+    filter: brightness(150%);
+  }
+}
+/***********************/
+/* Mouvement effects   */
+/***********************/
 .movementEffectNone{
 }
 .movementEffectUpToDown{
@@ -109,7 +108,6 @@ i {
   top: 0;
   animation: upToDownAnimation 3s;
 }
-
 @keyframes upToDownAnimation {
     from {
         top: -1000px;

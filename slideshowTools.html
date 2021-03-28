@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="css/font-awesome.min.css">
   <link rel="stylesheet" href="css/slideshow.css">
   <link rel="stylesheet" href="css/slideshowTools.css">
-
+  <link rel="stylesheet" href="css/starwars.css">
 </head>
 <body>
 <i class="fa fa-cog fa-2x"></i> Slideshow Tools by Rod <input type='file' accept='application/JSON' onchange='openFile(event)'>
@@ -41,20 +41,20 @@
   
   
   <div id="previewSlideShow">
-    <div id="images" style="display:none">
+    <div id="images" style="display:none" >
       <center>
-        <img id="srcImage" src="" width="480" height="320" />
+        <img id="srcImage" src="" />
       </center>
     </div>
     
     <div id="videos" style="display:none">
       <center>
-      <video id="video" width="480" height="320"  controls>
+      <video id="video" controls>
           <source id="srcVideo" src="" type="video/mp4">
       </video>
       </center>
-    </div>
-    
+    </div>       
+        
     <div id="musics" style="display:none">
       <audio id="music" controls>
         <source id="srcMusic" src="" type="audio/mpeg">
@@ -63,11 +63,6 @@
     
     <div id="textes" style="display:none">
       <div id ="divText"></div>
-      <div class="fade"></div>
-      <section class="star-wars">
-        <div class="crawl" id ="divCrawl">
-        </div>
-      </section>  
     </div>
    </div>
 </div>

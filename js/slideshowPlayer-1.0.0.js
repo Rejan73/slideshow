@@ -40,6 +40,8 @@ var openFile = function(event) {
         var reader = new FileReader();
         reader.onload = function(){
           slideShowDatas = JSON.parse(reader.result);
+          currentDataId=0;
+          $('#idSlideShow').val(currentDataId);
         };
         reader.readAsText(input.files[0]);
       };
@@ -49,6 +51,7 @@ $('a[start-slideshow-id]').click(function(e) {
 });
 
 $('a[config-id]').click(function(e) {
+   $('#idSlideShow').val(currentDataId);
    $('#configurationSlideShow').toggle();
 });
 $('a[set-slideshow-id]').click(function(e) {
@@ -88,20 +91,20 @@ function playImage(currentData){
   $("#images").addClass(currentData["styleEffect"]);
   $("#images").addClass(currentData["comeInEffect"]);
   $("#images").addClass(currentData["movementEffect"]);
-  $('#srcImage').attr('width',currentData.width);
-  $('#srcImage').attr('height',currentData.height);
   $('#images').show();
   currentDataId++;
-  setTimeout(function() {
+  setTimeout(function() {            
     $("#images").removeClass(currentData["comeInEffect"]);
     $("#images").removeClass(currentData["movementEffect"]);
     $("#images").addClass(currentData["comeOutEffect"]);
-  }, currentData["duration"]*1000);
-  setTimeout(function() {
+ }, currentData["duration"]*1000);
+
+ setTimeout(function() { 
     $("#images").removeClass(currentData["styleEffect"]);
     $("#images").removeClass(currentData["comeOutEffect"]);
     runAnimation();
   }, currentData["duration"]*1000+2000) ;
+  
 
 };
 
@@ -125,13 +128,15 @@ function playMusic(currentData){
 
 function playText(currentData){
   if (currentData.styleEffect=='starwars'){
-    var div_data ='<div class="title">'
-    + '<p>'+currentData.title+'</p>'
-    + '<h1>'+currentData.subTitle+'</h1></div><div>' ;
+    var div_data ='<p id="startStarWars">Il y a bien longtemps, dans une galaxie lointaine, tr&egrave;s lontaine</p>';
+    div_data+='<h1 id="h1StarWars">'+currentData.title+'</h1>';
+    div_data+='<div id="titlesStarWars">';
+    div_data+='<div id="titlecontentStarWars">';
+    div_data+='<p class="centerStarWars">'+currentData.subTitle+'</p>';
     currentData.lines.forEach(object => div_data=div_data+'<p>'+object.line+'<p>');
-    div_data=div_data+"</div>"   
-    $("#divCrawl").html(div_data);
-    $("#divText").html("");   
+    div_data+="</div></div>";   
+    $("#divText").html(div_data);    
+    $('#textes').show();
   } else {  
     var div_data ='<center><h1>'+currentData.title+'</h1><h2>'+currentData.subTitle+'</h2>' ;
     currentData.lines.forEach(object => div_data=div_data+'<p>'+object.line+'<p>');
@@ -142,6 +147,7 @@ function playText(currentData){
     $("#divText").html(div_data);
     $("#divCrawl").html("");
     $('#textes').show();
+  }    
     currentDataId++;
     
     setTimeout(function() {
@@ -155,5 +161,5 @@ function playText(currentData){
       $("#images").removeClass(currentData["comeOutEffect"]);
       runAnimation();
     }, currentData["duration"]*1000+2000) ;
-  }
+  
 };
