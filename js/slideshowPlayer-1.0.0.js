@@ -40,6 +40,8 @@ var openFile = function(event) {
         var reader = new FileReader();
         reader.onload = function(){
           slideShowDatas = JSON.parse(reader.result);
+          currentDataId=0;
+          $('#idSlideShow').val(currentDataId);
         };
         reader.readAsText(input.files[0]);
       };
@@ -49,6 +51,7 @@ $('a[start-slideshow-id]').click(function(e) {
 });
 
 $('a[config-id]').click(function(e) {
+   $('#idSlideShow').val(currentDataId);
    $('#configurationSlideShow').toggle();
 });
 $('a[set-slideshow-id]').click(function(e) {
@@ -88,20 +91,20 @@ function playImage(currentData){
   $("#images").addClass(currentData["styleEffect"]);
   $("#images").addClass(currentData["comeInEffect"]);
   $("#images").addClass(currentData["movementEffect"]);
-  $('#srcImage').attr('width',currentData.width);
-  $('#srcImage').attr('height',currentData.height);
   $('#images').show();
   currentDataId++;
-  setTimeout(function() {
+  setTimeout(function() {            
     $("#images").removeClass(currentData["comeInEffect"]);
     $("#images").removeClass(currentData["movementEffect"]);
     $("#images").addClass(currentData["comeOutEffect"]);
-  }, currentData["duration"]*1000);
-  setTimeout(function() {
+ }, currentData["duration"]*1000);
+
+ setTimeout(function() { 
     $("#images").removeClass(currentData["styleEffect"]);
     $("#images").removeClass(currentData["comeOutEffect"]);
     runAnimation();
   }, currentData["duration"]*1000+2000) ;
+  
 
 };
 
