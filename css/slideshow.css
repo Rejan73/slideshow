@@ -69,13 +69,13 @@ i {
 .comeInEffectZoomInSlowMotion{
   max-width: 100%;
   vertical-align: middle;
-  animation: zoomInSlowMotionAnimation 3s;
+  animation: zoomInSlowMotionAnimation 3s forwards;  
 }
 @keyframes zoomInSlowMotionAnimation {
   0% {
     transform-origin: 50% 65%;
     transform: scale(1);
-    transition: transform 5s;
+    transition: transform 5s, filter 3s ease-in-out;
     filter: brightness(150%);
   }
   100%{
@@ -85,7 +85,7 @@ i {
 }
 .comeOutEffectZoomOutSlowMotion{
   transform: scale(3);
-  animation: zoomOutSlowMotionAnimation 3s;
+  animation: zoomOutSlowMotionAnimation 3s forwards;
 }
 @keyframes zoomOutSlowMotionAnimation {
   0% {
@@ -94,7 +94,7 @@ i {
   100%{
     transform: scale(1);
     transform-origin: 50% 65%;
-    transition: transform 5s;
+    transition: transform 5s, filter 3s ease-in-out;
     filter: brightness(150%);
   }
 }
