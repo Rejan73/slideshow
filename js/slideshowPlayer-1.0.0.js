@@ -92,18 +92,37 @@ function playImage(currentData){
   $("#images").addClass(currentData["comeInEffect"]);
   $("#images").addClass(currentData["movementEffect"]);
   $('#images').show();
+  oldcurrentDataId=currentDataId;
   currentDataId++;
   setTimeout(function() {            
     $("#images").removeClass(currentData["comeInEffect"]);
     $("#images").removeClass(currentData["movementEffect"]);
     $("#images").addClass(currentData["comeOutEffect"]);
- }, currentData["duration"]*1000);
-
- setTimeout(function() { 
+    if ("comeOutEffectShowNextImage"==currentData["comeOutEffect"]){
+      $('#srcNextImage').attr('src',currentData.file);
+      $("#nextImage").addClass("comeOutEffectShowNextImage2"); 
+      $('#nextImage').show(); 
+      if (currentDataId+1<slideShowDatas.length && slideShowDatas[oldcurrentDataId+1].media=="img"){
+        $('#srcImage').attr('src',slideShowDatas[oldcurrentDataId+1].file);
+      }
+    }
+  }, currentData["duration"]*1000);
+ 
+  durationEffect=2000;
+  if ("comeOutEffectShowNextImage"==currentData["comeOutEffect"]){
+    durationEffect=5000;
+  }
+  
+  setTimeout(function() { 
     $("#images").removeClass(currentData["styleEffect"]);
     $("#images").removeClass(currentData["comeOutEffect"]);
+    if ("comeOutEffectShowNextImage"==currentData["comeOutEffect"]){
+      $('#srcNextImage').attr('src','');
+      $("#nextImage").removeClass("comeOutEffectShowNextImage2"); 
+      $('#nextImage').hide(); 
+    }     
     runAnimation();
-  }, currentData["duration"]*1000+2000) ;
+  }, currentData["duration"]*1000+durationEffect) ;
   
 
 };

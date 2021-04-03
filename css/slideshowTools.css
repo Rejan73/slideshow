@@ -11,7 +11,7 @@ body {
   border: solid green;
   overflow: hidden;
 }
-#srcImage, #video {
+#srcImage, #video, #srcNextImage {
   height: 360px;
   width: 640px;
   object-fit: cover;
@@ -73,6 +73,7 @@ body {
   padding-left: 20px;
   border: 2px solid green;
   background: #000;
+  z-index:10;
   width: 800px;
 } 
 
@@ -103,4 +104,24 @@ body {
 
 .tooltip:hover .tooltiptext {
   visibility: visible;
+}
+
+.comeOutEffectShowNextImage2 {
+   position : absolute; 
+   z-index: 2;
+   animation: showNextImage2Animation 5s
+}
+.comeOutEffectShowNextImage {
+   position : absolute;
+   z-index: 1;
+   animation: showNextImageAnimation 5s
+}
+@keyframes showNextImage2Animation {
+    from { opacity:1; }
+    to { opacity:0; }
+}
+
+@keyframes showNextImageAnimation {
+    from { opacity:0; }
+    to { opacity:1; }
 }

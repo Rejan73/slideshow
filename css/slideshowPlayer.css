@@ -11,7 +11,7 @@ body {
   width: 100%;
   overflow: hidden;
 }
-#srcImage,  #video  {
+#srcImage,  #video, #srcNextImage  {
   height: 100%;
   width: 100%;
   object-fit: cover;
@@ -23,4 +23,32 @@ body {
   object-fit: cover;
   overflow: hidden;
   position:absolute;
+}
+
+.comeOutEffectShowNextImage2 {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  overflow: hidden;
+   position : absolute; 
+   z-index: 2;
+   animation: showNextImage2Animation 5s
+}
+.comeOutEffectShowNextImage {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  overflow: hidden;
+   position : absolute;
+   z-index: 1;
+   animation: showNextImageAnimation 5s
+}
+@keyframes showNextImage2Animation {
+    from { opacity:1; }
+    to { opacity:0; }
+}
+
+@keyframes showNextImageAnimation {
+    from { opacity:0; }
+    to { opacity:1; }
 }

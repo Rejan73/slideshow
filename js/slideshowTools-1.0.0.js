@@ -7,7 +7,6 @@ var slideShowDatas;
 
 (function($) {
   $(document).ready(function(){
-    currentDataId=0;
     // ajout du listener
     $.getJSON('slideshowDataDemo.json', function(data) {         
         slideShowDatas = data;
@@ -370,43 +369,62 @@ function runAnimation(currentDataId){
   switch (currentData.media)
   {
     case "mp3":
-         playMusic(currentData);
+         playMusic(currentDataId);
          break;
     case "mp4":
-         playMovie(currentData);
+         playMovie(currentDataId);
          break;
     case "img":
-         playImage(currentData);
+         playImage(currentDataId);
          break;
     case "txt":
-         playText(currentData);
+         playText(currentDataId);
          break; 
     defaut:
          break;    
   }
 }
 
-function playImage(currentData){
+function playImage(currentDataId){
+  currentData=slideShowDatas[currentDataId];
   $('#srcImage').attr('src',currentData.file);
   $("#images").addClass(currentData["styleEffect"]);
   $("#images").addClass(currentData["comeInEffect"]);
   $("#images").addClass(currentData["movementEffect"]);
 
   $('#images').show();
+  
   setTimeout(function() {
     $("#images").removeClass(currentData["comeInEffect"]);
     $("#images").removeClass(currentData["movementEffect"]);
     $("#images").addClass(currentData["comeOutEffect"]);
+    if ("comeOutEffectShowNextImage"==currentData["comeOutEffect"]){
+      $('#srcNextImage').attr('src',currentData.file);
+      $("#nextImage").addClass("comeOutEffectShowNextImage2"); 
+      $('#nextImage').show(); 
+      if (currentDataId+1<slideShowDatas.length && slideShowDatas[currentDataId+1].media=="img"){
+        $('#srcImage').attr('src',slideShowDatas[currentDataId+1].file);
+      }
+    }
   }, currentData["duration"]*1000);
-  
+  durationEffect=2000;
+  if ("comeOutEffectShowNextImage"==currentData["comeOutEffect"]){
+    durationEffect=5000;
+  }
   setTimeout(function() {
     $("#images").removeClass(currentData["styleEffect"]);
     $("#images").removeClass(currentData["comeOutEffect"]);
-  }, currentData["duration"]*1000+2000) ;
+    if ("comeOutEffectShowNextImage"==currentData["comeOutEffect"]){
+      $('#srcNextImage').attr('src','');
+      $("#nextImage").removeClass("comeOutEffectShowNextImage2"); 
+      $('#nextImage').hide(); 
+    }
+  }, currentData["duration"]*1000+durationEffect) ;
   
 };
 
-function playMovie(currentData){
+function playMovie(currentDataId){
+  currentData=slideShowDatas[currentDataId];
   $('#srcVideo').attr('src',currentData.file);
   $('#video')[0].load();
   $('#videos').show();
@@ -414,7 +432,8 @@ function playMovie(currentData){
   //$('#video').get(0).requestFullscreen();
 }
   
-function playMusic(currentData){
+function playMusic(currentDataId){
+  currentData=slideShowDatas[currentDataId];
   $('#srcMusic').attr('src',currentData.file);
   $('#music')[0].load();
   $('#musics').show();
@@ -424,7 +443,8 @@ function playMusic(currentData){
 };
 
 
-function playText(currentData){
+function playText(currentDataId){
+  currentData=slideShowDatas[currentDataId];
   if (currentData.styleEffect=='starwars'){
     var div_data ='<p id="startStarWars">Il y a bien longtemps, dans une galaxie lointaine, tr&egrave;s lontaine</p>';
     div_data+='<h1 id="h1StarWars">'+currentData.title+'</h1>';
@@ -595,6 +615,7 @@ function hideEffectAnimation(){
     selectEffect+='<option value="comeOutEffectZoomOut">Zoom Out</option>';
     selectEffect+='<option value="comeOutEffectZoomOutWithRotate">Zoom Out with Rotate</option>';
     selectEffect+='<option value="comeOutEffectZoomOutSlowMotion">Zoom Out slow-motion</option>';
+    selectEffect+='<option value="comeOutEffectShowNextImage">Show Next Image</option>';
     selectEffect+='</select>';
     return selectEffect;
   }
