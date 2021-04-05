@@ -530,7 +530,7 @@ function hideTextAnimation(){
 }
 
 function addNewAnimation(){
-  $('#addNewAnimation').show();
+  $('#addNewAnimation').toggle();
 }
 
 function hideAddNewAnimation(){

@@ -58,8 +58,8 @@ body {
 } 
 #updateEffect{
   position: fixed; /* or absolute */
-  top: 50%;
-  left: 50%;
+  top: 40%;
+  left: 40%;
   padding-left: 20px;
   border: 2px solid green;
   background: #000;
@@ -68,8 +68,8 @@ body {
 }
 #updateTexte{
   position: fixed; /* or absolute */
-  top: 50%;
-  left: 50%;
+  top: 40%;
+  left: 40%;
   padding-left: 20px;
   border: 2px solid green;
   background: #000;
@@ -79,8 +79,8 @@ body {
 
 #addNewAnimation {
   position: fixed; /* or absolute */
-  top: 50%;
-  left: 50%;
+  top: 40%;
+  left: 40%;
   padding-left: 20px;
   border: 2px solid green;
   background: #000;
