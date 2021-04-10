@@ -271,7 +271,7 @@ function moveUpAnimation(currentDataId){
 
 function addTxtAnimation(){
     var dataToAdd={};
-    dataToAdd["media"]=$('#mediaToAdd').val();
+    dataToAdd["media"]="txt";
     dataToAdd["file"]='Texte_'+slideShowDatas.length;
     dataToAdd["title"]='Titre';
     dataToAdd["subTitle"]='Sous-Titre';
@@ -283,6 +283,8 @@ function addTxtAnimation(){
     dataToAdd["comeOutEffect"]="none";
     dataToAdd["soundEffectComeIn"]="none";
     dataToAdd["soundEffectComeOut"]="none";
+    dataToAdd["font"]="none";
+    dataToAdd["fontcolor"]="#ff0000";
     
     slideShowDatas.push(dataToAdd);
     changeSaveallColorRed();
@@ -442,7 +444,7 @@ function stopMusic(){
 }
 
 function playMusic(soundFile){
-  if (soundFile!='none' && soundFile!='undefined' ){
+  if (soundFile!='none' && soundFile!=undefined && soundFile!=null ){
     stopMusic();
     $('#srcMusic').attr('src',soundFile);
     $('#music')[0].load();
@@ -454,6 +456,9 @@ function playMusic(soundFile){
 
 function playText(currentDataId){
   currentData=slideShowDatas[currentDataId];
+  $("#textes").css("font-family", currentData["font"]);
+  $("#textes").css("color", currentData["fontcolor"]);
+     
   playMusic(currentData["soundEffectComeIn"]);
   if (currentData.styleEffect=='starwars'){
     var div_data ='<p id="startStarWars">Il y a bien longtemps, dans une galaxie lointaine, tr&egrave;s lontaine</p>';
@@ -502,10 +507,13 @@ function  updateTextAnimation(currentDataId){
   div_text+='Text : <textarea id="updatelines" rows="10" cols="100">';
   currentData.lines.forEach(object => div_text=div_text+object.line+'\n');
   div_text+='</textarea>'; 
+  div_text+='<br>Font:'+getFonts();
   div_text+='<br><center><a class="js-open-modal btn" href="#" title="Modify" onclick="saveTextAnimation('+currentDataId+');"><i class="fa fa-pencil-square fa-2x"></i></a>';
   div_text+='<a class="js-open-modal btn" href="#"  title="Cancel" onclick="hideTextAnimation();"><i class="fa fa-times-circle fa-2x"></i></a></center>';
   div_text+='<input type="hidden" id="textCurrentDataId" value="'+currentDataId+'">';
   $("#updateTexte").html(div_text); 
+  $('#fontEffect').val(currentData["font"]);
+  $('#fontColor').val(currentData["fontcolor"]);
   $('#updateEffect').hide(); 
   if (oldCurrentDataId==currentDataId){
     $('#updateTexte').toggle();
@@ -518,6 +526,8 @@ function  saveTextAnimation(currentDataId){
   currentData=slideShowDatas[currentDataId];
   currentData["title"]=$('#updatetitle').val();
   currentData["subTitle"]=$('#updatesubtitle').val();
+  currentData["font"]=$('#fontEffect').val();
+  currentData["fontcolor"]=$('#fontColor').val();
   var dataLine= $('#updatelines').val().split('\n');
   currentData["lines"]=[];
   dataLine.forEach(object => currentData["lines"].push({"line": object }));
@@ -606,10 +616,10 @@ function hideEffectAnimation(){
   function getMovementEffect(selectedEffect){
     var selectEffect='<select name="movementEffect" id="movementEffect">';
     selectEffect+='<option value="movementEffectNone">none</option>';
-    selectEffect+='<option value="movementEffectUpToDown" selected>Up to Down</option>';
-    selectEffect+='<option value="movementEffectDownToUp" selected>Down to Up</option>';
-    selectEffect+='<option value="movementEffectLeftToRight" selected>Left to Right</option>';
-    selectEffect+='<option value="movementEffectRightToLeft" selected>Right to Left</option>';
+    selectEffect+='<option value="movementEffectUpToDown">Up to Down</option>';
+    selectEffect+='<option value="movementEffectDownToUp">Down to Up</option>';
+    selectEffect+='<option value="movementEffectLeftToRight">Left to Right</option>';
+    selectEffect+='<option value="movementEffectRightToLeft">Right to Left</option>';
     selectEffect+='</select>';                                                                                                         
     return selectEffect;
   }
@@ -656,14 +666,14 @@ function hideEffectAnimation(){
   
   function getVideoEffect(selectedEffect){
     var selectEffect='<select name="styleEffect" id="styleEffect">';
-    selectEffect+='<option value="videoEffectNone" selected>none</option>';
+    selectEffect+='<option value="videoEffectNone">none</option>';
     selectEffect+='</select>';
     return selectEffect;
   }
 
   function getMusicEffect(selectedEffect){
     var selectEffect='<select name="styleEffect" id="styleEffect">';
-    selectEffect+='<option value="musicEffectNone" selected>none</option>';
+    selectEffect+='<option value="musicEffectNone">none</option>';
     selectEffect+='</select>';
     return selectEffect;
   }                                                                                                                                  
@@ -673,4 +683,151 @@ function hideEffectAnimation(){
     selectEffect+='<li>Come Out Sound <input type="text" id="soundEffectComeOut" value="'+currentData.soundEffectComeOut+'"></li></ul>';
     return selectEffect;
   }
-  
+
+function getFonts(){
+var fonts= [
+'A-Bug-s-Life---Debugged',
+'A-Bug-s-Life',
+'akaPotsley_0',
+'AL-Cinderella',
+'aladdin',
+'ALGERIA',
+'algerian_becker',
+'algerian_becker_basic',
+'algerian_becker_basic_caps',
+'Alice_in_Wonderland_3',
+'BFG-Font',
+'bighero_v4',
+'blasteei',
+'blasteet',
+'blasteii',
+'blastein',
+'blaster',
+'blasteri',
+'BLKCHCRY',
+'BUBBALOB',
+'bubbalove-bold',
+'Buka-Bird',
+'Caribbean',
+'Caribbean_0',
+'celticmd',
+'columbusdb',
+'columbusregular',
+'DENMARK',
+'Diner-Regular',
+'DIOGENES',
+'disney-print',
+'Findet-Nemo',
+'Flat-Earth-Scribe',
+'Florida-Project-Phase-One',
+'Florida-Project-Phase-One',
+'Florida-Project-Phase-Two',
+'Florida-Project-Phase-Two',
+'graceyscurse',
+'graceyscurse_0',
+'gunship',
+'gunship3d',
+'gunship3dital',
+'gunshipacad',
+'gunshipacadital',
+'gunshipbold',
+'gunshipboldital',
+'gunshipcond',
+'gunshipcondital',
+'gunshipexpand',
+'gunshipexpandital',
+'gunshipgrad',
+'gunshipgradital',
+'gunshiphalf',
+'gunshiphalfital',
+'gunshipital',
+'gunshiplaser',
+'gunshiplaserital',
+'gunshipleft',
+'gunshipout',
+'gunshipoutital',
+'gunshipsemital',
+'gunshipsuperital',
+'heroesassemble2',
+'heroesassemble3d',
+'heroesassemble3dital',
+'heroesassembleacad',
+'heroesassembleacadital',
+'heroesassemblebold2',
+'heroesassembleboldexpand2',
+'heroesassembleboldexpandital2',
+'heroesassembleboldital2',
+'heroesassemblecond2',
+'heroesassemblecondital2',
+'heroesassembleexpand2',
+'heroesassembleexpandital2',
+'heroesassemblegrad',
+'heroesassemblegradital',
+'heroesassembleital2',
+'heroesassembleleft2',
+'heroesassembleout',
+'heroesassembleoutital',
+'Ice-kingdom---Bold---Por-Kustren',
+'Incredibles,-The',
+'Intensa-Fuente',
+'JUNGLEFE',
+'lion_king',
+'LMS-Happily-Ever-After',
+'MAGNETOB',
+'Maleficio',
+'Mickey-Ears',
+'mickey-m-tfb',
+'MICKEY',
+'mickeymousebats',
+'Minnie',
+'Monster-AG',
+'Mouse-Tags',
+'MouseMemoirs-Regular',
+'mulan',
+'Nightmare-Before-Christmas',
+'Orange-Grove',
+'PentaGrams-Malefissent',
+'PokerHunters',
+'PrincesS-AND-THE-FROG',
+'rapierletletplain1.0',
+'RAPSCALL',
+'SANFW',
+'SHADSER',
+'sonic_advance_2',
+'Space-Station-77',
+'Space-Station-77_0',
+'Spaceship-Bullet_0',
+'Starjedi',
+'Starjhol',
+'Starjout',
+'startedbyamouse_0',
+'STJEDISE',
+'Stjldbl1',
+'Stjldbl2',
+'Storyboo',
+'Storyboo_0',
+'Strjmono',
+'Tangled',
+'Tr2n',
+'Walter',
+'waltograph42',
+'waltographUI',
+'WOODCUT',
+'Zootopia-JPosters.com.ar',
+];
+
+
+    var selectEffect='<select name="fontEffect" id="fontEffect" onchange="changeFont()">';
+    $.each( fonts, function( i, l ){
+      selectEffect+='<option value="'+l+'">'+l+'</option>';
+    });
+    selectEffect+='</select>';
+    selectEffect+=' <input type="color" id="fontColor" name="fontColor" value="#ff0000" onchange="changeFont()"><br>';
+    return selectEffect;
+}
+
+function changeFont(){
+       $("#textes").css("font-family", $('#fontEffect').val());
+       $("#textes").css("color", $('#fontColor').val());
+}
+
