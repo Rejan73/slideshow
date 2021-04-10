@@ -1,5 +1,6 @@
 #textes {
    font-family: starjedi;
+   font-size: 62.5%;
 } 
 
 @font-face { font-family:A-Bug-s-Life-Debugged; src: url('../fonts/disney/A Bug s Life - Debugged.ttf') format("truetype"); }

@@ -169,6 +169,8 @@ function playText(currentData){
   } else {  
     $("#textes").css("font-family", currentData["font"]);
     $("#textes").css("color", currentData["fontcolor"]);
+    var fontsize= currentData["fontsize"]*3;
+    $("#textes").css("font-size", fontsize+"%");
     var div_data ='<center><h1>'+currentData.title+'</h1><h2>'+currentData.subTitle+'</h2>' ;
     currentData.lines.forEach(object => div_data=div_data+'<p>'+object.line+'<p>');
     div_data+='<br></center>';

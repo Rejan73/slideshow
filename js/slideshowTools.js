@@ -285,6 +285,7 @@ function addTxtAnimation(){
     dataToAdd["soundEffectComeOut"]="none";
     dataToAdd["font"]="none";
     dataToAdd["fontcolor"]="#ff0000";
+    dataToAdd["fontsize"]="100";
     
     slideShowDatas.push(dataToAdd);
     changeSaveallColorRed();
@@ -458,6 +459,7 @@ function playText(currentDataId){
   currentData=slideShowDatas[currentDataId];
   $("#textes").css("font-family", currentData["font"]);
   $("#textes").css("color", currentData["fontcolor"]);
+  $("#textes").css("font-size", currentData["fontsize"]+"%");
      
   playMusic(currentData["soundEffectComeIn"]);
   if (currentData.styleEffect=='starwars'){
@@ -514,6 +516,7 @@ function  updateTextAnimation(currentDataId){
   $("#updateTexte").html(div_text); 
   $('#fontEffect').val(currentData["font"]);
   $('#fontColor').val(currentData["fontcolor"]);
+  $('#fontSize').val(currentData["fontsize"]);
   $('#updateEffect').hide(); 
   if (oldCurrentDataId==currentDataId){
     $('#updateTexte').toggle();
@@ -528,6 +531,7 @@ function  saveTextAnimation(currentDataId){
   currentData["subTitle"]=$('#updatesubtitle').val();
   currentData["font"]=$('#fontEffect').val();
   currentData["fontcolor"]=$('#fontColor').val();
+  currentData["fontsize"]=$('#fontSize').val();
   var dataLine= $('#updatelines').val().split('\n');
   currentData["lines"]=[];
   dataLine.forEach(object => currentData["lines"].push({"line": object }));
@@ -822,12 +826,15 @@ var fonts= [
       selectEffect+='<option value="'+l+'">'+l+'</option>';
     });
     selectEffect+='</select>';
-    selectEffect+=' <input type="color" id="fontColor" name="fontColor" value="#ff0000" onchange="changeFont()"><br>';
+    selectEffect+=' <input type="color" id="fontColor" name="fontColor" value="#ff0000" onchange="changeFont()">';
+    selectEffect+=' size : <input type="number" id="fontSize" name="fontSize" value="100" onchange="changeFont()">';
+    selectEffect+=' <br>';
     return selectEffect;
 }
 
 function changeFont(){
        $("#textes").css("font-family", $('#fontEffect').val());
        $("#textes").css("color", $('#fontColor').val());
+       $("#textes").css("font-size", $('#fontSize').val()+"%");
 }
 
