@@ -140,7 +140,7 @@ function stopMusic(){
 }
   
 function playMusic(soundFile,isEffect){
-  if (soundFile!='none' && soundFile!='undefined' ){
+  if (soundFile!='none' && soundFile!==undefined ){
     stopMusic()
     $('#srcMusic').attr('src',soundFile);
     $('#music')[0].load();

@@ -454,7 +454,7 @@ function stopMusic(){
 }
 
 function playMusic(soundFile){
-  if (soundFile!='none' && soundFile!=undefined && soundFile!=null ){
+  if (soundFile!='none' && soundFile!==undefined){
     stopMusic();
     $('#srcMusic').attr('src',soundFile);
     $('#music')[0].load();
