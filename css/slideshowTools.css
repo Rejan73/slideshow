@@ -1,17 +1,53 @@
 body {
-  width: 100%;
-  height: 100%;
+  width: 95%;
+  height: 95%;
   background: #000;
   color: #fff;
 }
-/*1280 x 720*/
+
+#divMenu{
+  width: 95%;
+}
+
+#mainSlideShow {
+  width: 95%;
+  clear:both;
+}
+
+#divLeft {
+  width: 42%;
+  float:left;
+}
+
+#divRight {   
+  float:left;
+}
+
+#divBottom {
+  height: 20%;
+  width: 100%;
+  clear:both;
+  float:left;
+}
+
+#slideShow {
+  height: 590px;
+  overflow-x: hidden;
+}
+
 #previewSlideShow {
   height: 360px;
   width: 640px;
   border: solid green;
   overflow: hidden;
 }
-#srcImage, #video {
+
+#divUpdateConfiguration {
+  clear:both;
+  float:left;
+}
+
+#srcImage, #video, #srcNextImage {
   height: 360px;
   width: 640px;
   object-fit: cover;
@@ -26,65 +62,29 @@ body {
   overflow: hidden;
   position:absolute;
 }
-#mainSlideShow #configurationSlideShow {
-    float:left;
-    width:50%;
-    left:50px;
-  top:300px;
-  position:absolute;
-}
-#mainSlideShow #previewSlideShow {
-    margin-left:50%;   
-}
 
 #timelineDiv {
   background: #fff;
-  height: 230px;
-  left:50px;
-  top:80px;
-  position:absolute;
+  height: 150px;
+  clear:both;
   overflow-x: scroll;
   overflow-y: hidden;
-  width: 800px;
 }
 
-#slideShow {
-  left:0px;
-  top:30px;
-  height: 600px;
-  position:absolute;
-  overflow-x: hidden;
-  overflow-y: scroll;
-} 
+
+ 
 #updateEffect{
-  position: fixed; /* or absolute */
-  top: 50%;
-  left: 50%;
-  padding-left: 20px;
-  border: 2px solid green;
+  padding-left: 10px;
   background: #000;
-  z-index:10;
-  width: 400px;
 }
 #updateTexte{
-  position: fixed; /* or absolute */
-  top: 50%;
-  left: 50%;
-  padding-left: 20px;
-  border: 2px solid green;
+  padding-left: 10px;
   background: #000;
-  width: 800px;
 } 
 
 #addNewAnimation {
-  position: fixed; /* or absolute */
-  top: 50%;
-  left: 50%;
   padding-left: 20px;
-  border: 2px solid green;
   background: #000;
-  z-index:10;
-  width: 400px;
 }
 
 .tooltip .tooltiptext {
@@ -103,4 +103,24 @@ body {
 
 .tooltip:hover .tooltiptext {
   visibility: visible;
+}
+
+.comeOutEffectShowNextImage2 {
+   position : absolute; 
+   z-index: 2;
+   animation: showNextImage2Animation 5s
+}
+.comeOutEffectShowNextImage {
+   position : absolute;
+   z-index: 1;
+   animation: showNextImageAnimation 5s
+}
+@keyframes showNextImage2Animation {
+    from { opacity:1; }
+    to { opacity:0; }
+}
+
+@keyframes showNextImageAnimation {
+    from { opacity:0; }
+    to { opacity:1; }
 }

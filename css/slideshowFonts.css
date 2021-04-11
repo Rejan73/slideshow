@@ -1,0 +1,135 @@
+#textes {
+   font-family: starjedi;
+   font-size: 62.5%;
+} 
+
+@font-face { font-family:A-Bug-s-Life-Debugged; src: url('../fonts/disney/A Bug s Life - Debugged.ttf') format("truetype"); }
+@font-face { font-family:A-Bug-s-Life; src: url('../fonts/disney/A Bug s Life.ttf') format("truetype"); }
+@font-face { font-family:akaPotsley_0; src: url('../fonts/disney/akaPotsley_0.ttf') format("truetype"); }
+@font-face { font-family:AL-Cinderella; src: url('../fonts/disney/AL Cinderella.ttf') format("truetype"); }
+@font-face { font-family:aladdin; src: url('../fonts/disney/aladdin.ttf') format("truetype"); }
+@font-face { font-family:ALGERIA; src: url('../fonts/disney/ALGERIA.ttf') format("truetype"); }
+@font-face { font-family:algerian_becker; src: url('../fonts/disney/algerian_becker.ttf') format("truetype"); }
+@font-face { font-family:algerian_becker_basic; src: url('../fonts/disney/algerian_becker_basic.ttf') format("truetype"); }
+@font-face { font-family:algerian_becker_basic_caps; src: url('../fonts/disney/algerian_becker_basic_caps.ttf') format("truetype"); }
+@font-face { font-family:Alice_in_Wonderland_3; src: url('../fonts/disney/Alice_in_Wonderland_3.ttf') format("truetype"); }
+@font-face { font-family:BFG-Font; src: url('../fonts/disney/BFG Font.otf') format("truetype"); }
+@font-face { font-family:bighero_v4; src: url('../fonts/disney/bighero_v4.ttf') format("truetype"); }
+@font-face { font-family:blasteei; src: url('../fonts/disney/blasteei.ttf') format("truetype"); }
+@font-face { font-family:blasteet; src: url('../fonts/disney/blasteet.ttf') format("truetype"); }
+@font-face { font-family:blasteii; src: url('../fonts/disney/blasteii.ttf') format("truetype"); }
+@font-face { font-family:blastein; src: url('../fonts/disney/blastein.ttf') format("truetype"); }
+@font-face { font-family:blaster; src: url('../fonts/disney/blaster.ttf') format("truetype"); }
+@font-face { font-family:blasteri; src: url('../fonts/disney/blasteri.ttf') format("truetype"); }
+@font-face { font-family:BLKCHCRY; src: url('../fonts/disney/BLKCHCRY.ttf') format("truetype"); }
+@font-face { font-family:BUBBALOB; src: url('../fonts/disney/BUBBALOB.ttf') format("truetype"); }
+@font-face { font-family:bubbalove-bold; src: url('../fonts/disney/bubbalove-bold.ttf') format("truetype"); }
+@font-face { font-family:Buka-Bird; src: url('../fonts/disney/Buka Bird.ttf') format("truetype"); }
+@font-face { font-family:Caribbean; src: url('../fonts/disney/Caribbean.ttf') format("truetype"); }
+@font-face { font-family:Caribbean_0; src: url('../fonts/disney/Caribbean_0.ttf') format("truetype"); }
+@font-face { font-family:celticmd; src: url('../fonts/disney/celticmd.ttf') format("truetype"); }
+@font-face { font-family:columbusdb; src: url('../fonts/disney/columbusdb.ttf') format("truetype"); }
+@font-face { font-family:columbusregular; src: url('../fonts/disney/columbusregular.ttf') format("truetype"); }
+@font-face { font-family:DENMARK; src: url('../fonts/disney/DENMARK.TTF') format("truetype"); }
+@font-face { font-family:Diner-Regular; src: url('../fonts/disney/Diner-Regular.ttf') format("truetype"); }
+@font-face { font-family:DIOGENES; src: url('../fonts/disney/DIOGENES.ttf') format("truetype"); }
+@font-face { font-family:disney-print; src: url('../fonts/disney/disney-print.ttf') format("truetype"); }
+@font-face { font-family:Findet-Nemo; src: url('../fonts/disney/Findet Nemo.ttf') format("truetype"); }
+@font-face { font-family:Flat-Earth-Scribe; src: url('../fonts/disney/Flat Earth Scribe.ttf') format("truetype"); }
+@font-face { font-family:Florida-Project-Phase-One; src: url('../fonts/disney/Florida Project Phase One.otf') format("truetype"); }
+@font-face { font-family:Florida-Project-Phase-One; src: url('../fonts/disney/Florida Project Phase One.ttf') format("truetype"); }
+@font-face { font-family:Florida-Project-Phase-Two; src: url('../fonts/disney/Florida Project Phase Two.otf') format("truetype"); }
+@font-face { font-family:Florida-Project-Phase-Two; src: url('../fonts/disney/Florida Project Phase Two.ttf') format("truetype"); }
+@font-face { font-family:graceyscurse; src: url('../fonts/disney/graceyscurse.ttf') format("truetype"); }
+@font-face { font-family:graceyscurse_0; src: url('../fonts/disney/graceyscurse_0.ttf') format("truetype"); }
+@font-face { font-family:gunship; src: url('../fonts/disney/gunship.ttf') format("truetype"); }
+@font-face { font-family:gunship3d; src: url('../fonts/disney/gunship3d.ttf') format("truetype"); }
+@font-face { font-family:gunship3dital; src: url('../fonts/disney/gunship3dital.ttf') format("truetype"); }
+@font-face { font-family:gunshipacad; src: url('../fonts/disney/gunshipacad.ttf') format("truetype"); }
+@font-face { font-family:gunshipacadital; src: url('../fonts/disney/gunshipacadital.ttf') format("truetype"); }
+@font-face { font-family:gunshipbold; src: url('../fonts/disney/gunshipbold.ttf') format("truetype"); }
+@font-face { font-family:gunshipboldital; src: url('../fonts/disney/gunshipboldital.ttf') format("truetype"); }
+@font-face { font-family:gunshipcond; src: url('../fonts/disney/gunshipcond.ttf') format("truetype"); }
+@font-face { font-family:gunshipcondital; src: url('../fonts/disney/gunshipcondital.ttf') format("truetype"); }
+@font-face { font-family:gunshipexpand; src: url('../fonts/disney/gunshipexpand.ttf') format("truetype"); }
+@font-face { font-family:gunshipexpandital; src: url('../fonts/disney/gunshipexpandital.ttf') format("truetype"); }
+@font-face { font-family:gunshipgrad; src: url('../fonts/disney/gunshipgrad.ttf') format("truetype"); }
+@font-face { font-family:gunshipgradital; src: url('../fonts/disney/gunshipgradital.ttf') format("truetype"); }
+@font-face { font-family:gunshiphalf; src: url('../fonts/disney/gunshiphalf.ttf') format("truetype"); }
+@font-face { font-family:gunshiphalfital; src: url('../fonts/disney/gunshiphalfital.ttf') format("truetype"); }
+@font-face { font-family:gunshipital; src: url('../fonts/disney/gunshipital.ttf') format("truetype"); }
+@font-face { font-family:gunshiplaser; src: url('../fonts/disney/gunshiplaser.ttf') format("truetype"); }
+@font-face { font-family:gunshiplaserital; src: url('../fonts/disney/gunshiplaserital.ttf') format("truetype"); }
+@font-face { font-family:gunshipleft; src: url('../fonts/disney/gunshipleft.ttf') format("truetype"); }
+@font-face { font-family:gunshipout; src: url('../fonts/disney/gunshipout.ttf') format("truetype"); }
+@font-face { font-family:gunshipoutital; src: url('../fonts/disney/gunshipoutital.ttf') format("truetype"); }
+@font-face { font-family:gunshipsemital; src: url('../fonts/disney/gunshipsemital.ttf') format("truetype"); }
+@font-face { font-family:gunshipsuperital; src: url('../fonts/disney/gunshipsuperital.ttf') format("truetype"); }
+@font-face { font-family:heroesassemble2; src: url('../fonts/disney/heroesassemble2.ttf') format("truetype"); }
+@font-face { font-family:heroesassemble3d; src: url('../fonts/disney/heroesassemble3d.ttf') format("truetype"); }
+@font-face { font-family:heroesassemble3dital; src: url('../fonts/disney/heroesassemble3dital.ttf') format("truetype"); }
+@font-face { font-family:heroesassembleacad; src: url('../fonts/disney/heroesassembleacad.ttf') format("truetype"); }
+@font-face { font-family:heroesassembleacadital; src: url('../fonts/disney/heroesassembleacadital.ttf') format("truetype"); }
+@font-face { font-family:heroesassemblebold2; src: url('../fonts/disney/heroesassemblebold2.ttf') format("truetype"); }
+@font-face { font-family:heroesassembleboldexpand2; src: url('../fonts/disney/heroesassembleboldexpand2.ttf') format("truetype"); }
+@font-face { font-family:heroesassembleboldexpandital2; src: url('../fonts/disney/heroesassembleboldexpandital2.ttf') format("truetype"); }
+@font-face { font-family:heroesassembleboldital2; src: url('../fonts/disney/heroesassembleboldital2.ttf') format("truetype"); }
+@font-face { font-family:heroesassemblecond2; src: url('../fonts/disney/heroesassemblecond2.ttf') format("truetype"); }
+@font-face { font-family:heroesassemblecondital2; src: url('../fonts/disney/heroesassemblecondital2.ttf') format("truetype"); }
+@font-face { font-family:heroesassembleexpand2; src: url('../fonts/disney/heroesassembleexpand2.ttf') format("truetype"); }
+@font-face { font-family:heroesassembleexpandital2; src: url('../fonts/disney/heroesassembleexpandital2.ttf') format("truetype"); }
+@font-face { font-family:heroesassemblegrad; src: url('../fonts/disney/heroesassemblegrad.ttf') format("truetype"); }
+@font-face { font-family:heroesassemblegradital; src: url('../fonts/disney/heroesassemblegradital.ttf') format("truetype"); }
+@font-face { font-family:heroesassembleital2; src: url('../fonts/disney/heroesassembleital2.ttf') format("truetype"); }
+@font-face { font-family:heroesassembleleft2; src: url('../fonts/disney/heroesassembleleft2.ttf') format("truetype"); }
+@font-face { font-family:heroesassembleout; src: url('../fonts/disney/heroesassembleout.ttf') format("truetype"); }
+@font-face { font-family:heroesassembleoutital; src: url('../fonts/disney/heroesassembleoutital.ttf') format("truetype"); }
+@font-face { font-family:Ice-kingdom-Bold-Por-Kustren; src: url('../fonts/disney/Ice kingdom - Bold - Por Kustren.ttf') format("truetype"); }
+@font-face { font-family:Incredibles, The; src: url('../fonts/disney/Incredibles, The.ttf') format("truetype"); }
+@font-face { font-family:Intensa-Fuente; src: url('../fonts/disney/Intensa Fuente.ttf') format("truetype"); }
+@font-face { font-family:JUNGLEFE; src: url('../fonts/disney/JUNGLEFE.ttf') format("truetype"); }
+@font-face { font-family:lion_king; src: url('../fonts/disney/lion_king.ttf') format("truetype"); }
+@font-face { font-family:LMS-Happily-Ever-After; src: url('../fonts/disney/LMS Happily Ever After.ttf') format("truetype"); }
+@font-face { font-family:MAGNETOB; src: url('../fonts/disney/MAGNETOB.ttf') format("truetype"); }
+@font-face { font-family:Maleficio; src: url('../fonts/disney/Maleficio.ttf') format("truetype"); }
+@font-face { font-family:Mickey-Ears; src: url('../fonts/disney/Mickey Ears.ttf') format("truetype"); }
+@font-face { font-family:mickey-m-tfb; src: url('../fonts/disney/mickey m tfb.ttf') format("truetype"); }
+@font-face { font-family:MICKEY; src: url('../fonts/disney/MICKEY.TTF') format("truetype"); }
+@font-face { font-family:mickeymousebats; src: url('../fonts/disney/mickeymousebats.ttf') format("truetype"); }
+@font-face { font-family:Minnie; src: url('../fonts/disney/Minnie.TTF') format("truetype"); }
+@font-face { font-family:Monster-AG; src: url('../fonts/disney/Monster AG.ttf') format("truetype"); }
+@font-face { font-family:Mouse-Tags; src: url('../fonts/disney/Mouse Tags.ttf') format("truetype"); }
+@font-face { font-family:MouseMemoirs-Regular; src: url('../fonts/disney/MouseMemoirs-Regular.ttf') format("truetype"); }
+@font-face { font-family:mulan; src: url('../fonts/disney/mulan.ttf') format("truetype"); }
+@font-face { font-family:Nightmare-Before-Christmas; src: url('../fonts/disney/Nightmare Before Christmas.ttf') format("truetype"); }
+@font-face { font-family:Orange-Grove; src: url('../fonts/disney/Orange Grove.ttf') format("truetype"); }
+@font-face { font-family:PentaGrams-Malefissent; src: url('../fonts/disney/PentaGrams Malefissent.ttf') format("truetype"); }
+@font-face { font-family:PokerHunters; src: url('../fonts/disney/PokerHunters.ttf') format("truetype"); }
+@font-face { font-family:PrincesS AND THE FROG; src: url('../fonts/disney/PrincesS AND THE FROG.ttf') format("truetype"); }
+@font-face { font-family:rapierletletplain1.0; src: url('../fonts/disney/rapierletletplain1.0.ttf') format("truetype"); }
+@font-face { font-family:RAPSCALL; src: url('../fonts/disney/RAPSCALL.ttf') format("truetype"); }
+@font-face { font-family:SANFW; src: url('../fonts/disney/SANFW__.ttf') format("truetype"); }
+@font-face { font-family:SHADSER; src: url('../fonts/disney/SHADSER.ttf') format("truetype"); }
+@font-face { font-family:sonic_advance_2; src: url('../fonts/disney/sonic_advance_2.ttf') format("truetype"); }
+@font-face { font-family:Space-Station 77; src: url('../fonts/disney/Space Station 77.ttf') format("truetype"); }
+@font-face { font-family:Space-Station 77_0; src: url('../fonts/disney/Space Station 77_0.ttf') format("truetype"); }
+@font-face { font-family:Spaceship-Bullet_0; src: url('../fonts/disney/Spaceship Bullet_0.ttf') format("truetype"); }
+@font-face { font-family:Starjedi; src: url('../fonts/disney/Starjedi.ttf') format("truetype"); }
+@font-face { font-family:Starjhol; src: url('../fonts/disney/Starjhol.ttf') format("truetype"); }
+@font-face { font-family:Starjout; src: url('../fonts/disney/Starjout.ttf') format("truetype"); }
+@font-face { font-family:startedbyamouse_0; src: url('../fonts/disney/startedbyamouse_0.ttf') format("truetype"); }
+@font-face { font-family:STJEDISE; src: url('../fonts/disney/STJEDISE.ttf') format("truetype"); }
+@font-face { font-family:Stjldbl1; src: url('../fonts/disney/Stjldbl1.ttf') format("truetype"); }
+@font-face { font-family:Stjldbl2; src: url('../fonts/disney/Stjldbl2.ttf') format("truetype"); }
+@font-face { font-family:Storyboo; src: url('../fonts/disney/Storyboo.ttf') format("truetype"); }
+@font-face { font-family:Storyboo_0; src: url('../fonts/disney/Storyboo_0.ttf') format("truetype"); }
+@font-face { font-family:Strjmono; src: url('../fonts/disney/Strjmono.ttf') format("truetype"); }
+@font-face { font-family:Tangled; src: url('../fonts/disney/Tangled.ttf') format("truetype"); }
+@font-face { font-family:Tr2n; src: url('../fonts/disney/Tr2n.ttf') format("truetype"); }
+@font-face { font-family:Walter; src: url('../fonts/disney/Walter.ttf') format("truetype"); }
+@font-face { font-family:waltograph42src: url('../fonts/disney/waltograph42.otf') format("truetype"); }
+@font-face { font-family:waltographUI; src: url('../fonts/disney/waltographUI.ttf') format("truetype"); }
+@font-face { font-family:WOODCUT; src: url('../fonts/disney/WOODCUT.ttf') format("truetype"); }
+@font-face { font-family:Zootopia JPosters.com.ar; src: url('../fonts/disney/Zootopia JPosters.com.ar.otf') format("truetype"); }
+
+
