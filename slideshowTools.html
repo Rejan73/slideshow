@@ -10,71 +10,75 @@
   <link rel="stylesheet" href="css/starwars.css">
 </head>
 <body>
-<i class="fa fa-cog fa-2x"></i> Slideshow Tools by Rod <input type='file' accept='application/JSON' onchange='openFile(event)'>
-<br><br><a class="js-open-modal btn" href="#" title="show timeline" onclick="showTimeLine();"><i class="fa fa-bar-chart fa-2x"></i></a><br>
-<br><a class="js-open-modal btn" href="#" title="add animation" onclick="addNewAnimation();"><i class="fa fa-plus-circle fa-2x"></i></a><br>
-<br><a class="js-open-modal btn" href="#" title="save all" onclick="saveAllAnimation();"><i id="isaveall" class="fa fa-save fa-2x"></i></a><br>
-<br><a class="js-open-modal btn" href="slideshowPlayer.html" target="_blank" title="start player"><i class="fa fa-play-circle fa-2x"></i></a><br>
-<br><a class="js-open-modal btn" href="https://github.com/Rejan73/slideshow/blob/main/README.md" target="_blank" title="info"><i class="fa fa-info-circle fa-2x"></i></a><br>
-<div id="timelines" style="display:none">
-   <div id="timelineDiv"></div>
+<div id="divMenu">
+  <i class="fa fa-cog fa-2x"></i> Slideshow Tools by Rod <input type='file' accept='application/JSON' onchange='openFile(event)'>
+  <a class="js-open-modal btn" href="#" title="show timeline" onclick="showTimeLine();"><i class="fa fa-bar-chart fa-2x"></i></a>
+  <a class="js-open-modal btn" href="#" title="add animation" onclick="addNewAnimation();"><i class="fa fa-plus-circle fa-2x"></i></a>
+  <a class="js-open-modal btn" href="#" title="save all" onclick="saveAllAnimation();"><i id="isaveall" class="fa fa-save fa-2x"></i></a>
+  <a class="js-open-modal btn" href="slideshowPlayer.html" target="_blank" title="start player"><i class="fa fa-play-circle fa-2x"></i></a>
+  <a class="js-open-modal btn" href="https://github.com/Rejan73/slideshow/blob/main/README.md" target="_blank" title="info"><i class="fa fa-info-circle fa-2x"></i></a>
 </div>
 <div id="mainSlideShow">
-  <div id="configurationSlideShow">
-     <div id="slideShow" style="display:none"></div>
-  </div>
-  <div id="updateTexte" style="display:none">
-  </div>
-  <div id="updateEffect" style="display:none">
-  </div>
-  <div id="addNewAnimation" style="display:none">
-     Ajout Animation : <br><br>
-     Type : <select name="mediaToAdd" id="mediaToAdd">';
-       <option value="img">Photo</option>
-       <option value="mp3">Music</option>
-       <option value="mp4">Video</option>
-     </select>
-     <input type="file" id="files" name="files" accept="audio/mp3,audio/ogg,audio/wav,audio/mpeg,video/mp4,video/ogg,video/webm,image/*" multiple>
-     <a class="js-open-modal btn" href="#" add-media="add-media" title="add media" onclick="addAnimation();"><i class="fa fa fa-save fa-2x"></i></a><br><br>
-     ou Text :  <a class="js-open-modal btn" href="#" title="add txt media" onclick="addTxtAnimation();"><i class="fa fa fa-save fa-2x"></i></a>
-     <br><center><a class="js-open-modal btn" href="#"  title="Cancel" onclick="hideAddNewAnimation();"><i class="fa fa-times-circle fa-2x"></i></a></center>  
-  </div>
-  
-  
-  <div id="previewSlideShow">
-    <div id="images" style="display:none" >
-      <center>
-        <img id="srcImage" src="" />
-      </center>
+<div id="divLeft">
+  <div id="slideShow" style="display:none"></div>
+</div>  
+<div id="divRight">  
+    <div id="previewSlideShow">
+      <div id="images" style="display:none" >
+        <center>
+          <img id="srcImage" src="" />
+        </center>
+      </div>
+      <div id="nextImage" style="display:none" >
+        <center>
+          <img id="srcNextImage" src="" />
+        </center>
+      </div>
+      <div id="videos" style="display:none">
+        <center>
+        <video id="video" controls>
+            <source id="srcVideo" src="" type="video/mp4">
+        </video>
+        </center>
+      </div>       
+      <div id="musics" style="display:none">
+        <audio id="music" controls>
+          <source id="srcMusic" src="" type="audio/mpeg">
+        </audio>
+      </div>
+      <div id="divSoundEffect" style="display:none">
+        <audio id="soundEffect" controls>
+          <source id="srcSoundEffect" src="" type="audio/mpeg">
+        </audio>
+      </div>
+      <div id="textes" style="display:none">
+        <div id ="divText"></div>
+      </div>
     </div>
-    <div id="nextImage" style="display:none" >
-      <center>
-        <img id="srcNextImage" src="" />
-      </center>
+    <div id="divUpdateConfiguration">
+      <div id="updateTexte" style="display:none">
+      </div>
+      <div id="updateEffect" style="display:none">
+      </div>
+      <div id="addNewAnimation" style="display:none">
+         Ajout Animation : <br><br>
+         Type : <select name="mediaToAdd" id="mediaToAdd">';
+           <option value="img">Photo</option>
+           <option value="mp3">Music</option>
+           <option value="mp4">Video</option>
+         </select>
+         <input type="file" id="files" name="files" accept="audio/mp3,audio/ogg,audio/wav,audio/mpeg,video/mp4,video/ogg,video/webm,image/*" multiple>
+         <a class="js-open-modal btn" href="#" add-media="add-media" title="add media" onclick="addAnimation();"><i class="fa fa fa-save fa-2x"></i></a><br><br>
+         ou Text :  <a class="js-open-modal btn" href="#" title="add txt media" onclick="addTxtAnimation();"><i class="fa fa fa-save fa-2x"></i></a>
+         <br><center><a class="js-open-modal btn" href="#"  title="Cancel" onclick="hideAddNewAnimation();"><i class="fa fa-times-circle fa-2x"></i></a></center>  
+      </div>
     </div>
-    <div id="videos" style="display:none">
-      <center>
-      <video id="video" controls>
-          <source id="srcVideo" src="" type="video/mp4">
-      </video>
-      </center>
-    </div>       
-        
-    <div id="musics" style="display:none">
-      <audio id="music" controls>
-        <source id="srcMusic" src="" type="audio/mpeg">
-      </audio>
-    </div>
-    <div id="divSoundEffect" style="display:none">
-      <audio id="soundEffect" controls>
-        <source id="srcSoundEffect" src="" type="audio/mpeg">
-      </audio>
-    </div>
-    
-    <div id="textes" style="display:none">
-      <div id ="divText"></div>
-    </div>
-   </div>
+</div>
+<div id="divBottom">  
+  <div id="timelines" style="display:none">
+    <div id="timelineDiv"></div>
+  </div>   
+</div>  
 </div>
 <script type="text/javascript" src="js/charts/loader.js"></script>
 <script src="js/jquery-3.5.0.js"></script>

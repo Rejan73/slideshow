@@ -104,8 +104,8 @@ function drawChart(){
       [ 'Video',   'Advanced Google Charts',   new Date(0,0,0,0,0,20), new Date(0,0,0,0,1,0) ]]);
           */
     var options = {
-      timeline: { showBarLabels: false },
-      height: 220,
+      timeline: { showBarLabels: false,  rowLabelStyle: { fontSize: 11 }, barLabelStyle: { fontSize: 6 }  },
+      height: 180,
       width: 10000,
       hAxis: {format: 'mm:ss'},
       colors: ['blue', 'red', 'green'],
@@ -204,17 +204,6 @@ function getEndTime(file){
     return '';
   }
   return  file.split('#t=')[1].split(',')[1];
-}
-
-function hideAll(){
-    $('#srcVideo').attr('src','');
-    $('#videos').hide();
-    $('#images').hide();
-    $('#musics').hide();
-    $('#textes').hide();
-    $('#updateTexte').hide();
-    $('#updateEffect').hide();
-    $('#addNewAnimation').hide();
 }
 
 $('a[set-slideshow-id]').click(function(e) {
@@ -366,6 +355,14 @@ function downAll(data, filename, mime) {
     }
 }
 
+function hideAll(){
+    $('#srcVideo').attr('src','');
+    $('#videos').hide();
+    $('#images').hide();
+    $('#musics').hide();
+    $('#textes').hide();
+}
+
 function runAnimation(currentDataId){
   hideAll();
   currentData=slideShowDatas[currentDataId];
@@ -504,14 +501,16 @@ function playText(currentDataId){
 function  updateTextAnimation(currentDataId){
   oldCurrentDataId=$('#textCurrentDataId').val();
   currentData=slideShowDatas[currentDataId];
-  var div_text ='<p>Text Modification '+currentData.file+'<p><br>Title : <input type="text" size="50" id="updatetitle" value="'+currentData.title+'"/><br>';
-  div_text+='SubTitle :<input type="text" size="50" id="updatesubtitle" value="'+currentData.subTitle+'"/><br>';
-  div_text+='Text : <textarea id="updatelines" rows="10" cols="100">';
+  var div_text ='<p>Text Modification '+currentData.file+'</p>';
+  div_text+='Title : <input type="text" size="50" id="updatetitle" value="'+currentData.title+'"/><br>';
+  div_text+='SubTitle : <input type="text" size="50" id="updatesubtitle" value="'+currentData.subTitle+'"/><br>';
+  div_text+='Text : <textarea id="updatelines" rows="5" cols="60">';
   currentData.lines.forEach(object => div_text=div_text+object.line+'\n');
   div_text+='</textarea>'; 
   div_text+='<br>Font:'+getFonts();
-  div_text+='<br><center><a class="js-open-modal btn" href="#" title="Modify" onclick="saveTextAnimation('+currentDataId+');"><i class="fa fa-pencil-square fa-2x"></i></a>';
-  div_text+='<a class="js-open-modal btn" href="#"  title="Cancel" onclick="hideTextAnimation();"><i class="fa fa-times-circle fa-2x"></i></a></center>';
+  div_text+='&nbsp;&nbsp;&nbsp;&nbsp;<a class="js-open-modal btn" href="#" title="Modify" onclick="saveTextAnimation('+currentDataId+');"><i class="fa fa-save fa-2x"></i></a>';
+  div_text+='&nbsp;<a class="js-open-modal btn" href="#" title="Play" onclick="runAnimation('+currentDataId+');"><i class="fa fa-play-circle fa-2x" ></i></a>';
+  div_text+='&nbsp;<a class="js-open-modal btn" href="#"  title="Cancel" onclick="hideTextAnimation();"><i class="fa fa-times-circle fa-2x"></i></a>';
   div_text+='<input type="hidden" id="textCurrentDataId" value="'+currentDataId+'">';
   $("#updateTexte").html(div_text); 
   $('#fontEffect').val(currentData["font"]);
@@ -536,7 +535,6 @@ function  saveTextAnimation(currentDataId){
   currentData["lines"]=[];
   dataLine.forEach(object => currentData["lines"].push({"line": object }));
   changeSaveallColorRed();
-  $('#updateTexte').hide();
 }
 
 function hideTextAnimation(){
@@ -555,7 +553,8 @@ function hideAddNewAnimation(){
 function  updateEffectAnimation(currentDataId){
   oldCurrentDataId=$('#effetCurrentDataId').val();
   currentData=slideShowDatas[currentDataId];
-  var div_effect ='<p>Style Modification '+currentData.file+'<p><br><label><i class="fa fa-film fa-2x"></i> Style Effect</label> ';
+  var div_effect ='<p>Style Modification '+currentData.file+'</p>';
+  div_effect+='<label><i class="fa fa-film fa-1x"></i> Style Effect</label> ';
   switch (currentData.media)
   {
     case "mp3":
@@ -566,23 +565,24 @@ function  updateEffectAnimation(currentDataId){
          break;
     case "img":
         div_effect+=getImageEffect(currentData.styleEffect);
-        div_effect+='<br><p><br><label><i class="fa fa-film fa-2x"></i> Sound Effect</label> '+getSoundEffect(currentData);
+        div_effect+=getSoundEffect(currentData);
          break;
     case "txt":
          div_effect+=getTextEffect(currentData.styleEffect);
-         div_effect+='<br><p><br><label><i class="fa fa-film fa-2x"></i> Sound Effect</label> '+getSoundEffect(currentData);
+         div_effect+=getSoundEffect(currentData);
          break; 
     defaut:
          break;    
   }
-  div_effect+='<br><label><i class="fa fa-film fa-2x"></i> Movement Effect</label> ';
+  div_effect+='<label><i class="fa fa-film fa-1x"></i> Movement Effect</label> ';
   div_effect+=getMovementEffect(currentData.movementEffect);
-  div_effect+='<br><label><i class="fa fa-film fa-2x"></i> Come In Effect</label> ';
+  div_effect+='<br><label><i class="fa fa-film fa-1x"></i> Come In Effect</label> ';
   div_effect+=getComeInEffect(currentData.comeInEffect);
-  div_effect+='<br><label><i class="fa fa-film fa-2x"></i> Come Out Effect</label> ';
+  div_effect+='<br><label><i class="fa fa-film fa-1x"></i> Come Out Effect</label> ';
   div_effect+=getComeOutEffect(currentData.comeOutEffect);
   div_effect+='<br><center><a class="js-open-modal btn" href="#" save-media="save-media" title="Modify" onclick="saveEffectAnimation('+currentDataId+');"><i class="fa fa-save fa-2x"></i></a>';
-  div_effect+='<a class="js-open-modal btn" href="#"  title="Cancel" onclick="hideEffectAnimation();"><i class="fa fa-times-circle fa-2x"></i></a></center>';
+  div_effect+='&nbsp;<a class="js-open-modal btn" href="#" title="Play" onclick="runAnimation('+currentDataId+');"><i class="fa fa-play-circle fa-2x" ></i></a>';
+  div_effect+='&nbsp;<a class="js-open-modal btn" href="#"  title="Cancel" onclick="hideEffectAnimation();"><i class="fa fa-times-circle fa-2x"></i></a></center>';
   div_effect+='<input type="hidden" id="effetCurrentDataId" value="'+currentDataId+'">';
   $("#updateEffect").html(div_effect);  
   $('#styleEffect').val(currentData["styleEffect"]);
@@ -608,9 +608,7 @@ function  saveEffectAnimation(currentDataId){
     currentData["soundEffectComeIn"]=$('#soundEffectComeIn').val();
     currentData["soundEffectComeOut"]=$('#soundEffectComeOut').val();
   }
-  
   changeSaveallColorRed();
-  $('#updateEffect').hide();
 }
 
 function hideEffectAnimation(){
@@ -683,8 +681,8 @@ function hideEffectAnimation(){
   }                                                                                                                                  
                                                                                                   
   function getSoundEffect(currentData){
-    var selectEffect='<br><ul><li>Come In Sound <input type="text" id="soundEffectComeIn" value="'+currentData.soundEffectComeIn+'"></li>';
-    selectEffect+='<li>Come Out Sound <input type="text" id="soundEffectComeOut" value="'+currentData.soundEffectComeOut+'"></li></ul>';
+    var selectEffect='<br><label><i class="fa fa-film fa-1x"></i>Come In Sound Effect</label><input type="text" id="soundEffectComeIn" value="'+currentData.soundEffectComeIn+'">';
+    selectEffect+='<br><label><i class="fa fa-film fa-1x"></i>Come Out Sound Effect</label><input type="text" id="soundEffectComeOut" value="'+currentData.soundEffectComeOut+'"><br>';
     return selectEffect;
   }
 
@@ -828,7 +826,6 @@ var fonts= [
     selectEffect+='</select>';
     selectEffect+=' <input type="color" id="fontColor" name="fontColor" value="#ff0000" onchange="changeFont()">';
     selectEffect+=' size : <input type="number" id="fontSize" name="fontSize" value="100" onchange="changeFont()">';
-    selectEffect+=' <br>';
     return selectEffect;
 }
 
