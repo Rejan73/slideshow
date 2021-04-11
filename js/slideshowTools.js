@@ -361,10 +361,22 @@ function hideAll(){
     $('#images').hide();
     $('#musics').hide();
     $('#textes').hide();
+    $('#updateTexte').hide();
+    $('#updateEffect').hide();
+    $('#addNewAnimation').hide();
 }
 
 function runAnimation(currentDataId){
   hideAll();
+  playAnimation(currentDataId);
+}  
+
+function playAnimation(currentDataId){ 
+  $('#srcVideo').attr('src','');
+  $('#videos').hide();
+  $('#images').hide();
+  $('#musics').hide();
+  $('#textes').hide(); 
   currentData=slideShowDatas[currentDataId];
   switch (currentData.media)
   {
@@ -509,7 +521,7 @@ function  updateTextAnimation(currentDataId){
   div_text+='</textarea>'; 
   div_text+='<br>Font:'+getFonts();
   div_text+='&nbsp;&nbsp;&nbsp;&nbsp;<a class="js-open-modal btn" href="#" title="Modify" onclick="saveTextAnimation('+currentDataId+');"><i class="fa fa-save fa-2x"></i></a>';
-  div_text+='&nbsp;<a class="js-open-modal btn" href="#" title="Play" onclick="runAnimation('+currentDataId+');"><i class="fa fa-play-circle fa-2x" ></i></a>';
+  div_text+='&nbsp;<a class="js-open-modal btn" href="#" title="Play" onclick="playAnimation('+currentDataId+');"><i class="fa fa-play-circle fa-2x" ></i></a>';
   div_text+='&nbsp;<a class="js-open-modal btn" href="#"  title="Cancel" onclick="hideTextAnimation();"><i class="fa fa-times-circle fa-2x"></i></a>';
   div_text+='<input type="hidden" id="textCurrentDataId" value="'+currentDataId+'">';
   $("#updateTexte").html(div_text); 
@@ -581,7 +593,7 @@ function  updateEffectAnimation(currentDataId){
   div_effect+='<br><label><i class="fa fa-film fa-1x"></i> Come Out Effect</label> ';
   div_effect+=getComeOutEffect(currentData.comeOutEffect);
   div_effect+='<br><center><a class="js-open-modal btn" href="#" save-media="save-media" title="Modify" onclick="saveEffectAnimation('+currentDataId+');"><i class="fa fa-save fa-2x"></i></a>';
-  div_effect+='&nbsp;<a class="js-open-modal btn" href="#" title="Play" onclick="runAnimation('+currentDataId+');"><i class="fa fa-play-circle fa-2x" ></i></a>';
+  div_effect+='&nbsp;<a class="js-open-modal btn" href="#" title="Play" onclick="playAnimation('+currentDataId+');"><i class="fa fa-play-circle fa-2x" ></i></a>';
   div_effect+='&nbsp;<a class="js-open-modal btn" href="#"  title="Cancel" onclick="hideEffectAnimation();"><i class="fa fa-times-circle fa-2x"></i></a></center>';
   div_effect+='<input type="hidden" id="effetCurrentDataId" value="'+currentDataId+'">';
   $("#updateEffect").html(div_effect);  
