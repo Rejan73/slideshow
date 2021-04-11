@@ -45,7 +45,13 @@ Lancement de la boite à outils :
 
 Les versions sont disponibles [ici](https://github.com/Rejan73/slideshow/releases/)
 
-## Next version 
+## 1.0.3 
+- gestion des fonts, des couleur et de la taille pour les textes
+- ajouts d'effets pour les images
+- ajout de sons/bruitages
+- refonte de slideshow tools 
+
+## 1.0.2 
 - ajout d'un fichier de démo
 - offline version (pas besoin de connexion internet pour fonctionner)
 
