@@ -9,9 +9,11 @@ Ce projet permet de réaliser des diaporamas qui peuvent inclure :
 Il est composé d'un [slideshowPlayer](documentation/slideshowPlayer.md) et d'un [slideshowTools](documentation/slideshowTools.md)
 
 Tout le code s'exécute en local.
-- Les photos sont dans le dossier local : photos
-- Les videos dans le dossier local : videos
-- les musics dans le dossier local : musics
+- Les photos sont dans le dossier : photos
+- Les videos dans le dossier : videos
+- les musics dans le dossier : musics
+- Les bruitages dans le dossier : sons
+- Les polices dans le dossier : fonts
 
 Pour exporter votre animation, 
 - copir le dernier fichier sauvegardé : slideshowData-1616342130635.json qui se situe dans votre répertoire de téléchargement dans le répertoire d'installation.
