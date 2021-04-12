@@ -373,6 +373,7 @@ function runAnimation(currentDataId){
 
 function playAnimation(currentDataId){ 
   $('#srcVideo').attr('src','');
+  $("#music").attr('controls', '');
   $('#videos').hide();
   $('#images').hide();
   $('#musics').hide();
@@ -398,6 +399,7 @@ function playAnimation(currentDataId){
 }
 
 function playImage(currentDataId){
+  $("#music").removeAttr('controls');
   currentData=slideShowDatas[currentDataId];
   $('#srcImage').attr('src',currentData.file);
   $("#images").addClass(currentData["styleEffect"]);
@@ -465,6 +467,7 @@ function playMusic(soundFile){
 
 
 function playText(currentDataId){
+  $("#music").removeAttr('controls');
   currentData=slideShowDatas[currentDataId];
   $("#textes").css("font-family", currentData["font"]);
   $("#textes").css("color", currentData["fontcolor"]);
@@ -554,7 +557,12 @@ function hideTextAnimation(){
 }
 
 function addNewAnimation(){
-  $('#addNewAnimation').toggle();
+  if ($('#addNewAnimation').is(":visible")){
+    hideAll();
+  }else {
+    hideAll();
+    $('#addNewAnimation').show();
+  }
 }
 
 function hideAddNewAnimation(){
@@ -688,8 +696,8 @@ function hideEffectAnimation(){
   
   function getStartEndEffect(currentData){
     var selectEffect='<label><i class="fa fa-film fa-2x"></i> Style Effect</label> ';
-    selectEffect+='start in s <input type="text" size="1" id="startFileUpdate" value="' + getStartTime(currentData.file) +'"/> <i class="fa fa-hourglass-o fa-2x" onclick="setStartCurrentTime(\''+currentData.media+'\');"></i>';
-    selectEffect+=' end in s <input type="text" size="1" id="endFileUpdate" value="' + getEndTime(currentData.file)+'"/> <i class="fa fa-hourglass fa-2x" onclick="setEndCurrentTime(\''+currentData.media+'\');"></i><br>';
+    selectEffect+='start in s <input type="text" size="1" id="startFileUpdate" value="' + getStartTime(currentData.file) +'"/> <i class="fa fa-hourglass-o fa-2x" title="fix start time" style="cursor: pointer;" onclick="setStartCurrentTime(\''+currentData.media+'\');"></i>';
+    selectEffect+=' end in s <input type="text" size="1" id="endFileUpdate" value="' + getEndTime(currentData.file)+'"/> <i class="fa fa-hourglass fa-2x" title="fix end time" style="cursor: pointer;" onclick="setEndCurrentTime(\''+currentData.media+'\');"></i><br>';
     return selectEffect;
   }
   function setStartCurrentTime(media){
@@ -710,9 +718,20 @@ function hideEffectAnimation(){
                                                                                                   
   function getSoundEffect(currentData){
     var selectEffect='<br><label><i class="fa fa-film fa-1x"></i> Come In Sound Effect</label><input type="text" id="soundEffectComeIn" value="'+currentData.soundEffectComeIn+'">';
-    selectEffect+='<br><label><i class="fa fa-film fa-1x"></i> Come Out Sound Effect</label><input type="text" id="soundEffectComeOut" value="'+currentData.soundEffectComeOut+'"><br>';
+    selectEffect+=' <input type="file" id="comeInfile" name="comeInfile" accept="audio/mp3,audio/ogg,audio/wav,audio/mpeg"  onchange="openComeInSoundFile(event)">';
+    selectEffect+='<br><label><i class="fa fa-film fa-1x"></i> Come Out Sound Effect</label><input type="text" id="soundEffectComeOut" value="'+currentData.soundEffectComeOut+'">';
+    selectEffect+=' <input type="file" id="comeOutfile" name="comeoutfile" accept="audio/mp3,audio/ogg,audio/wav,audio/mpeg" onchange="openComeOutSoundFile(event)"><br>';
     return selectEffect;
   }
+  
+  var openComeInSoundFile = function(event) {
+        var input = event.target;
+        $("#soundEffectComeIn").val("sons/"+input.files[0].name);
+  };
+  var openComeOutSoundFile = function(event) {
+        var input = event.target;
+        $("#soundEffectComeOut").val("sons/"+input.files[0].name);
+  };
 
 function getFonts(){
 var fonts= [
