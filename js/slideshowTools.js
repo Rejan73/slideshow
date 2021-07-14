@@ -863,6 +863,18 @@ var fonts= [
 'waltographUI',
 'WOODCUT',
 'Zootopia-JPosters.com.ar',
+'AvenirLTStd-Black',
+'AvenirLTStd-BlackOblique',
+'AvenirLTStd-Book',
+'AvenirLTStd-BookOblique',
+'AvenirLTStd-Heavy',
+'AvenirLTStd-HeavyOblique',
+'AvenirLTStd-Light',
+'AvenirLTStd-LightOblique',
+'AvenirLTStd-Medium',
+'AvenirLTStd-MediumOblique',
+'AvenirLTStd-Oblique',
+'AvenirLTStd-Roman'
 ];
 
 
