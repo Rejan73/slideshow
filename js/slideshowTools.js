@@ -293,10 +293,12 @@ function addAnimation(){
           break;
       case "mp4":
           dataToAdd.file='videos/'+files[i].name;
+          dataToAdd["orientationEffect"]="landscape";
           break;
       case "img":
           dataToAdd.file='photos/'+files[i].name;
           dataToAdd["duration"]='5';
+          dataToAdd["orientationEffect"]="landscape";
           break;
       defaut:
           break; 
@@ -373,6 +375,7 @@ function runAnimation(currentDataId){
 
 function playAnimation(currentDataId){ 
   $('#srcVideo').attr('src','');
+  $("#music").attr('controls', '');
   $('#videos').hide();
   $('#images').hide();
   $('#musics').hide();
@@ -398,8 +401,10 @@ function playAnimation(currentDataId){
 }
 
 function playImage(currentDataId){
+  $("#music").removeAttr('controls');
   currentData=slideShowDatas[currentDataId];
   $('#srcImage').attr('src',currentData.file);
+  $("#srcImage").addClass(currentData["orientationEffect"]);
   $("#images").addClass(currentData["styleEffect"]);
   $("#images").addClass(currentData["comeInEffect"]);
   $("#images").addClass(currentData["movementEffect"]);
@@ -427,6 +432,7 @@ function playImage(currentDataId){
   }
 
   setTimeout(function() {
+    $("#srcImage").removeClass(currentData["orientationEffect"]);
     $("#images").removeClass(currentData["styleEffect"]);
     $("#images").removeClass(currentData["comeOutEffect"]);
     if ("comeOutEffectShowNextImage"==currentData["comeOutEffect"]){
@@ -441,6 +447,7 @@ function playImage(currentDataId){
 
 function playMovie(currentDataId){
   currentData=slideShowDatas[currentDataId];
+  $("#video").addClass(currentData["orientationEffect"]);
   $('#srcVideo').attr('src',currentData.file);
   $('#video')[0].load();
   $('#videos').show();
@@ -454,17 +461,18 @@ function stopMusic(){
 }
 
 function playMusic(soundFile){
-  if (soundFile!='none' && soundFile!=undefined && soundFile!=null ){
+  if (soundFile!='none' && soundFile!==undefined){
     stopMusic();
     $('#srcMusic').attr('src',soundFile);
     $('#music')[0].load();
-    //$('#musics').show();
+    $('#musics').show();
     $('#music').get(0).play();
   }
 };
 
 
 function playText(currentDataId){
+  $("#music").removeAttr('controls');
   currentData=slideShowDatas[currentDataId];
   $("#textes").css("font-family", currentData["font"]);
   $("#textes").css("color", currentData["fontcolor"]);
@@ -554,7 +562,12 @@ function hideTextAnimation(){
 }
 
 function addNewAnimation(){
-  $('#addNewAnimation').toggle();
+  if ($('#addNewAnimation').is(":visible")){
+    hideAll();
+  }else {
+    hideAll();
+    $('#addNewAnimation').show();
+  }
 }
 
 function hideAddNewAnimation(){
@@ -566,37 +579,40 @@ function  updateEffectAnimation(currentDataId){
   oldCurrentDataId=$('#effetCurrentDataId').val();
   currentData=slideShowDatas[currentDataId];
   var div_effect ='<p>Style Modification '+currentData.file+'</p>';
-  div_effect+='<label><i class="fa fa-film fa-1x"></i> Style Effect</label> ';
   switch (currentData.media)
   {
     case "mp3":
-         div_effect+=getMusicEffect(currentData.styleEffect);
+         div_effect+=getStartEndEffect(currentData);
          break;
     case "mp4":
-         div_effect+=getVideoEffect(currentData.styleEffect);
+         div_effect+=getOrientationEffect(currentData.styleEffect);
+         div_effect+=getStartEndEffect(currentData);
          break;
     case "img":
+        div_effect+=getOrientationEffect(currentData.styleEffect);
         div_effect+=getImageEffect(currentData.styleEffect);
         div_effect+=getSoundEffect(currentData);
+        div_effect+=getMovementEffect(currentData.movementEffect);
+        div_effect+=getComeInEffect(currentData.comeInEffect);
+        div_effect+=getComeOutEffect(currentData.comeOutEffect);
          break;
     case "txt":
          div_effect+=getTextEffect(currentData.styleEffect);
          div_effect+=getSoundEffect(currentData);
+         div_effect+=getMovementEffect(currentData.movementEffect);
+         div_effect+=getComeInEffect(currentData.comeInEffect);
+         div_effect+=getComeOutEffect(currentData.comeOutEffect);
          break; 
     defaut:
          break;    
   }
-  div_effect+='<label><i class="fa fa-film fa-1x"></i> Movement Effect</label> ';
-  div_effect+=getMovementEffect(currentData.movementEffect);
-  div_effect+='<br><label><i class="fa fa-film fa-1x"></i> Come In Effect</label> ';
-  div_effect+=getComeInEffect(currentData.comeInEffect);
-  div_effect+='<br><label><i class="fa fa-film fa-1x"></i> Come Out Effect</label> ';
-  div_effect+=getComeOutEffect(currentData.comeOutEffect);
   div_effect+='<br><center><a class="js-open-modal btn" href="#" save-media="save-media" title="Modify" onclick="saveEffectAnimation('+currentDataId+');"><i class="fa fa-save fa-2x"></i></a>';
   div_effect+='&nbsp;<a class="js-open-modal btn" href="#" title="Play" onclick="playAnimation('+currentDataId+');"><i class="fa fa-play-circle fa-2x" ></i></a>';
   div_effect+='&nbsp;<a class="js-open-modal btn" href="#"  title="Cancel" onclick="hideEffectAnimation();"><i class="fa fa-times-circle fa-2x"></i></a></center>';
   div_effect+='<input type="hidden" id="effetCurrentDataId" value="'+currentDataId+'">';
+  
   $("#updateEffect").html(div_effect);  
+  $('#orientationEffect').val(currentData["orientationEffect"]);
   $('#styleEffect').val(currentData["styleEffect"]);
   $('#movementEffect').val(currentData["movementEffect"]);
   $('#comeInEffect').val(currentData["comeInEffect"]);
@@ -612,13 +628,21 @@ function  updateEffectAnimation(currentDataId){
 }
 function  saveEffectAnimation(currentDataId){
   currentData=slideShowDatas[currentDataId];
-  currentData["styleEffect"]=$('#styleEffect').val();
-  currentData["movementEffect"]=$('#movementEffect').val();
-  currentData["comeInEffect"]=$('#comeInEffect').val();
-  currentData["comeOutEffect"]=$('#comeOutEffect').val();
+  if ( currentData.media=="mp4" || currentData.media=="img"){
+    $("#video").removeClass(currentData["orientationEffect"]);
+    currentData["orientationEffect"]=$('#orientationEffect').val();
+  } 
   if (currentData.media=="txt" || currentData.media=="img"){
+    currentData["styleEffect"]=$('#styleEffect').val();
+    currentData["movementEffect"]=$('#movementEffect').val();
+    currentData["comeInEffect"]=$('#comeInEffect').val();
+    currentData["comeOutEffect"]=$('#comeOutEffect').val();
     currentData["soundEffectComeIn"]=$('#soundEffectComeIn').val();
     currentData["soundEffectComeOut"]=$('#soundEffectComeOut').val();
+  } else if (currentData.media=="mp3" || currentData.media=="mp4"){
+    currentData.file= getFilePath(currentData.file)+'#t='+ $('#startFileUpdate').val() +','+$('#endFileUpdate').val();
+    $('#startFile'+currentDataId).val($('#startFileUpdate').val()); 
+    $('#endFile'+currentDataId).val($('#endFileUpdate').val());
   }
   changeSaveallColorRed();
 }
@@ -628,7 +652,8 @@ function hideEffectAnimation(){
 }
 
   function getMovementEffect(selectedEffect){
-    var selectEffect='<select name="movementEffect" id="movementEffect">';
+    var selectEffect='<label><i class="fa fa-film fa-1x"></i> Movement Effect</label>'; 
+    selectEffect+='<select name="movementEffect" id="movementEffect">';
     selectEffect+='<option value="movementEffectNone">none</option>';
     selectEffect+='<option value="movementEffectUpToDown">Up to Down</option>';
     selectEffect+='<option value="movementEffectDownToUp">Down to Up</option>';
@@ -639,7 +664,8 @@ function hideEffectAnimation(){
   }
 
   function getComeInEffect(selectedEffect){
-    var selectEffect='<select name="comeInEffect" id="comeInEffect">';
+    var selectEffect='<br><label><i class="fa fa-film fa-1x"></i> Come In Effect</label> ';
+    selectEffect+='<select name="comeInEffect" id="comeInEffect">';
     selectEffect+='<option value="comeInEffectNone">none</option>';
     selectEffect+='<option value="comeInEffectFadeIn">Fade In</option>';
     selectEffect+='<option value="comeInEffectZoomIn">Zoom In</option>';
@@ -650,7 +676,8 @@ function hideEffectAnimation(){
   }
   
   function getComeOutEffect(selectedEffect){
-    var selectEffect='<select name="comeOutEffect" id="comeOutEffect">';
+    var selectEffect='<br><label><i class="fa fa-film fa-1x"></i> Come Out Effect</label> ';
+    selectEffect+='<select name="comeOutEffect" id="comeOutEffect">';
     selectEffect+='<option value="comeOutEffectNone">none</option>';
     selectEffect+='<option value="comeOutEffectFadeOut">Fade Out</option>';
     selectEffect+='<option value="comeOutEffectZoomOut">Zoom Out</option>';
@@ -662,7 +689,8 @@ function hideEffectAnimation(){
   }
 
   function getImageEffect(selectedEffect){
-    var selectEffect='<select name="styleEffect" id="styleEffect">';
+    var selectEffect='<label><i class="fa fa-film fa-1x"></i> Style Effect</label> ';
+    selectEffect+='<select name="styleEffect" id="styleEffect">';
     selectEffect+='<option value="imageEffectNone">none</option>';
     selectEffect+='<option value="imageEffectSepia">Sepia</option>';
     selectEffect+='<option value="imageEffectBlackAndWhite">Black and White</option>';
@@ -670,33 +698,62 @@ function hideEffectAnimation(){
     return selectEffect;
   }
   
+  function getOrientationEffect(selectedEffect){
+    var selectEffect='<label><i class="fa fa-film fa-1x"></i> Orientation</label> ';
+    selectEffect+='<select name="orientationEffect" id="orientationEffect">';
+    selectEffect+='<option value="landscape">landscape</option>';
+    selectEffect+='<option value="portrait">portrait</option>';
+    selectEffect+='</select>';
+    return selectEffect;
+  }
+  
   function getTextEffect(selectedEffect){
-    var selectEffect='<select name="styleEffect" id="styleEffect">';
+    var selectEffect='<label><i class="fa fa-film fa-1x"></i> Style Effect</label> ';
+    selectEffect+='<select name="styleEffect" id="styleEffect">';
     selectEffect+='<option value="none">none</option>';
     selectEffect+='<option value="starwars">starwars</option>';
     selectEffect+='</select>';
     return selectEffect;
   }
   
-  function getVideoEffect(selectedEffect){
-    var selectEffect='<select name="styleEffect" id="styleEffect">';
-    selectEffect+='<option value="videoEffectNone">none</option>';
-    selectEffect+='</select>';
+  function getStartEndEffect(currentData){
+    var selectEffect='<label><i class="fa fa-film fa-2x"></i> Style Effect</label> ';
+    selectEffect+='start in s <input type="text" size="1" id="startFileUpdate" value="' + getStartTime(currentData.file) +'"/> <i class="fa fa-hourglass-o fa-2x" title="fix start time" style="cursor: pointer;" onclick="setStartCurrentTime(\''+currentData.media+'\');"></i>';
+    selectEffect+=' end in s <input type="text" size="1" id="endFileUpdate" value="' + getEndTime(currentData.file)+'"/> <i class="fa fa-hourglass fa-2x" title="fix end time" style="cursor: pointer;" onclick="setEndCurrentTime(\''+currentData.media+'\');"></i><br>';
     return selectEffect;
   }
-
-  function getMusicEffect(selectedEffect){
-    var selectEffect='<select name="styleEffect" id="styleEffect">';
-    selectEffect+='<option value="musicEffectNone">none</option>';
-    selectEffect+='</select>';
-    return selectEffect;
-  }                                                                                                                                  
+  function setStartCurrentTime(media){
+   var mediaComponent="#video";
+   if (media=='mp3'){
+     mediaComponent="#music";
+   }
+   $("#startFileUpdate").val($(mediaComponent)[0].currentTime);
+  }
+  
+  function setEndCurrentTime(media){
+   var mediaComponent="#video";
+   if (media=='mp3'){
+     mediaComponent="#music";
+   }
+   $("#endFileUpdate").val($(mediaComponent)[0].currentTime);
+  }
                                                                                                   
   function getSoundEffect(currentData){
-    var selectEffect='<br><label><i class="fa fa-film fa-1x"></i>Come In Sound Effect</label><input type="text" id="soundEffectComeIn" value="'+currentData.soundEffectComeIn+'">';
-    selectEffect+='<br><label><i class="fa fa-film fa-1x"></i>Come Out Sound Effect</label><input type="text" id="soundEffectComeOut" value="'+currentData.soundEffectComeOut+'"><br>';
+    var selectEffect='<br><label><i class="fa fa-film fa-1x"></i> Come In Sound Effect</label><input type="text" id="soundEffectComeIn" value="'+currentData.soundEffectComeIn+'">';
+    selectEffect+=' <input type="file" id="comeInfile" name="comeInfile" accept="audio/mp3,audio/ogg,audio/wav,audio/mpeg"  onchange="openComeInSoundFile(event)">';
+    selectEffect+='<br><label><i class="fa fa-film fa-1x"></i> Come Out Sound Effect</label><input type="text" id="soundEffectComeOut" value="'+currentData.soundEffectComeOut+'">';
+    selectEffect+=' <input type="file" id="comeOutfile" name="comeoutfile" accept="audio/mp3,audio/ogg,audio/wav,audio/mpeg" onchange="openComeOutSoundFile(event)"><br>';
     return selectEffect;
   }
+  
+  var openComeInSoundFile = function(event) {
+        var input = event.target;
+        $("#soundEffectComeIn").val("sons/"+input.files[0].name);
+  };
+  var openComeOutSoundFile = function(event) {
+        var input = event.target;
+        $("#soundEffectComeOut").val("sons/"+input.files[0].name);
+  };
 
 function getFonts(){
 var fonts= [
@@ -828,6 +885,18 @@ var fonts= [
 'waltographUI',
 'WOODCUT',
 'Zootopia-JPosters.com.ar',
+'AvenirLTStd-Black',
+'AvenirLTStd-BlackOblique',
+'AvenirLTStd-Book',
+'AvenirLTStd-BookOblique',
+'AvenirLTStd-Heavy',
+'AvenirLTStd-HeavyOblique',
+'AvenirLTStd-Light',
+'AvenirLTStd-LightOblique',
+'AvenirLTStd-Medium',
+'AvenirLTStd-MediumOblique',
+'AvenirLTStd-Oblique',
+'AvenirLTStd-Roman'
 ];
 
 

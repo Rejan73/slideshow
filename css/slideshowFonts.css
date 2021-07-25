@@ -131,5 +131,15 @@
 @font-face { font-family:waltographUI; src: url('../fonts/disney/waltographUI.ttf') format("truetype"); }
 @font-face { font-family:WOODCUT; src: url('../fonts/disney/WOODCUT.ttf') format("truetype"); }
 @font-face { font-family:Zootopia JPosters.com.ar; src: url('../fonts/disney/Zootopia JPosters.com.ar.otf') format("truetype"); }
-
-
+@font-face { font-family:AvenirLTStd-Black; src: url('../fonts/cesar/AvenirLTStd-Black.otf') format("truetype"); }
+@font-face { font-family:AvenirLTStd-BlackOblique; src: url('../fonts/cesar/AvenirLTStd-BlackOblique.otf') format("truetype"); }
+@font-face { font-family:AvenirLTStd-Book; src: url('../fonts/cesar/AvenirLTStd-Book.otf') format("truetype"); }
+@font-face { font-family:AvenirLTStd-BookOblique; src: url('../fonts/cesar/AvenirLTStd-BookOblique.otf') format("truetype"); }
+@font-face { font-family:AvenirLTStd-Heavy; src: url('../fonts/cesar/AvenirLTStd-Heavy.otf') format("truetype"); }
+@font-face { font-family:AvenirLTStd-HeavyOblique; src: url('../fonts/cesar/AvenirLTStd-HeavyOblique.otf') format("truetype"); }
+@font-face { font-family:AvenirLTStd-Light; src: url('../fonts/cesar/AvenirLTStd-Light.otf') format("truetype"); }
+@font-face { font-family:AvenirLTStd-LightOblique; src: url('../fonts/cesar/AvenirLTStd-LightOblique.otf') format("truetype"); }
+@font-face { font-family:AvenirLTStd-Medium; src: url('../fonts/cesar/AvenirLTStd-Medium.otf') format("truetype"); }
+@font-face { font-family:AvenirLTStd-MediumOblique; src: url('../fonts/cesar/AvenirLTStd-MediumOblique.otf') format("truetype"); }
+@font-face { font-family:AvenirLTStd-Oblique; src: url('../fonts/cesar/AvenirLTStd-Oblique.otf') format("truetype"); }
+@font-face { font-family:Zootopia JPosters.com.ar; src: url('../fonts/cesar/AvenirLTStd-Oblique.otf') format("truetype"); }
