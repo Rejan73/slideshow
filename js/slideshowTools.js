@@ -293,10 +293,12 @@ function addAnimation(){
           break;
       case "mp4":
           dataToAdd.file='videos/'+files[i].name;
+          dataToAdd["orientationEffect"]="landscape";
           break;
       case "img":
           dataToAdd.file='photos/'+files[i].name;
           dataToAdd["duration"]='5';
+          dataToAdd["orientationEffect"]="landscape";
           break;
       defaut:
           break; 
@@ -402,6 +404,7 @@ function playImage(currentDataId){
   $("#music").removeAttr('controls');
   currentData=slideShowDatas[currentDataId];
   $('#srcImage').attr('src',currentData.file);
+  $("#srcImage").addClass(currentData["orientationEffect"]);
   $("#images").addClass(currentData["styleEffect"]);
   $("#images").addClass(currentData["comeInEffect"]);
   $("#images").addClass(currentData["movementEffect"]);
@@ -429,6 +432,7 @@ function playImage(currentDataId){
   }
 
   setTimeout(function() {
+    $("#srcImage").removeClass(currentData["orientationEffect"]);
     $("#images").removeClass(currentData["styleEffect"]);
     $("#images").removeClass(currentData["comeOutEffect"]);
     if ("comeOutEffectShowNextImage"==currentData["comeOutEffect"]){
@@ -443,6 +447,7 @@ function playImage(currentDataId){
 
 function playMovie(currentDataId){
   currentData=slideShowDatas[currentDataId];
+  $("#video").addClass(currentData["orientationEffect"]);
   $('#srcVideo').attr('src',currentData.file);
   $('#video')[0].load();
   $('#videos').show();
@@ -580,9 +585,11 @@ function  updateEffectAnimation(currentDataId){
          div_effect+=getStartEndEffect(currentData);
          break;
     case "mp4":
+         div_effect+=getOrientationEffect(currentData.styleEffect);
          div_effect+=getStartEndEffect(currentData);
          break;
     case "img":
+        div_effect+=getOrientationEffect(currentData.styleEffect);
         div_effect+=getImageEffect(currentData.styleEffect);
         div_effect+=getSoundEffect(currentData);
         div_effect+=getMovementEffect(currentData.movementEffect);
@@ -603,7 +610,9 @@ function  updateEffectAnimation(currentDataId){
   div_effect+='&nbsp;<a class="js-open-modal btn" href="#" title="Play" onclick="playAnimation('+currentDataId+');"><i class="fa fa-play-circle fa-2x" ></i></a>';
   div_effect+='&nbsp;<a class="js-open-modal btn" href="#"  title="Cancel" onclick="hideEffectAnimation();"><i class="fa fa-times-circle fa-2x"></i></a></center>';
   div_effect+='<input type="hidden" id="effetCurrentDataId" value="'+currentDataId+'">';
+  
   $("#updateEffect").html(div_effect);  
+  $('#orientationEffect').val(currentData["orientationEffect"]);
   $('#styleEffect').val(currentData["styleEffect"]);
   $('#movementEffect').val(currentData["movementEffect"]);
   $('#comeInEffect').val(currentData["comeInEffect"]);
@@ -619,6 +628,10 @@ function  updateEffectAnimation(currentDataId){
 }
 function  saveEffectAnimation(currentDataId){
   currentData=slideShowDatas[currentDataId];
+  if ( currentData.media=="mp4" || currentData.media=="img"){
+    $("#video").removeClass(currentData["orientationEffect"]);
+    currentData["orientationEffect"]=$('#orientationEffect').val();
+  } 
   if (currentData.media=="txt" || currentData.media=="img"){
     currentData["styleEffect"]=$('#styleEffect').val();
     currentData["movementEffect"]=$('#movementEffect').val();
@@ -681,6 +694,15 @@ function hideEffectAnimation(){
     selectEffect+='<option value="imageEffectNone">none</option>';
     selectEffect+='<option value="imageEffectSepia">Sepia</option>';
     selectEffect+='<option value="imageEffectBlackAndWhite">Black and White</option>';
+    selectEffect+='</select>';
+    return selectEffect;
+  }
+  
+  function getOrientationEffect(selectedEffect){
+    var selectEffect='<label><i class="fa fa-film fa-1x"></i> Orientation</label> ';
+    selectEffect+='<select name="orientationEffect" id="orientationEffect">';
+    selectEffect+='<option value="landscape">landscape</option>';
+    selectEffect+='<option value="portrait">portrait</option>';
     selectEffect+='</select>';
     return selectEffect;
   }

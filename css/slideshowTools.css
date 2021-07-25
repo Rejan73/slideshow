@@ -47,13 +47,14 @@ body {
   float:left;
 }
 
-#srcImage, #video, #srcNextImage {
+#srcImage, #video, #srcNextImage {       
   height: 360px;
   width: 640px;
   object-fit: cover;
   border: solid red;
   overflow: hidden;
 }
+
 #text, #divText {
   height: 360px;
   width: 640px;
