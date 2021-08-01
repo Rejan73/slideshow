@@ -44,7 +44,8 @@ Lancement de la boite à outils :
 # Versions
 
 Les versions sont disponibles [ici](https://github.com/Rejan73/slideshow/releases/)
-
+## 1.0.X
+- gestion du mode paysage ou portrait pour les videos et photos
 ## 1.0.3 
 - gestion des fonts, des couleur et de la taille pour les textes
 - ajouts d'effets pour les images
