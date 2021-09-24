@@ -380,6 +380,12 @@ function playAnimation(currentDataId){
   $('#images').hide();
   $('#musics').hide();
   $('#textes').hide(); 
+  $("#srcImage").removeClass("portrait"); 
+  $("#srcImage").removeClass("landscape");
+  $("#srcNextImage").removeClass("portrait"); 
+  $("#srcNextImage").removeClass("landscape");
+  $("#video").removeClass("portrait"); 
+  $("#video").removeClass("landscape");
   currentData=slideShowDatas[currentDataId];
   switch (currentData.media)
   {
@@ -479,6 +485,14 @@ function playText(currentDataId){
   $("#textes").css("font-size", currentData["fontsize"]+"%");
      
   playMusic(currentData["soundEffectComeIn"]);
+  $("#divText").css("height", "360px");
+
+  if (currentData.movementEffect=='movementEffectDownToUpInfinity'){
+	  cptLine=0;
+	  currentData.lines.forEach(object => cptLine++);
+	  cptLine=cptLine*37;
+	  $("#divText").css("height", cptLine+"px");
+  } 
   if (currentData.styleEffect=='starwars'){
     var div_data ='<p id="startStarWars">Il y a bien longtemps, dans une galaxie lointaine, tr&egrave;s lontaine</p>';
     div_data+='<h1 id="h1StarWars">'+currentData.title+'</h1>';
@@ -657,6 +671,7 @@ function hideEffectAnimation(){
     selectEffect+='<option value="movementEffectNone">none</option>';
     selectEffect+='<option value="movementEffectUpToDown">Up to Down</option>';
     selectEffect+='<option value="movementEffectDownToUp">Down to Up</option>';
+	selectEffect+='<option value="movementEffectDownToUpInfinity">Down to Up Infinity</option>';
     selectEffect+='<option value="movementEffectLeftToRight">Left to Right</option>';
     selectEffect+='<option value="movementEffectRightToLeft">Right to Left</option>';
     selectEffect+='</select>';                                                                                                         

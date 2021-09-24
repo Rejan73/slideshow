@@ -148,6 +148,22 @@ i {
     }
 }
 
+.movementEffectDownToUpInfinity{
+  position: relative;
+  top: 0;
+  animation: downToUpInfinityAnimation 25s;
+}
+
+@keyframes downToUpInfinityAnimation {
+    from {
+        top: 2000px;
+    }
+    to {
+        top: -7000px;
+    }
+}
+
+
 .movementEffectLeftToRight {
   position: relative;
   left: 0;

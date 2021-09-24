@@ -159,6 +159,17 @@ function playMusic(soundFile,isEffect){
 
 function playText(currentData){
   playMusic(currentData["soundEffectComeIn"],true);
+  $("#divText").css("height", "100%");
+  $("#divText").css("position", "absolute");
+  $("#text").css("position", "absolute");
+  if (currentData.movementEffect=='movementEffectDownToUpInfinity'){
+	  cptLine=0;
+	  currentData.lines.forEach(object => cptLine++);
+	  cptLine=cptLine*100;
+	  $("#divText").css("position", "relative");
+	  $("#text").css("position", "relative");
+	  $("#divText").css("height", cptLine+"px");
+  } 
   if (currentData.styleEffect=='starwars'){
     var div_data ='<p id="startStarWars">Il y a bien longtemps, dans une galaxie lointaine, tr&egrave;s lontaine</p>';
     div_data+='<h1 id="h1StarWars">'+currentData.title+'</h1>';
