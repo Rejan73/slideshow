@@ -84,7 +84,6 @@ function runAnimation(){
 function playImage(currentData){
   playMusic(currentData["soundEffectComeIn"],true);
   $('#srcImage').attr('src',currentData.file);
-  $("#srcImage").addClass(currentData["orientationEffect"]);
   $("#images").addClass(currentData["styleEffect"]);
   $("#images").addClass(currentData["comeInEffect"]);
   $("#images").addClass(currentData["movementEffect"]);
@@ -113,7 +112,6 @@ function playImage(currentData){
   
   setTimeout(function() { 
     stopMusicEffectOut(currentData["soundEffectComeOut"]);
-    $("#srcImage").removeClass(currentData["orientationEffect"]);
     $("#images").removeClass(currentData["styleEffect"]);
     $("#images").removeClass(currentData["comeOutEffect"]);
     if ("comeOutEffectShowNextImage"==currentData["comeOutEffect"]){
@@ -128,7 +126,6 @@ function playImage(currentData){
 };
 
 function playMovie(currentData){
-    $("#video").addClass(currentData["orientationEffect"]);
     $('#srcVideo').attr('src',currentData.file);
     $('#video')[0].load();
     $('#videos').show();

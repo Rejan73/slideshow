@@ -50,6 +50,9 @@ body {
 #srcImage, #video, #srcNextImage {       
   height: 360px;
   width: 640px;
+  min-width: 100%;
+  min-height: 100%;
+  position: relative;
   object-fit: contain;
   border: solid red;
   overflow: hidden;
