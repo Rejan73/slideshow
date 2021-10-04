@@ -112,7 +112,7 @@ function playImage(currentData){
   }
   
   setTimeout(function() { 
-    stopMusic();
+    stopMusicEffectOut(currentData["soundEffectComeOut"]);
     $("#srcImage").removeClass(currentData["orientationEffect"]);
     $("#images").removeClass(currentData["styleEffect"]);
     $("#images").removeClass(currentData["comeOutEffect"]);
@@ -136,14 +136,19 @@ function playMovie(currentData){
     $('#video').get(0).play();
     
 }
-  
+function stopMusicEffectOut(soundFile){
+	if (soundFile!='none' && soundFile!==undefined  && soundFile!=='undefined'){
+      $('#music').get(0).pause();
+      $('#srcMusic').attr('src','');
+	}
+}  
 function stopMusic(){
     $('#music').get(0).pause();
     $('#srcMusic').attr('src','');
 }
   
 function playMusic(soundFile,isEffect){
-  if (soundFile!='none' && soundFile!==undefined ){
+  if (soundFile!='none' && soundFile!==undefined  && soundFile!=='undefined'){
     stopMusic()
     $('#srcMusic').attr('src',soundFile);
     $('#music')[0].load();
