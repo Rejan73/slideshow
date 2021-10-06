@@ -42,6 +42,7 @@ var openFile = function(event) {
       };
 
 $('a[start-slideshow-id]').click(function(e) {
+   $('#mainSlideShow').toggle();
    runAnimation();
 });
 
@@ -52,12 +53,24 @@ $('a[config-id]').click(function(e) {
 $('a[set-slideshow-id]').click(function(e) {
    currentDataId =$('#idSlideShow').val();
 });
+$('a[set-resolution-id]').click(function(e) {
+   height=$(window).height();
+   width=$(window).width();
+   $("#srcImage").css("width", width+"px");
+   $("#srcImage").css("height", height+"px");
+   $("#video").css("width", width+"px");
+   $("#video").css("height", height+"px");
+   $("#srcNextImage").css("width", width+"px");
+   $("#srcNextImage").css("height", height+"px");
+   
+});
 
 
 function runAnimation(){
   hideAll();
   if (currentDataId>=slideShowDatas.length){
     console.log('fini');
+	$('#mainSlideShow').toggle();
     return null;
   }
   var currentData=slideShowDatas[currentDataId];

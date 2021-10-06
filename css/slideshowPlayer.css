@@ -11,9 +11,10 @@ body {
   width: 100%;
   overflow: hidden;
 }
+
 #srcImage,  #video, #srcNextImage  {
-  height: 600px;
-  width: 800px;
+  width: 1024px;	
+  height: 768px;
   min-width: 100%;
   min-height: 100%;
   position: relative;
