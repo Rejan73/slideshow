@@ -220,7 +220,7 @@ function playText(currentData){
     }, currentData["duration"]*1000);
   
     setTimeout(function() {
-      stopMusic();
+	  stopMusicEffectOut(currentData["soundEffectComeOut"]);
       $("#images").removeClass(currentData["styleEffect"]);
       $("#images").removeClass(currentData["comeOutEffect"]);
       runAnimation();
