@@ -5,7 +5,23 @@ body {
   overflow: hidden;
   color: #fff;
 }
-
+#playFinal{
+  height: 80%;
+  width: 80%;
+  background: black;
+  position: absolute;
+  display: block;
+  left: 11%;
+  top: 20px;
+  z-index:1;
+}
+#scrImgfinal{
+  height: auto;
+  width: 95%;
+  border: solid #EEBAD5;
+  position: absolute;
+  display: block;
+}
 #playIntro {
   height: 1000px;
   width: 68%;
