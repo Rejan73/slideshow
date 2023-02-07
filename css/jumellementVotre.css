@@ -81,13 +81,13 @@ body {
   display: block;
 }
 
-#photoIdentiteG {  left: 17%;  top: 14%;  z-index:5;}
-#photoIdentiteD {  left: 67%;  top: 14%;  z-index:5;}
+#photoIdentiteG {  left: 5%;  top: 4%;  z-index:5;}
+#photoIdentiteD {  left: 82%;  top: 4%;  z-index:5;}
 
 .photo {
   height: 45%;
   width: auto;
-  border: solid #EEBAD5;
+  #border: solid #EEBAD5;
   position: absolute;
   display: block;
 }
