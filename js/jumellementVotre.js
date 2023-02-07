@@ -125,6 +125,8 @@ function playIdentity(){
 	if (cptIdentity==1){
 		playMovie("videos/bebes.mp4",10);
 	}
+	$("#age").text(2022+cptIdentity);
+	
 	cptIdentity++;
 	if (cptIdentity<chloeIndentity.length){
 		setTimeout(function() {
