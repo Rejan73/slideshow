@@ -46,7 +46,7 @@ sarahIdentity[17]="photos/identite/sarah2019.jpg";
 sarahIdentity[18]="photos/identite/sarah2020.jpg";
 
 var chloeGauche=new Array();	
-chloeGauche[0]="photos/gauche/chloeDoudou.png";
+chloeGauche[0]="photos/gauche/FairePart.png";
 chloeGauche[1]="photos/gauche/G2003.jpg";
 chloeGauche[2]="photos/gauche/G2004.png";
 chloeGauche[3]="photos/GX.png";
@@ -68,7 +68,7 @@ chloeGauche[18]="photos/gauche/G2020.jpg";
 chloeGauche[19]="photos/gauche/G2021.jpg";
 
 var sarahDroite=new Array();
-sarahDroite[0]="photos/droite/sarahDoudou.png";
+sarahDroite[0]="photos/droite/FairePartText.png";
 sarahDroite[1]="photos/droite/D2003.jpg";
 sarahDroite[2]="photos/droite/D2004.png";
 sarahDroite[3]="photos/droite/D2005.jpg";
@@ -125,7 +125,7 @@ function playIdentity(){
 	$('#srcImageGauche').attr('src',chloeGauche[cptIdentity]);
 	$('#srcImageDroite').attr('src',sarahDroite[cptIdentity]);
 	if (cptIdentity==1){
-		playMovie("videos/bebes.mp4",10);
+		playMovie("videos/bebes.mp4",6);
 	}
 	$("#age").text(2002+cptIdentity);
 	
