@@ -101,6 +101,8 @@ function playSoundMusic(soundFile){
 
 function letsGo(){
 	$('#srcPlay').hide();
+	$('#srcCDoudou').hide();
+	$('#srcSDoudou').hide();
 	
 	playSoundMusic("musics/amicalementVotre.m4a");
 	i=0;
