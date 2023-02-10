@@ -23,6 +23,7 @@ chloeIndentity[15]="photos/identite/chloe2017.jpg";
 chloeIndentity[16]="photos/identite/chloe2018.jpg";
 chloeIndentity[17]="photos/identite/chloe2019.jpg";
 chloeIndentity[18]="photos/identite/chloe2020.jpg";
+chloeIndentity[19]="photos/identite/chloe2002.png";
 
 var sarahIdentity=new Array();
 sarahIdentity[0]="photos/identite/sarah2002.png";
@@ -44,6 +45,7 @@ sarahIdentity[15]="photos/identite/sarah2017.jpg";
 sarahIdentity[16]="photos/identite/sarah2018.jpg";
 sarahIdentity[17]="photos/identite/sarah2019.jpg";
 sarahIdentity[18]="photos/identite/sarah2020.jpg";
+sarahIdentity[19]="photos/identite/sarah2002.png";
 
 var chloeGauche=new Array();	
 chloeGauche[0]="photos/gauche/FairePart.png";
