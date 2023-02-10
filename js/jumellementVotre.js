@@ -25,6 +25,7 @@ chloeIndentity[17]="photos/identite/chloe2019.jpg";
 chloeIndentity[18]="photos/identite/chloe2020.jpg";
 chloeIndentity[19]="photos/identite/chloe2021.png";
 chloeIndentity[20]="photos/identite/chloe2022.png";
+chloeIndentity[21]="photos/identite/chloe2023.png";
 
 var sarahIdentity=new Array();
 sarahIdentity[0]="photos/identite/sarah2002.png";
@@ -48,6 +49,7 @@ sarahIdentity[17]="photos/identite/sarah2019.jpg";
 sarahIdentity[18]="photos/identite/sarah2020.jpg";
 sarahIdentity[19]="photos/identite/sarah2021.png";
 sarahIdentity[20]="photos/identite/sarah2022.png";
+sarahIdentity[21]="photos/identite/sarah2023.png";
 
 var chloeGauche=new Array();	
 chloeGauche[0]="photos/gauche/FairePart.png";
@@ -70,6 +72,8 @@ chloeGauche[16]="photos/gauche/G2018.png";
 chloeGauche[17]="photos/gauche/G2019.png";
 chloeGauche[18]="photos/gauche/G2020.png";
 chloeGauche[19]="photos/gauche/G2021.png";
+chloeGauche[20]="photos/gauche/G2022.png";
+chloeGauche[21]="photos/gauche/G2023.png";
 
 var sarahDroite=new Array();
 sarahDroite[0]="photos/droite/FairePartText.png";
@@ -92,6 +96,8 @@ sarahDroite[16]="photos/droite/D2018.png";
 sarahDroite[17]="photos/droite/D2019.png";
 sarahDroite[18]="photos/droite/D2020.png";
 sarahDroite[19]="photos/droite/D2021.png";
+sarahDroite[20]="photos/droite/D2022.png";
+sarahDroite[21]="photos/droite/D2023.png";
 
 var cptIdentity=0;
 
@@ -134,10 +140,10 @@ function playIdentity(){
 	$("#age").text(2002+cptIdentity);
 	
 	cptIdentity++;
-	if (cptIdentity<chloeIndentity.length){
+	if (cptIdentity<=chloeIndentity.length){
 		setTimeout(function() {
 			playIdentity()
-		}, 6*1000);
+		}, 5*1000);
     } else{
 		$('#playSlideShow').hide();
 		$('#playFinal').show();
@@ -183,7 +189,7 @@ function playIdentityStepByStep(){
 	$("#age").text(2002+cptIdentity);
 	
 	cptIdentity++;
-	if (cptIdentity>=chloeIndentity.length){
+	if (cptIdentity>chloeIndentity.length){
 		$('#playSlideShow').hide();
 		$('#playFinal').show();
 	}
