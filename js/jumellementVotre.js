@@ -152,3 +152,36 @@ function playMovie(movieFile,duration){
 	}, duration*1000) ;
     
 }
+
+function oneGoBack(){
+	cptIdentity--;
+	cptIdentity--;
+	playIdentityStepByStep();
+}
+function oneGoAfter(){
+	cptIdentity++;
+	playIdentityStepByStep();
+}
+
+function playIdentityStepByStep(){
+	$('#srcPlay').hide();
+	$('#srcCDoudou').hide();
+	$('#srcSDoudou').hide();
+	$('#playFinal').hide();
+	$('#playIntro').hide();
+	$('#playSlideShow').show();
+
+	$('#srcPhotoGauche').attr('src',chloeIndentity[cptIdentity]);
+	$('#srcPhotoDroite').attr('src',sarahIdentity[cptIdentity]);
+
+	$('#srcImageGauche').attr('src',chloeGauche[cptIdentity]);
+	$('#srcImageDroite').attr('src',sarahDroite[cptIdentity]);
+	
+	$("#age").text(2002+cptIdentity);
+	
+	cptIdentity++;
+	if (cptIdentity>=chloeIndentity.length){
+		$('#playSlideShow').hide();
+		$('#playFinal').show();
+	}
+}
