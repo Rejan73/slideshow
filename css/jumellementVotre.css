@@ -87,13 +87,12 @@ body {
 .photo {
   height: 45%;
   width: auto;
-  #border: solid #EEBAD5;
   position: absolute;
   display: block;
 }
 
 #gauche {  left: 0px;  top: 28%;  z-index:2;}
-#droite {  left: 50.6%;  top: 28%;  z-index:2;}
+#droite {  left: 51.4%;  top: 28%;  z-index:2;}
 
 .videoview {
   height: 45%;

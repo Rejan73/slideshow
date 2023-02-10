@@ -63,8 +63,8 @@ chloeGauche[13]="photos/gauche/G2015.jpg";
 chloeGauche[14]="photos/gauche/G2016.jpg";
 chloeGauche[15]="photos/gauche/G2017.jpg";
 chloeGauche[16]="photos/gauche/G2018.png";
-chloeGauche[17]="photos/gauche/G2019.jpg";
-chloeGauche[18]="photos/gauche/G2020.jpg";
+chloeGauche[17]="photos/gauche/G2019.png";
+chloeGauche[18]="photos/gauche/G2020.png";
 chloeGauche[19]="photos/gauche/G2021.jpg";
 
 var sarahDroite=new Array();
