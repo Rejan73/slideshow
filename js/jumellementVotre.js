@@ -83,9 +83,9 @@ sarahDroite[11]="photos/droite/D2013.jpg";
 sarahDroite[12]="photos/droite/D2014-2.jpg";
 sarahDroite[13]="photos/DX.png";
 sarahDroite[14]="photos/droite/D2016.jpg";
-sarahDroite[15]="photos/droite/D2017.jpeg";
+sarahDroite[15]="photos/droite/D2017.png";
 sarahDroite[16]="photos/droite/D2018.png";
-sarahDroite[17]="photos/droite/D2019.jpg";
+sarahDroite[17]="photos/droite/D2019.png";
 sarahDroite[18]="photos/droite/D2020.png";
 sarahDroite[19]="photos/droite/D2021.png";
 
