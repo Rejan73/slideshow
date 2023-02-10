@@ -159,7 +159,6 @@ function oneGoBack(){
 	playIdentityStepByStep();
 }
 function oneGoAfter(){
-	cptIdentity++;
 	playIdentityStepByStep();
 }
 
