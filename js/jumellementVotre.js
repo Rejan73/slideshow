@@ -23,7 +23,8 @@ chloeIndentity[15]="photos/identite/chloe2017.jpg";
 chloeIndentity[16]="photos/identite/chloe2018.jpg";
 chloeIndentity[17]="photos/identite/chloe2019.jpg";
 chloeIndentity[18]="photos/identite/chloe2020.jpg";
-chloeIndentity[19]="photos/identite/chloe2002.png";
+chloeIndentity[19]="photos/identite/chloe2021.png";
+chloeIndentity[20]="photos/identite/chloe2022.png";
 
 var sarahIdentity=new Array();
 sarahIdentity[0]="photos/identite/sarah2002.png";
@@ -45,13 +46,14 @@ sarahIdentity[15]="photos/identite/sarah2017.jpg";
 sarahIdentity[16]="photos/identite/sarah2018.jpg";
 sarahIdentity[17]="photos/identite/sarah2019.jpg";
 sarahIdentity[18]="photos/identite/sarah2020.jpg";
-sarahIdentity[19]="photos/identite/sarah2002.png";
+sarahIdentity[19]="photos/identite/sarah2021.png";
+sarahIdentity[20]="photos/identite/sarah2022.png";
 
 var chloeGauche=new Array();	
 chloeGauche[0]="photos/gauche/FairePart.png";
-chloeGauche[1]="photos/gauche/G2003.jpg";
+chloeGauche[1]="photos/gauche/G2003.png";
 chloeGauche[2]="photos/gauche/G2004.png";
-chloeGauche[3]="photos/GX.png";
+chloeGauche[3]="photos/gauche/G2005.jpg";
 chloeGauche[4]="photos/gauche/G2006.png";
 chloeGauche[5]="photos/gauche/G2007.jpg";
 chloeGauche[6]="photos/gauche/G2008.jpg";
@@ -67,13 +69,13 @@ chloeGauche[15]="photos/gauche/G2017.jpg";
 chloeGauche[16]="photos/gauche/G2018.png";
 chloeGauche[17]="photos/gauche/G2019.png";
 chloeGauche[18]="photos/gauche/G2020.png";
-chloeGauche[19]="photos/gauche/G2021.jpg";
+chloeGauche[19]="photos/gauche/G2021.png";
 
 var sarahDroite=new Array();
 sarahDroite[0]="photos/droite/FairePartText.png";
-sarahDroite[1]="photos/droite/D2003.jpg";
-sarahDroite[2]="photos/droite/D2004.png";
-sarahDroite[3]="photos/droite/D2005.jpg";
+sarahDroite[1]="photos/droite/D2003.png";
+sarahDroite[2]="photos/droite/D2004.jpg";
+sarahDroite[3]="photos/droite/D2005.png";
 sarahDroite[4]="photos/droite/D2006.jpg";
 sarahDroite[5]="photos/droite/D2007.jpg";
 sarahDroite[6]="photos/droite/D2008.png";
@@ -82,8 +84,8 @@ sarahDroite[8]="photos/droite/D2010.jpg";
 sarahDroite[9]="photos/droite/D2011.jpg";
 sarahDroite[10]="photos/droite/D2012.jpg";
 sarahDroite[11]="photos/droite/D2013.jpg";
-sarahDroite[12]="photos/droite/D2014-2.jpg";
-sarahDroite[13]="photos/DX.png";
+sarahDroite[12]="photos/droite/D2014.jpg";
+sarahDroite[13]="photos/droite/D2015.jpg";
 sarahDroite[14]="photos/droite/D2016.jpg";
 sarahDroite[15]="photos/droite/D2017.png";
 sarahDroite[16]="photos/droite/D2018.png";
@@ -169,7 +171,9 @@ function playIdentityStepByStep(){
 	$('#playFinal').hide();
 	$('#playIntro').hide();
 	$('#playSlideShow').show();
-
+	if (cptIdentity==1){
+		playMovie("videos/bebes.mp4",3);
+	}
 	$('#srcPhotoGauche').attr('src',chloeIndentity[cptIdentity]);
 	$('#srcPhotoDroite').attr('src',sarahIdentity[cptIdentity]);
 
