@@ -4,7 +4,7 @@
  * Date: 2021-03-19T08:00Z
  */
 var chloeIndentity=new Array();	
-chloeIndentity[0]="photos/identite/chloe2002.jpg";
+chloeIndentity[0]="photos/identite/chloe2002.png";
 chloeIndentity[1]="photos/identite/chloeBebe.jpg";
 chloeIndentity[2]="photos/identite/chloe2003.jpg";
 chloeIndentity[3]="photos/identite/chloe2005.jpg";
@@ -25,7 +25,7 @@ chloeIndentity[17]="photos/identite/chloe2019.jpg";
 chloeIndentity[18]="photos/identite/chloe2020.jpg";
 
 var sarahIdentity=new Array();
-sarahIdentity[0]="photos/identite/sarah2002.jpg";
+sarahIdentity[0]="photos/identite/sarah2002.png";
 sarahIdentity[1]="photos/identite/sarahBebe.jpg";
 sarahIdentity[2]="photos/identite/sarah2003.jpg";
 sarahIdentity[3]="photos/identite/sarah2005.jpg";
