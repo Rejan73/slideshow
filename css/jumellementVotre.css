@@ -102,18 +102,13 @@ body {
 }
 
 #divDroiteVideo {  left: 50.6%;   top: 28%;  z-index:4;}
-#videoDroite   {  width: auto;  height: 100%;
-  
-  
-}
-
+#videoDroite   {  width: auto;  height: 100%;}
 
 #srcPhotoGauche,#srcPhotoDroite,#srcImageGauche,#srcImageDroite{
         max-width: 100%;
         max-height: 100%;
         display: block;
 }
-
 
 #srcImage,  #srcNextImage  {
   height: 100%;

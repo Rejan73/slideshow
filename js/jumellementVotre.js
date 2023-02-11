@@ -110,6 +110,8 @@ function playSoundMusic(soundFile){
 };
 
 function letsGo(){
+	$('#srcPlayBack').hide();
+	$('#srcPlayAfter').hide();
 	$('#srcPlay').hide();
 	$('#srcCDoudou').hide();
 	$('#srcSDoudou').hide();
@@ -137,8 +139,11 @@ function playIdentity(){
 	if (cptIdentity==1){
 		playMovie("videos/bebes.mp4",6);
 	}
-	$("#age").text(2002+cptIdentity);
-	
+	if (2002+cptIdentity<2024){
+		$("#age").text(2002+cptIdentity);
+	}else{
+		$("#age").text(2023);
+	}
 	cptIdentity++;
 	if (cptIdentity<=chloeIndentity.length){
 		setTimeout(function() {
@@ -186,7 +191,11 @@ function playIdentityStepByStep(){
 	$('#srcImageGauche').attr('src',chloeGauche[cptIdentity]);
 	$('#srcImageDroite').attr('src',sarahDroite[cptIdentity]);
 	
-	$("#age").text(2002+cptIdentity);
+	if (2002+cptIdentity<2024){
+		$("#age").text(2002+cptIdentity);
+	}else{
+		$("#age").text(2023);
+	}
 	
 	cptIdentity++;
 	if (cptIdentity>chloeIndentity.length){
