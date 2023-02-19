@@ -757,6 +757,8 @@ function hideEffectAnimation(){
 
 function getFonts(){
 var fonts= [
+'Friends',
+'hobbitonbrushhand',  
 'A-Bug-s-Life---Debugged',
 'A-Bug-s-Life',
 'akaPotsley_0',
