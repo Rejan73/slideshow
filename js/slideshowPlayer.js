@@ -67,7 +67,9 @@ function runAnimation(){
          playMusic(currentData.file,false);
          break;
     case "mp4":
-         stopMusic();
+         if (currentData["styleEffect"]=='stopMusic'){
+          stopMusic();
+         }
          playMovie(currentData);
          break;
     case "img":
