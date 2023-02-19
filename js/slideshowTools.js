@@ -586,6 +586,7 @@ function  updateEffectAnimation(currentDataId){
          break;
     case "mp4":
          div_effect+=getOrientationEffect(currentData.styleEffect);
+         div_effect+=getMovieEffect(currentData.styleEffect);
          div_effect+=getStartEndEffect(currentData);
          break;
     case "img":
@@ -628,6 +629,9 @@ function  updateEffectAnimation(currentDataId){
 }
 function  saveEffectAnimation(currentDataId){
   currentData=slideShowDatas[currentDataId];
+  if ( currentData.media=="mp4"){
+    currentData["styleEffect"]=$('#styleEffect').val();
+  }
   if ( currentData.media=="mp4" || currentData.media=="img"){
     $("#video").removeClass(currentData["orientationEffect"]);
     currentData["orientationEffect"]=$('#orientationEffect').val();
@@ -694,6 +698,15 @@ function hideEffectAnimation(){
     selectEffect+='<option value="imageEffectNone">none</option>';
     selectEffect+='<option value="imageEffectSepia">Sepia</option>';
     selectEffect+='<option value="imageEffectBlackAndWhite">Black and White</option>';
+    selectEffect+='</select>';
+    return selectEffect;
+  }
+
+  function getMovieEffect(selectedEffect){
+    var selectEffect='<br><label><i class="fa fa-film fa-1x"></i> Style Effect</label> ';
+    selectEffect+='<select name="styleEffect" id="styleEffect">';
+    selectEffect+='<option value="keepMusic">Keep Music</option>';
+    selectEffect+='<option value="stopMusic">Stop Music</option>';
     selectEffect+='</select>';
     return selectEffect;
   }
