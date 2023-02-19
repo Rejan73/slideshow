@@ -2,7 +2,8 @@
    font-family: starjedi;
    font-size: 62.5%;
 } 
-
+@font-face { font-family:Friends; src: url('../fonts/Friends.ttf') format("truetype"); }
+@font-face { font-family:hobbitonbrushhand; src: url('../fonts/hobbitonbrushhand.ttf') format("truetype"); }
 @font-face { font-family:A-Bug-s-Life-Debugged; src: url('../fonts/disney/A Bug s Life - Debugged.ttf') format("truetype"); }
 @font-face { font-family:A-Bug-s-Life; src: url('../fonts/disney/A Bug s Life.ttf') format("truetype"); }
 @font-face { font-family:akaPotsley_0; src: url('../fonts/disney/akaPotsley_0.ttf') format("truetype"); }
