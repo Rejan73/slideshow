@@ -38,7 +38,7 @@ var openFile = function(event) {
 
 function fillSlideShow(){
     hideAll();
-    var div_data='<table><th></th><th>File</th><th>Time in s</th><th>Actions</th>';
+    var div_data='<table><th></th><th>N°</th><th>File</th><th>Time in s</th><th>Actions</th>';
     var cpt=0;
     slideShowDatas.forEach(slideShowData => div_data+=printSlideShowData(slideShowData,cpt++));
     div_data+='</table>';
@@ -138,37 +138,36 @@ function printSlideShowData(slideShowData,cpt){
   switch (slideShowData.media)
   {
     case "mp3":
-         line+='<td><i id="icon'+cpt+'" class="fa fa-file-audio-o fa-2x" ></i></td><td>'+getFilename(slideShowData.file)+'</td>';
+         line+='<td><i id="icon'+cpt+'" class="fa fa-file-audio-o fa-1x" ></i></td><td>'+cpt+'</td><td>'+getFilename(slideShowData.file)+'</td>';
          line+='<td>start <input type="text" size="1" id="startFile'+cpt+'" value="' + getStartTime(slideShowData.file) +'"/>';
          line+=' end <input type="text" size="1" id="endFile'+cpt+'" value="' + getEndTime(slideShowData.file)+'"/></td>';
          break;
     case "mp4":
-         line+='<td><i id="icon'+cpt+'"class="fa fa-file-movie-o fa-2x" ></i></td><td>'+getFilename(slideShowData.file)+'</td>';
+         line+='<td><i id="icon'+cpt+'"class="fa fa-file-movie-o fa-1x" ></i></td><td>'+cpt+'</td><td>'+getFilename(slideShowData.file)+'</td>';
          line+='<td>start <input type="text" size="1" id="startFile'+cpt+'" value="' + getStartTime(slideShowData.file) +'"/>';
          line+=' end <input type="text" size="1" id="endFile'+cpt+'" value="' + getEndTime(slideShowData.file)+'"/></td>';
          break;
     case "img":
-         line+='<td><div class="tooltip"><i id="icon'+cpt+'"class="fa fa-file-photo-o fa-2x" ></i><span class="tooltiptext">';
+         line+='<td><div class="tooltip"><i id="icon'+cpt+'"class="fa fa-file-photo-o fa-1x" ></i><span class="tooltiptext">';
          line+='<img width="100" heigth="100" src="'+slideShowData.file+'"></span></div></td>';
-         line+='<td>'+getFilename(slideShowData.file)+'</td>';
+         line+='<td>'+cpt+'</td><td>'+getFilename(slideShowData.file)+'</td>';
          line+='<td>duration <input type="text" size="1" id="durationFile'+cpt+'" value="' + slideShowData.duration +'"/></td>';
          break;
     case "txt":
-         line+='<td><i id="icon'+cpt+'"class="fa fa-file-text-o fa-2x" ></i></td><td>'+slideShowData.file+'</td>';
+         line+='<td><i id="icon'+cpt+'"class="fa fa-file-text-o fa-1x" ></i></td><td>'+cpt+'</td><td>'+slideShowData.file+'</td>';
          line+='<td>duration <input type="text" size="1" id="durationFile'+cpt+'" value="' + slideShowData.duration +'"/>';
-         line+=' <a class="js-open-modal btn" href="#" title="Modify Text" onclick="updateTextAnimation('+cpt+');"><i class="fa fa-pencil-square fa-2x" ></i></a></td>';
+         line+=' <a class="js-open-modal btn" href="#" title="Modify Text" onclick="updateTextAnimation('+cpt+');"><i class="fa fa-pencil-square fa-1x" ></i></a></td>';
          break; 
     defaut:
          break;    
   }
   
   line+='<td>';
-  line+='<a class="js-open-modal btn" href="#" title="up" onclick="moveUpAnimation('+cpt+');"><i class="fa fa-arrow-circle-up fa-2x" ></i></a>';
-  line+='<a class="js-open-modal btn" href="#" title="down" onclick="moveDownAnimation('+cpt+');"><i class="fa fa-arrow-circle-down fa-2x" ></i></a>';
-  line+='<a class="js-open-modal btn" href="#" title="Modify Effect" onclick="updateEffectAnimation('+cpt+');"><i class="fa fa-film fa-2x" ></i></a>';
-  line+='<a class="js-open-modal btn" href="#" title="Save" onclick="saveAnimation('+cpt+');"><i class="fa fa-save fa-2x" ></i></a>';
-  line+='<a class="js-open-modal btn" href="#" title="Remove" onclick="removeAnimation('+cpt+');"><i class="fa fa-times-circle fa-2x" style="color:red;"></i></a>';
-  line+='<a class="js-open-modal btn" href="#" title="Play" onclick="runAnimation('+cpt+');"><i class="fa fa-play-circle fa-2x" ></i></a></td>';
+  line+='<a class="js-open-modal btn" href="#" title="move" onclick="showMoveAnimation('+cpt+');"><i class="fa fa-arrow-circle-up fa-1x" ></i><i class="fa fa-arrow-circle-down fa-1x" ></i></a>';
+  line+='<a class="js-open-modal btn" href="#" title="Modify Effect" onclick="updateEffectAnimation('+cpt+');"><i class="fa fa-film fa-1x" ></i></a>';
+  line+='<a class="js-open-modal btn" href="#" title="Save" onclick="saveAnimation('+cpt+');"><i class="fa fa-save fa-1x" ></i></a>';
+  line+='<a class="js-open-modal btn" href="#" title="Remove" onclick="removeAnimation('+cpt+');"><i class="fa fa-times-circle fa-1x" style="color:red;"></i></a>';
+  line+='<a class="js-open-modal btn" href="#" title="Play" onclick="runAnimation('+cpt+');"><i class="fa fa-play-circle fa-1x" ></i></a></td>';
   
   return '<tr>'+line+'</tr>';
 }
@@ -257,6 +256,31 @@ function moveUpAnimation(currentDataId){
   }
   fillSlideShow();
 }
+
+function showMoveAnimation(currentDataId){
+  var line='';
+  line+="N°"+currentDataId+" move to <input type='text' id='moveTo' value=''>";
+  line+="<a class='js-open-modal btn' href='#' move-Animation='move-Animation' title='move animation' onclick='moveAnimation("+currentDataId+");'><i class='fa fa fa-save fa-1x'></i></a>";
+  $("#divMoveAnimation").html(line); 
+  $("#divMoveAnimation").show();
+}
+
+function moveAnimation(currentDataId){
+  $("#divMoveAnimation").hide();
+  if (currentDataId>$("#moveTo").val()){
+    while (currentDataId!=$("#moveTo").val()){
+      moveUpAnimation(currentDataId);
+      currentDataId--;
+    }
+  }else {
+    while (currentDataId!=$("#moveTo").val()){
+      moveDownAnimation(currentDataId);
+      currentDataId++;
+    }
+  }
+}
+
+
 
 function addTxtAnimation(){
     var dataToAdd={};

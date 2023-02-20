@@ -72,8 +72,6 @@ body {
   overflow-y: hidden;
 }
 
-
- 
 #updateEffect{
   padding-left: 10px;
   background: #000;
@@ -86,6 +84,18 @@ body {
 #addNewAnimation {
   padding-left: 20px;
   background: #000;
+}
+
+#divMoveAnimation {
+  top: 50px;
+  left: 400px;
+  height: 80px;
+  width: 100px;
+  object-fit: cover;
+  border: solid red;
+  overflow: hidden;
+  position:absolute;
+  z-index: 5;
 }
 
 .tooltip .tooltiptext {
