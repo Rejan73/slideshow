@@ -114,7 +114,7 @@ function playImage(currentData){
   }
   
   setTimeout(function() { 
-    stopMusic();
+    //RDS stopMusic();
     $("#srcImage").removeClass(currentData["orientationEffect"]);
     $("#images").removeClass(currentData["styleEffect"]);
     $("#images").removeClass(currentData["comeOutEffect"]);
@@ -196,7 +196,7 @@ function playText(currentData){
     }, currentData["duration"]*1000);
   
     setTimeout(function() {
-      stopMusic();
+      //RDS stopMusic();
       $("#images").removeClass(currentData["styleEffect"]);
       $("#images").removeClass(currentData["comeOutEffect"]);
       runAnimation();

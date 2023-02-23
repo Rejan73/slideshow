@@ -7,15 +7,24 @@ body {
 }
 /*1280 x 720*/
 #playSlideShow {
+  margin-left: auto;
+  margin-right: auto;
   height: 100%;
   width: 100%;
   overflow: hidden;
 }
 #srcImage,  #video, #srcNextImage  {
-  height: 100%;
+  /*height: 100%;
   width: 100%;
   object-fit: cover;
-  overflow: hidden;
+  overflow: hidden;*/
+  margin-left: auto;
+  margin-right: auto;
+  height: 90%;
+  width: auto;
+  border: solid #00FBFF;
+  position: absolute;
+  display: block;
 }
 #text, #divText {
   height: 100%;
