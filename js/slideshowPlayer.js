@@ -137,7 +137,7 @@ function playMovie(currentData){
     $('#video')[0].load();
     volume=currentData["volume"]==undefined ?1:currentData["volume"]/100;
     $('#videos').show();
-    $('#musics').get(0).volume=volume;
+    $('#video').get(0).volume=volume;
     //$('#video').get(0).requestFullscreen();
     $('#video').get(0).play();
     
@@ -155,7 +155,7 @@ function playMusic(currentData,soundFile,isEffect){
     $('#srcMusic').attr('src',soundFile);
     $('#music')[0].load();
     //$('#musics').show();
-    $('#musics').get(0).volume=volume;
+    $('#music').get(0).volume=volume;
     $('#music').get(0).play();
     if (!isEffect){
       currentDataId++;
