@@ -5,10 +5,14 @@ body {
   overflow: hidden;
   color: #fff;
 }
+
+#configurationSlideShow{
+  display:none;
+}
 /*1280 x 720*/
 #playSlideShow {
-  width: 90%;
-  height: 90%;
+  width: 95%;
+  height: 95%;
   background-color: black;
   position: absolute; 
   left: 0;

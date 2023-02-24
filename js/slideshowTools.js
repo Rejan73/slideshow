@@ -328,6 +328,7 @@ function addAnimation(){
           break; 
     }
     dataToAdd["styleEffect"]="none";
+    dataToAdd["volume"]="100";
     dataToAdd["movementEffect"]="none";
     dataToAdd["comeInEffect"]="none";
     dataToAdd["comeOutEffect"]="none";
@@ -408,7 +409,7 @@ function playAnimation(currentDataId){
   switch (currentData.media)
   {
     case "mp3":
-         playMusic(currentData.file);
+         playMusic(currentDataId,currentData.file);
          break;
     case "mp4":
          playMovie(currentDataId);
@@ -432,7 +433,7 @@ function playImage(currentDataId){
   $("#images").addClass(currentData["styleEffect"]);
   $("#images").addClass(currentData["comeInEffect"]);
   $("#images").addClass(currentData["movementEffect"]);
-  playMusic(currentData["soundEffectComeIn"]);
+  playMusic(currentDataId,currentData["soundEffectComeIn"]);
   $('#images').show();
   
   setTimeout(function() {
@@ -447,7 +448,7 @@ function playImage(currentDataId){
         $('#srcImage').attr('src',slideShowDatas[currentDataId+1].file);
       }
     }
-    playMusic(currentData["soundEffectComeOut"]);
+    playMusic(currentDataId,currentData["soundEffectComeOut"]);
   }, currentData["duration"]*1000);
 
   durationEffect=2000;
@@ -471,10 +472,12 @@ function playImage(currentDataId){
 
 function playMovie(currentDataId){
   currentData=slideShowDatas[currentDataId];
+  volume=currentData["volume"]==undefined ?1:currentData["volume"]/100;
   $("#video").addClass(currentData["orientationEffect"]);
   $('#srcVideo').attr('src',currentData.file);
   $('#video')[0].load();
   $('#videos').show();
+  $('#video').get(0).volume=volume;//0.0 to 1.0
   $('#video').get(0).play();
   //$('#video').get(0).requestFullscreen();
 }
@@ -484,12 +487,15 @@ function stopMusic(){
     $('#srcMusic').attr('src','');
 }
 
-function playMusic(soundFile){
+function playMusic(currentDataId,soundFile){
+  currentData=slideShowDatas[currentDataId];
   if (soundFile!='none' && soundFile!==undefined){
     stopMusic();
+    volume=currentData["volume"]==undefined ?1:currentData["volume"]/100;
     $('#srcMusic').attr('src',soundFile);
     $('#music')[0].load();
     $('#musics').show();
+    $('#musics').get(0).volume=volume;
     $('#music').get(0).play();
   }
 };
@@ -502,7 +508,7 @@ function playText(currentDataId){
   $("#textes").css("color", currentData["fontcolor"]);
   $("#textes").css("font-size", currentData["fontsize"]+"%");
      
-  playMusic(currentData["soundEffectComeIn"]);
+  playMusic(currentDataId,currentData["soundEffectComeIn"]);
   if (currentData.styleEffect=='starwars'){
     var div_data ='<p id="startStarWars">Il y a bien longtemps, dans une galaxie lointaine, tr&egrave;s lontaine</p>';
     div_data+='<h1 id="h1StarWars">'+currentData.title+'</h1>';
@@ -525,7 +531,7 @@ function playText(currentDataId){
     $("#divText").html(div_data);
     $("#divCrawl").html("");
     setTimeout(function() {
-      playMusic(currentData["soundEffectComeOut"]);
+      playMusic(currentDataId,currentData["soundEffectComeOut"]);
       $("#textes").removeClass(currentData["comeInEffect"]);
       $("#textes").removeClass(currentData["movementEffect"]);
       $("#textes").addClass(currentData["comeOutEffect"]);
@@ -607,9 +613,11 @@ function  updateEffectAnimation(currentDataId){
   {
     case "mp3":
          div_effect+=getStartEndEffect(currentData);
+         div_effect+=getVolume(currentData.volume);
          break;
     case "mp4":
          div_effect+=getOrientationEffect(currentData.styleEffect);
+         div_effect+=getVolume(currentData.volume);
          div_effect+=getMovieEffect(currentData.styleEffect);
          div_effect+=getStartEndEffect(currentData);
          break;
@@ -639,6 +647,7 @@ function  updateEffectAnimation(currentDataId){
   $("#updateEffect").html(div_effect);  
   $('#orientationEffect').val(currentData["orientationEffect"]);
   $('#styleEffect').val(currentData["styleEffect"]);
+  $('#volume').val(currentData["volume"]);
   $('#movementEffect').val(currentData["movementEffect"]);
   $('#comeInEffect').val(currentData["comeInEffect"]);
   $('#comeOutEffect').val(currentData["comeOutEffect"]);
@@ -668,6 +677,7 @@ function  saveEffectAnimation(currentDataId){
     currentData["soundEffectComeIn"]=$('#soundEffectComeIn').val();
     currentData["soundEffectComeOut"]=$('#soundEffectComeOut').val();
   } else if (currentData.media=="mp3" || currentData.media=="mp4"){
+    currentData["volume"]=$('#volume').val();
     currentData.file= getFilePath(currentData.file)+'#t='+ $('#startFileUpdate').val() +','+$('#endFileUpdate').val();
     $('#startFile'+currentDataId).val($('#startFileUpdate').val()); 
     $('#endFile'+currentDataId).val($('#endFileUpdate').val());
@@ -753,6 +763,11 @@ function hideEffectAnimation(){
     return selectEffect;
   }
   
+  function getVolume(volume){
+    var selectEffect=' Volume <input name="volume" id="volume" type="range" min="0" max="100" value="'+volume+'">';
+    return selectEffect;
+  }
+
   function getStartEndEffect(currentData){
     var selectEffect='<label><i class="fa fa-film fa-2x"></i> Style Effect</label> ';
     selectEffect+='start in s <input type="text" size="1" id="startFileUpdate" value="' + getStartTime(currentData.file) +'"/> <i class="fa fa-hourglass-o fa-2x" title="fix start time" style="cursor: pointer;" onclick="setStartCurrentTime(\''+currentData.media+'\');"></i>';
