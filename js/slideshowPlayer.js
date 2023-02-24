@@ -64,7 +64,7 @@ function runAnimation(){
   switch (currentData.media)
   {
     case "mp3":
-         playMusic(currentData.file,false);
+         playMusic(currentData,currentData.file,false);
          break;
     case "mp4":
          if (currentData["styleEffect"]=='stopMusic'){
@@ -84,7 +84,7 @@ function runAnimation(){
 }
 
 function playImage(currentData){
-  playMusic(currentData["soundEffectComeIn"],true);
+  playMusic(currentData,currentData["soundEffectComeIn"],true);
   $('#srcImage').attr('src',currentData.file);
   $("#srcImage").addClass(currentData["orientationEffect"]);
   $("#images").addClass(currentData["styleEffect"]);
@@ -94,7 +94,7 @@ function playImage(currentData){
   oldcurrentDataId=currentDataId;
   currentDataId++;
   setTimeout(function() {    
-   playMusic(currentData["soundEffectComeOut"],true);        
+   playMusic(currentData,currentData["soundEffectComeOut"],true);        
     $("#images").removeClass(currentData["comeInEffect"]);
     $("#images").removeClass(currentData["movementEffect"]);
     $("#images").addClass(currentData["comeOutEffect"]);
@@ -135,7 +135,9 @@ function playMovie(currentData){
     $("#video").addClass(currentData["orientationEffect"]);
     $('#srcVideo').attr('src',currentData.file);
     $('#video')[0].load();
+    volume=currentData["volume"]==undefined ?1:currentData["volume"]/100;
     $('#videos').show();
+    $('#musics').get(0).volume=volume;
     //$('#video').get(0).requestFullscreen();
     $('#video').get(0).play();
     
@@ -146,12 +148,14 @@ function stopMusic(){
     $('#srcMusic').attr('src','');
 }
   
-function playMusic(soundFile,isEffect){
+function playMusic(currentData,soundFile,isEffect){
   if (soundFile!='none' && soundFile!==undefined ){
     stopMusic()
+    volume=currentData["volume"]==undefined ?1:currentData["volume"]/100;
     $('#srcMusic').attr('src',soundFile);
     $('#music')[0].load();
     //$('#musics').show();
+    $('#musics').get(0).volume=volume;
     $('#music').get(0).play();
     if (!isEffect){
       currentDataId++;
@@ -162,7 +166,7 @@ function playMusic(soundFile,isEffect){
 };
 
 function playText(currentData){
-  playMusic(currentData["soundEffectComeIn"],true);
+  playMusic(currentData,currentData["soundEffectComeIn"],true);
   if (currentData.styleEffect=='starwars'){
     var div_data ='<p id="startStarWars">Il y a bien longtemps, dans une galaxie lointaine, tr&egrave;s lontaine</p>';
     div_data+='<h1 id="h1StarWars">'+currentData.title+'</h1>';
@@ -191,7 +195,7 @@ function playText(currentData){
     currentDataId++;
     
     setTimeout(function() {
-      playMusic(currentData["soundEffectComeOut"],true);
+      playMusic(currentData,currentData["soundEffectComeOut"],true);
       $("#textes").removeClass(currentData["comeInEffect"]);
       $("#textes").removeClass(currentData["movementEffect"]);
       $("#textes").addClass(currentData["comeOutEffect"]);
