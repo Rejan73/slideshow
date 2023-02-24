@@ -114,7 +114,9 @@ function playImage(currentData){
   }
   
   setTimeout(function() { 
-    stopMusic();
+    if (currentData["soundEffectComeOut"]!='none' && currentData["soundEffectComeOut"]!==undefined ){
+      stopMusic();
+    }
     $("#srcImage").removeClass(currentData["orientationEffect"]);
     $("#images").removeClass(currentData["styleEffect"]);
     $("#images").removeClass(currentData["comeOutEffect"]);
@@ -196,9 +198,11 @@ function playText(currentData){
     }, currentData["duration"]*1000);
   
     setTimeout(function() {
-      stopMusic();
-      $("#images").removeClass(currentData["styleEffect"]);
-      $("#images").removeClass(currentData["comeOutEffect"]);
+      if (currentData["soundEffectComeOut"]!='none' && currentData["soundEffectComeOut"]!==undefined ){
+        stopMusic();
+      }
+      $("#textes").removeClass(currentData["styleEffect"]);
+      $("#textes").removeClass(currentData["comeOutEffect"]);
       runAnimation();
     }, currentData["duration"]*1000+2000) ;
   

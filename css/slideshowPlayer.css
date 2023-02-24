@@ -7,15 +7,32 @@ body {
 }
 /*1280 x 720*/
 #playSlideShow {
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
+  width: 90%;
+  height: 90%;
+  background-color: black;
+  position: absolute; 
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  max-width: 100%;
+  max-height: 100%;
+  overflow: auto;
 }
 #srcImage,  #video, #srcNextImage  {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  overflow: hidden;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  max-width: 100%;
+  max-height: 100%;
+  height: 90%;
+  width: auto;
+  border: solid #00FBFF;
+  position: absolute;
+  display: block;
 }
 #text, #divText {
   height: 100%;
