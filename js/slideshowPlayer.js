@@ -91,6 +91,7 @@ function playImage(currentData){
   $("#images").addClass(currentData["comeInEffect"]);
   $("#images").addClass(currentData["movementEffect"]);
   $('#images').show();
+  $("#srcImage").addClass('border');
   oldcurrentDataId=currentDataId;
   currentDataId++;
   setTimeout(function() {    
@@ -121,7 +122,7 @@ function playImage(currentData){
     $("#images").removeClass(currentData["styleEffect"]);
     $("#images").removeClass(currentData["comeOutEffect"]);
     if ("comeOutEffectShowNextImage"==currentData["comeOutEffect"]){
-      $('#srcNextImage').attr('src','');
+      $('#srcNextImage').attr('src','photos/black.png');
       $("#nextImage").removeClass("comeOutEffectShowNextImage2"); 
       $('#nextImage').hide(); 
     }     
@@ -132,6 +133,8 @@ function playImage(currentData){
 };
 
 function playMovie(currentData){
+  $("#srcImage").removeClass('border');
+  $('#srcImage').attr('src','photos/black.png');
     $("#video").addClass(currentData["orientationEffect"]);
     $('#srcVideo').attr('src',currentData.file);
     $('#video')[0].load();
@@ -166,6 +169,8 @@ function playMusic(currentData,soundFile,isEffect){
 };
 
 function playText(currentData){
+  $("#srcImage").removeClass('border');
+  $('#srcImage').attr('src','photos/black.png');
   playMusic(currentData,currentData["soundEffectComeIn"],true);
   if (currentData.styleEffect=='starwars'){
     var div_data ='<p id="startStarWars">Il y a bien longtemps, dans une galaxie lointaine, tr&egrave;s lontaine</p>';
