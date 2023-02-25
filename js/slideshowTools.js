@@ -401,7 +401,6 @@ function runAnimation(currentDataId){
 function playAnimation(currentDataId){ 
   $('#srcVideo').attr('src','');
   $("#music").attr('controls', '');
-  $('#srcNextImage').attr('src','photos/black.png');
   $('#videos').hide();
   $('#images').hide();
   $('#musics').hide();

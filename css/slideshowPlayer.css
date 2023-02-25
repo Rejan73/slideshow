@@ -34,10 +34,14 @@ body {
   max-height: 100%;
   height: 90%;
   width: auto;
-  border: solid #00FBFF;
   position: absolute;
   display: block;
 }
+
+.border{
+  border: solid #00FBFF;
+}
+
 #text, #divText {
   height: 100%;
   width: 100%;
