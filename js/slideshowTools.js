@@ -401,6 +401,7 @@ function runAnimation(currentDataId){
 function playAnimation(currentDataId){ 
   $('#srcVideo').attr('src','');
   $("#music").attr('controls', '');
+  $('#srcNextImage').attr('src','photos/black.png');
   $('#videos').hide();
   $('#images').hide();
   $('#musics').hide();
@@ -461,7 +462,7 @@ function playImage(currentDataId){
     $("#images").removeClass(currentData["styleEffect"]);
     $("#images").removeClass(currentData["comeOutEffect"]);
     if ("comeOutEffectShowNextImage"==currentData["comeOutEffect"]){
-      $('#srcNextImage').attr('src','');
+      $('#srcNextImage').attr('src','photos/black.png');
       $("#nextImage").removeClass("comeOutEffectShowNextImage2"); 
       $('#nextImage').hide(); 
     }
