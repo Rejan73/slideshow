@@ -88,11 +88,12 @@ body {
 
 #divMoveAnimation {
   top: 50px;
-  left: 400px;
+  left: 470px;
   height: 80px;
   width: 100px;
   object-fit: cover;
   border: solid red;
+  background: #000;
   overflow: hidden;
   position:absolute;
   z-index: 5;
