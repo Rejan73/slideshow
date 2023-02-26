@@ -38,7 +38,7 @@ var openFile = function(event) {
 
 function fillSlideShow(){
     hideAll();
-    var div_data='<table><th></th><th>N°</th><th>File</th><th>Time in s</th><th>Actions</th>';
+    var div_data='<table><th></th><th>N°</th><th>File</th><th>Time in mm:ss</th><th>Actions</th>';
     var cpt=0;
     slideShowDatas.forEach(slideShowData => div_data+=printSlideShowData(slideShowData,cpt++));
     div_data+='</table>';
@@ -139,23 +139,23 @@ function printSlideShowData(slideShowData,cpt){
   {
     case "mp3":
          line+='<td><i id="icon'+cpt+'" class="fa fa-file-audio-o fa-1x" ></i></td><td>'+cpt+'</td><td>'+getFilename(slideShowData.file)+'</td>';
-         line+='<td>start <input type="text" size="1" id="startFile'+cpt+'" value="' + getStartTime(slideShowData.file) +'"/>';
-         line+=' end <input type="text" size="1" id="endFile'+cpt+'" value="' + getEndTime(slideShowData.file)+'"/></td>';
+         line+='<td>start <input type="time" size="1" id="startFile'+cpt+'" value="' + getStartTime(slideShowData.file) +'"/>';
+         line+=' end <input type="time" size="1" id="endFile'+cpt+'" value="' + getEndTime(slideShowData.file)+'"/></td>';
          break;
     case "mp4":
          line+='<td><i id="icon'+cpt+'"class="fa fa-file-movie-o fa-1x" ></i></td><td>'+cpt+'</td><td>'+getFilename(slideShowData.file)+'</td>';
-         line+='<td>start <input type="text" size="1" id="startFile'+cpt+'" value="' + getStartTime(slideShowData.file) +'"/>';
-         line+=' end <input type="text" size="1" id="endFile'+cpt+'" value="' + getEndTime(slideShowData.file)+'"/></td>';
+         line+='<td>start <input type="time" size="1" id="startFile'+cpt+'" value="' + getStartTime(slideShowData.file) +'"/>';
+         line+=' end <input type="time" size="1" id="endFile'+cpt+'" value="' + getEndTime(slideShowData.file)+'"/></td>';
          break;
     case "img":
          line+='<td><div class="tooltip"><i id="icon'+cpt+'"class="fa fa-file-photo-o fa-1x" ></i><span class="tooltiptext">';
          line+='<img width="100" heigth="100" src="'+slideShowData.file+'"></span></div></td>';
          line+='<td>'+cpt+'</td><td>'+getFilename(slideShowData.file)+'</td>';
-         line+='<td>duration <input type="text" size="1" id="durationFile'+cpt+'" value="' + slideShowData.duration +'"/></td>';
+         line+='<td>duration <input type="time" size="1" id="durationFile'+cpt+'" value="' + afficheTemps(slideShowData.duration) +'"/></td>';
          break;
     case "txt":
          line+='<td><i id="icon'+cpt+'"class="fa fa-file-text-o fa-1x" ></i></td><td>'+cpt+'</td><td>'+slideShowData.file+'</td>';
-         line+='<td>duration <input type="text" size="1" id="durationFile'+cpt+'" value="' + slideShowData.duration +'"/>';
+         line+='<td>duration <input type="time" size="1" id="durationFile'+cpt+'" value="' + afficheTemps(slideShowData.duration) +'"/>';
          line+=' <a class="js-open-modal btn" href="#" title="Modify Text" onclick="updateTextAnimation('+cpt+');"><i class="fa fa-pencil-square fa-1x" ></i></a></td>';
          break; 
     defaut:
@@ -164,10 +164,10 @@ function printSlideShowData(slideShowData,cpt){
   
   line+='<td>';
   line+='<a class="js-open-modal btn" href="#" title="move" onclick="showMoveAnimation('+cpt+');"><i class="fa fa-arrow-circle-up fa-1x" ></i><i class="fa fa-arrow-circle-down fa-1x" ></i></a>';
-  line+='<a class="js-open-modal btn" href="#" title="Modify Effect" onclick="updateEffectAnimation('+cpt+');"><i class="fa fa-film fa-1x" ></i></a>';
-  line+='<a class="js-open-modal btn" href="#" title="Save" onclick="saveAnimation('+cpt+');"><i class="fa fa-save fa-1x" ></i></a>';
-  line+='<a class="js-open-modal btn" href="#" title="Remove" onclick="removeAnimation('+cpt+');"><i class="fa fa-times-circle fa-1x" style="color:red;"></i></a>';
-  line+='<a class="js-open-modal btn" href="#" title="Play" onclick="runAnimation('+cpt+');"><i class="fa fa-play-circle fa-1x" ></i></a></td>';
+  line+='&nbsp;<a class="js-open-modal btn" href="#" title="Modify Effect" onclick="updateEffectAnimation('+cpt+');"><i class="fa fa-film fa-1x" ></i></a>';
+  line+='&nbsp;<a class="js-open-modal btn" href="#" title="Save" onclick="saveAnimation('+cpt+');"><i class="fa fa-save fa-1x" ></i></a>';
+  line+='&nbsp;<a class="js-open-modal btn" href="#" title="Play" onclick="runAnimation('+cpt+');"><i class="fa fa-play-circle fa-1x" ></i></a>';
+  line+='&nbsp;&nbsp;<a class="js-open-modal btn" href="#" title="Remove" onclick="removeAnimation('+cpt+');"><i class="fa fa-times-circle fa-1x" style="color:red;"></i></a></td>';
   
   return '<tr>'+line+'</tr>';
 }
@@ -195,14 +195,29 @@ function getStartTime(file){
   if (file.split('#t=').length<2){
     return 0;
   }
-  return  file.split('#t=')[1].split(',')[0];
+  var temps=file.split('#t=')[1].split(',')[0];
+  return  afficheTemps(temps);
 }
 
 function getEndTime(file){
   if (file.split('#t=').length<2){
     return '';
   }
-  return  file.split('#t=')[1].split(',')[1];
+  var temps=file.split('#t=')[1].split(',')[1];
+  return  afficheTemps(temps);
+
+}
+function afficheTemps(temps){
+  var minutes = Math.floor(temps/60);
+  var secondes = Math.floor(temps%60);
+  return  (minutes<10?"0"+minutes:minutes)+":"+(secondes<10?"0"+secondes:secondes);
+}
+
+function toSecond(mmss){
+  if (mmss.split(':').length<2){
+    return mmss;
+  }
+  return mmss.split(':')[0]*60 + mmss.split(':')[1]*1;
 }
 
 $('a[set-slideshow-id]').click(function(e) {
@@ -212,10 +227,12 @@ $('a[set-slideshow-id]').click(function(e) {
 function saveAnimation(currentDataId){
   hideAll();
   currentData=slideShowDatas[currentDataId];
-  currentData.duration=    $('#durationFile'+currentDataId).val();
+  if ($('#durationFile'+currentDataId).val()!=undefined) {
+    currentData.duration= toSecond($('#durationFile'+currentDataId).val());
+  }
   currentData.effect=$('#effectFile'+currentDataId).val();
   if (currentData.media=='mp3' || currentData.media=='mp4'){
-    currentData.file= getFilePath(currentData.file)+'#t='+ $('#startFile'+currentDataId).val() +','+$('#endFile'+currentDataId).val();
+    currentData.file= getFilePath(currentData.file)+'#t='+ toSecond($('#startFile'+currentDataId).val()) +','+toSecond($('#endFile'+currentDataId).val());
   }
   changeSaveallColorRed();
   fillSlideShow();
@@ -259,8 +276,8 @@ function moveUpAnimation(currentDataId){
 
 function showMoveAnimation(currentDataId){
   var line='';
-  line+="N°"+currentDataId+" move to <input type='text' id='moveTo' value=''>";
-  line+="<a class='js-open-modal btn' href='#' move-Animation='move-Animation' title='move animation' onclick='moveAnimation("+currentDataId+");'><i class='fa fa fa-save fa-1x'></i></a>";
+  line+="<center>N°"+currentDataId+" move to <input type='number' id='moveTo' value='' min='0' max='9999'>";
+  line+="&nbsp;<a class='js-open-modal btn' href='#' move-Animation='move-Animation' title='move animation' onclick='moveAnimation("+currentDataId+");'><i class='fa fa fa-save fa-2x'></i></a></center>";
   $("#divMoveAnimation").html(line); 
   $("#divMoveAnimation").show();
 }
@@ -678,7 +695,7 @@ function  saveEffectAnimation(currentDataId){
     currentData["soundEffectComeOut"]=$('#soundEffectComeOut').val();
   } else if (currentData.media=="mp3" || currentData.media=="mp4"){
     currentData["volume"]=$('#volume').val();
-    currentData.file= getFilePath(currentData.file)+'#t='+ $('#startFileUpdate').val() +','+$('#endFileUpdate').val();
+    currentData.file= getFilePath(currentData.file)+'#t='+ toSecond($('#startFileUpdate').val()) +','+toSecond($('#endFileUpdate').val());
     $('#startFile'+currentDataId).val($('#startFileUpdate').val()); 
     $('#endFile'+currentDataId).val($('#endFileUpdate').val());
   }
@@ -770,8 +787,8 @@ function hideEffectAnimation(){
 
   function getStartEndEffect(currentData){
     var selectEffect='<label><i class="fa fa-film fa-2x"></i> Style Effect</label> ';
-    selectEffect+='start in s <input type="text" size="1" id="startFileUpdate" value="' + getStartTime(currentData.file) +'"/> <i class="fa fa-hourglass-o fa-2x" title="fix start time" style="cursor: pointer;" onclick="setStartCurrentTime(\''+currentData.media+'\');"></i>';
-    selectEffect+=' end in s <input type="text" size="1" id="endFileUpdate" value="' + getEndTime(currentData.file)+'"/> <i class="fa fa-hourglass fa-2x" title="fix end time" style="cursor: pointer;" onclick="setEndCurrentTime(\''+currentData.media+'\');"></i><br>';
+    selectEffect+='start in mm:ss <input type="time" size="1" id="startFileUpdate" value="' + getStartTime(currentData.file) +'"/> <i class="fa fa-hourglass-o fa-2x" title="fix start time" style="cursor: pointer;" onclick="setStartCurrentTime(\''+currentData.media+'\');"></i>';
+    selectEffect+=' end in mm:ss <input type="time" size="1" id="endFileUpdate" value="' + getEndTime(currentData.file)+'"/> <i class="fa fa-hourglass fa-2x" title="fix end time" style="cursor: pointer;" onclick="setEndCurrentTime(\''+currentData.media+'\');"></i><br>';
     return selectEffect;
   }
   function setStartCurrentTime(media){
