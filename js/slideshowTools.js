@@ -188,7 +188,7 @@ function getFilename(file){
 }
 
 function getDuration(file){
-    return parseFloat(getEndTime(file))-parseFloat(getStartTime(file));
+    return parseFloat(toSecond(getEndTime(file)))-parseFloat(toSecond(getStartTime(file)));
 }
 
 function getStartTime(file){
