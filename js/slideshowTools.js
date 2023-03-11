@@ -139,23 +139,23 @@ function printSlideShowData(slideShowData,cpt){
   {
     case "mp3":
          line+='<td><i id="icon'+cpt+'" class="fa fa-file-audio-o fa-1x" ></i></td><td>'+cpt+'</td><td>'+getFilename(slideShowData.file)+'</td>';
-         line+='<td>start <input type="time" size="1" id="startFile'+cpt+'" value="' + getStartTime(slideShowData.file) +'"/>';
-         line+=' end <input type="time" size="1" id="endFile'+cpt+'" value="' + getEndTime(slideShowData.file)+'"/></td>';
+         line+='<td>start <input type="time" step="1" min="00:00:00" max="24:00:00" size="1" id="startFile'+cpt+'" value="' + getStartTime(slideShowData.file) +'"/>';
+         line+=' end <input type="time" step="1" min="00:00:00" max="24:00:00" size="1" id="endFile'+cpt+'" value="' + getEndTime(slideShowData.file)+'"/></td>';
          break;
     case "mp4":
          line+='<td><i id="icon'+cpt+'"class="fa fa-file-movie-o fa-1x" ></i></td><td>'+cpt+'</td><td>'+getFilename(slideShowData.file)+'</td>';
-         line+='<td>start <input type="time" size="1" id="startFile'+cpt+'" value="' + getStartTime(slideShowData.file) +'"/>';
-         line+=' end <input type="time" size="1" id="endFile'+cpt+'" value="' + getEndTime(slideShowData.file)+'"/></td>';
+         line+='<td>start <input type="time" step="1" min="00:00:00" max="24:00:00" size="1" id="startFile'+cpt+'" value="' + getStartTime(slideShowData.file) +'"/>';
+         line+=' end <input type="time" step="1" min="00:00:00" max="24:00:00" size="1" id="endFile'+cpt+'" value="' + getEndTime(slideShowData.file)+'"/></td>';
          break;
     case "img":
          line+='<td><div class="tooltip"><i id="icon'+cpt+'"class="fa fa-file-photo-o fa-1x" ></i><span class="tooltiptext">';
          line+='<img width="100" heigth="100" src="'+slideShowData.file+'"></span></div></td>';
          line+='<td>'+cpt+'</td><td>'+getFilename(slideShowData.file)+'</td>';
-         line+='<td>duration <input type="time" size="1" id="durationFile'+cpt+'" value="' + afficheTemps(slideShowData.duration) +'"/></td>';
+         line+='<td>duration <input type="time" step="1" min="00:00:00" max="24:00:00" size="1" id="durationFile'+cpt+'" value="' + afficheTemps(slideShowData.duration) +'"/></td>';
          break;
     case "txt":
          line+='<td><i id="icon'+cpt+'"class="fa fa-file-text-o fa-1x" ></i></td><td>'+cpt+'</td><td>'+slideShowData.file+'</td>';
-         line+='<td>duration <input type="time" size="1" id="durationFile'+cpt+'" value="' + afficheTemps(slideShowData.duration) +'"/>';
+         line+='<td>duration <input type="time" step="1" min="00:00:00" max="24:00:00" size="1" id="durationFile'+cpt+'" value="' + afficheTemps(slideShowData.duration) +'"/>';
          line+=' <a class="js-open-modal btn" href="#" title="Modify Text" onclick="updateTextAnimation('+cpt+');"><i class="fa fa-pencil-square fa-1x" ></i></a></td>';
          break; 
     defaut:
@@ -208,16 +208,20 @@ function getEndTime(file){
 
 }
 function afficheTemps(temps){
-  var minutes = Math.floor(temps/60);
-  var secondes = Math.floor(temps%60);
-  return  (minutes<10?"0"+minutes:minutes)+":"+(secondes<10?"0"+secondes:secondes);
+  var heures= Math.floor(temps/3600);
+  var minutes = Math.floor((temps%3600)/60);
+  var secondes = Math.floor((temps%3600)%60);
+  return  (heures<10?"0"+heures:heures)+":"+(minutes<10?"0"+minutes:minutes)+":"+(secondes<10?"0"+secondes:secondes);
 }
 
 function toSecond(mmss){
   if (mmss.split(':').length<2){
     return mmss;
   }
-  return mmss.split(':')[0]*60 + mmss.split(':')[1]*1;
+  if (mmss.split(':').length<3){
+    return mmss.split(':')[0]*60 + mmss.split(':')[1]*1;;
+  }
+  return mmss.split(':')[0]*3600+mmss.split(':')[1]*60 + mmss.split(':')[2]*1;
 }
 
 $('a[set-slideshow-id]').click(function(e) {
@@ -302,7 +306,7 @@ function moveAnimation(currentDataId){
 function addTxtAnimation(){
     var dataToAdd={};
     dataToAdd["media"]="txt";
-    dataToAdd["file"]='Texte_'+slideShowDatas.length;
+    dataToAdd["file"]=($("#textname").val()=='')?'Texte_'+slideShowDatas.length:$("#textname").val();
     dataToAdd["title"]='Titre';
     dataToAdd["subTitle"]='Sous-Titre';
     dataToAdd["lines"]=[{"line":"ceci est une ligne"}];
@@ -787,8 +791,8 @@ function hideEffectAnimation(){
 
   function getStartEndEffect(currentData){
     var selectEffect='<label><i class="fa fa-film fa-2x"></i> Style Effect</label> ';
-    selectEffect+='start in mm:ss <input type="time" size="1" id="startFileUpdate" value="' + getStartTime(currentData.file) +'"/> <i class="fa fa-hourglass-o fa-2x" title="fix start time" style="cursor: pointer;" onclick="setStartCurrentTime(\''+currentData.media+'\');"></i>';
-    selectEffect+=' end in mm:ss <input type="time" size="1" id="endFileUpdate" value="' + getEndTime(currentData.file)+'"/> <i class="fa fa-hourglass fa-2x" title="fix end time" style="cursor: pointer;" onclick="setEndCurrentTime(\''+currentData.media+'\');"></i><br>';
+    selectEffect+='start in mm:ss <input type="time" step="1" min="00:00:00" max="24:00:00"" size="1" id="startFileUpdate" value="' + getStartTime(currentData.file) +'"/> <i class="fa fa-hourglass-o fa-2x" title="fix start time" style="cursor: pointer;" onclick="setStartCurrentTime(\''+currentData.media+'\');"></i>';
+    selectEffect+=' end in mm:ss <input type="time" step="1" min="00:00:00" max="24:00:00" size="1" id="endFileUpdate" value="' + getEndTime(currentData.file)+'"/> <i class="fa fa-hourglass fa-2x" title="fix end time" style="cursor: pointer;" onclick="setEndCurrentTime(\''+currentData.media+'\');"></i><br>';
     return selectEffect;
   }
   function setStartCurrentTime(media){
