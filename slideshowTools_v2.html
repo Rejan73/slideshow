@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Slide Show by Rod</title>
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/slideshow.css">   
+  <link rel="stylesheet" href="css/slideshowFonts.css">  
+  <link rel="stylesheet" href="css/slideshowTools.css">
+  <link rel="stylesheet" href="css/starwars.css">
+</head>
+<body>
+<div id="divMenu">
+  <i class="fa fa-cog fa-2x"></i> Slideshow Tools by Rod <input type='file' accept='application/JSON' onchange='openFile(event)'>
+  <a class="js-open-modal btn" href="#" title="show timeline" onclick="showTimeLine();"><i class="fa fa-bar-chart fa-2x"></i></a>
+  <a class="js-open-modal btn" href="#" title="add animation" onclick="addNewAnimation();"><i class="fa fa-plus-circle fa-2x"></i></a>
+  <a class="js-open-modal btn" href="#" title="save all" onclick="saveAllAnimation();"><i id="isaveall" class="fa fa-save fa-2x"></i></a>
+  <a class="js-open-modal btn" href="slideshowPlayer.html" target="_blank" title="start player"><i class="fa fa-play-circle fa-2x"></i></a>
+  <a class="js-open-modal btn" href="https://github.com/Rejan73/slideshow/blob/main/README.md" target="_blank" title="info"><i class="fa fa-info-circle fa-2x"></i></a>
+</div>
+<div id="divMoveAnimation" style="display:none"></div>
+<div id="mainSlideShow">
+<div id="divLeft">
+  <div id="slideShow" style="display:none"></div>
+</div>  
+<div id="divRight">  
+    <div id="previewSlideShow">
+      <div id="images" style="display:none" >
+        <center>
+          <img id="srcImage" src="" />
+        </center>
+      </div>
+      <div id="nextImage" style="display:none" >
+        <center>
+          <img id="srcNextImage" src="" />
+        </center>
+      </div>
+      <div id="videos" style="display:none">
+        <center>
+        <video id="video" controls>
+            <source id="srcVideo" src="" type="video/mp4">
+        </video>
+        </center>
+      </div>       
+      <div id="musics" style="display:none">
+        <audio id="music" controls>
+          <source id="srcMusic" src="" type="audio/mpeg">
+        </audio>
+      </div>
+      <div id="divSoundEffect" style="display:none">
+        <audio id="soundEffect" controls>
+          <source id="srcSoundEffect" src="" type="audio/mpeg">
+        </audio>
+      </div>
+      <div id="textes" style="display:none">
+        <div id ="divText"></div>
+      </div>
+    </div>
+    <div id="divUpdateConfiguration">
+      <div id="updateTexte" style="display:none">
+      </div>
+      <div id="updateEffect" style="display:none">
+      </div>
+      <div id="addNewAnimation" style="display:none">
+         <br>Ajout Animation : <br><br>
+         <i class="fa fa-file-o fa-2x" ></i> Type : <select name="mediaToAdd" id="mediaToAdd">';
+           <option value="img">Photo</option>
+           <option value="mp3">Music</option>
+           <option value="mp4">Video</option>
+         </select>
+         Multiples Files <input type="file" id="files" name="files" accept="audio/mp3,audio/ogg,audio/wav,audio/mpeg,video/mp4,video/ogg,video/webm,image/*" multiple>
+         <a class="js-open-modal btn" href="#" add-media="add-media" title="add media" onclick="addAnimation();"><i class="fa fa fa-save fa-2x"></i></a><br><br>
+         <i class="fa fa-file-movie-o fa-2x" ></i> Type Text nom: <input type="text" id="textname" size="10"> <a class="js-open-modal btn" href="#" title="add txt media" onclick="addTxtAnimation();"><i class="fa fa fa-save fa-2x"></i></a>
+         <br><center><a class="js-open-modal btn" href="#"  title="Cancel" onclick="hideAddNewAnimation();"><i class="fa fa-times-circle fa-2x"></i></a></center>  
+      </div>
+    </div>
+    <div id="divObject">
+      <form action="javascript:addAnimationObject();">
+        Nom : <input type="text" id="objectName"><br>
+        Type : <select name="objectMedia" id="objectMedia">';
+          <option value="img">Photo</option>
+          <option value="mp3">Music</option>
+          <option value="mp4">Video</option>
+          <option value="txt">Text</option>
+        </select>
+        File : <input type="file" id="objectFile"  accept="audio/mp3,audio/ogg,audio/wav,audio/mpeg,video/mp4,video/ogg,video/webm,image/*"><br>
+        Size Width: <input type="number" id="objectWidth" min="0" max="800"> Size Height: <input type="number" id="objectHeight" min="0" max="800"> <br>
+        Position Top: <input type="number" id="objectTop" min="0" max="600"> Position Left: <input type="number" id="objectLeft" min="0" max="800"> Z-Index : <input type="number" id="objectZindex"><br>
+        Coming At : <input type="time" step="1" min="00:00:00" max="24:00:00" size="1" id="objetComingTime" value="00:00:00"> Duration : <input type="time" step="1" min="00:00:00" max="24:00:00"" size="1" id="objetDuration" value="00:00:00"><br>
+        <input type="submit">
+    </form>
+    </div>
+</div>
+<div id="divBottom">  
+  <div id="timelines" style="display:none">
+    <div id="timelineDiv"></div>
+  </div>   
+</div>  
+</div>
+<script type="text/javascript" src="js/charts/loader.js"></script>
+<script src="js/jquery-3.5.0.js"></script>
+<script src="js/slideshowTools_v2.js"></script> 
+</body>
+</html>
