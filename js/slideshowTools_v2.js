@@ -1,10 +1,12 @@
 /*!
- * Slideshow Tools Library v1.0.0
+ * Slideshow Tools Library v2.0.0
  *
- * Date: 2021-03-19T08:00Z
+ * Date: 2023-03-12T08:00Z
  */
-var slideShowDatas;
+
 var slideShowObjects;
+slideShowObjects=JSON.parse("[]");
+
 
 (function($) {
   $(document).ready(function(){
@@ -22,26 +24,19 @@ var openFile = function(event) {
         var input = event.target;
         var reader = new FileReader();
         reader.onload = function(){
-          slideShowDatas = JSON.parse(reader.result);
+          slideShowObjects = JSON.parse(reader.result);
           google.charts.load("current", {packages:["timeline"]});
           fillSlideShow();
           $('#timelines').show();
         };
           reader.readAsText(input.files[0]);
-        /*
-        $('#video').get(0).addEventListener('pause', function(e) {
-              $('#video').get(0).currentTime;
-        });  
-        */
-        
       };
       
 
 function fillSlideShow(){
-    hideAll();
-    var div_data='<table><th></th><th>N°</th><th>File</th><th>Time in mm:ss</th><th>Actions</th>';
+    var div_data='<table><th></th><th>N°</th><th>File</th><th>Coming at</th><th>Actions</th>';
     var cpt=0;
-    slideShowDatas.forEach(slideShowData => div_data+=printSlideShowData(slideShowData,cpt++));
+    slideShowObjects.forEach(slideShowObjects => div_data+=printSlideShowData(slideShowObjects,cpt++));
     div_data+='</table>';
     $('#slideShow').html(div_data); 
     $('#slideShow').show(); 
@@ -51,8 +46,8 @@ function fillSlideShow(){
 
 function calculeAnimationTime(){
   var animationTime=0;
-  slideShowDatas.filter(slideShowData => slideShowData["duration"] !=null).forEach(slideShowData => animationTime+=parseFloat(slideShowData["duration"]));
-  slideShowDatas.filter(slideShowData => parseFloat(getEndTime(slideShowData["file"]))>0 && slideShowData["media"]=="mp4").forEach(slideShowData => animationTime+=getDuration(slideShowData.file));
+  slideShowObjects.filter(slideShowObject => slideShowObject["duration"] !=null).forEach(slideShowObject => animationTime+=parseFloat(slideShowObject["duration"]));
+  slideShowObjects.filter(slideShowObject => parseFloat(getEndTime(slideShowObject["file"]))>0 && slideShowObject["media"]=="mp4").forEach(slideShowObject => animationTime+=getDuration(slideShowObject.file));
   return animationTime;
 }
 
@@ -64,17 +59,17 @@ function toDateTime(secs) {
 
 var time=0;
 var timeCpt=-1;
-function  buildData(slideShowData) {
+function  buildData(slideShowObject) {
   var startTime=time;
    timeCpt++;
-    if (slideShowData["duration"] !=null){
-      time+=parseFloat(slideShowData["duration"]);
-    } else if (slideShowData["media"]=="mp4"){
-      time+=getDuration(slideShowData.file);
+    if (slideShowObject["duration"] !=null){
+      time+=parseFloat(slideShowObject["duration"]);
+    } else if (slideShowObject["media"]=="mp4"){
+      time+=getDuration(slideShowObject.file);
     } else{
-       return [ slideShowData.media ,timeCpt+':'+ getFilename(slideShowData.file),toDateTime(startTime), toDateTime(startTime+getDuration(slideShowData.file))];
+       return [ slideShowObject.media ,timeCpt+':'+ getFilename(slideShowObject.file),toDateTime(startTime), toDateTime(startTime+getDuration(slideShowObject.file))];
     } 
-    return [ slideShowData.media ,timeCpt+':'+ getFilename(slideShowData.file), toDateTime(startTime),  toDateTime(time)];
+    return [ slideShowObject.media ,timeCpt+':'+ getFilename(slideShowObject.file), toDateTime(startTime),  toDateTime(time)];
     
 }
 
@@ -96,7 +91,7 @@ function drawChart(){
     var currentData=[];
     time=0;
     timeCpt=-1;
-    slideShowDatas.forEach(object => currentData.push(buildData(object)));
+    slideShowObjects.forEach(object => currentData.push(buildData(object)));
     dataTable.addRows( currentData);
    /* dataTable.addRows([
       [ 'Music', 'Beginning JavaScript',       new Date(0,0,0,0,0,0),  new Date(0,0,0,0,0,30) ],
@@ -134,39 +129,31 @@ function drawChart(){
 }
 
 
-function printSlideShowData(slideShowData,cpt){
+function printSlideShowData(slideShowObject,cpt){
   var line='';
-  switch (slideShowData.media)
+  switch (slideShowObject.media)
   {
     case "mp3":
-         line+='<td><i id="icon'+cpt+'" class="fa fa-file-audio-o fa-1x" ></i></td><td>'+cpt+'</td><td>'+getFilename(slideShowData.file)+'</td>';
-         line+='<td>start <input type="time" step="1" min="00:00:00" max="24:00:00" size="1" id="startFile'+cpt+'" value="' + getStartTime(slideShowData.file) +'"/>';
-         line+=' end <input type="time" step="1" min="00:00:00" max="24:00:00" size="1" id="endFile'+cpt+'" value="' + getEndTime(slideShowData.file)+'"/></td>';
+         line+='<td><i id="icon'+cpt+'" class="fa fa-file-audio-o fa-1x" ></i></td><td>'+cpt+'</td><td>'+getFilename(slideShowObject.file)+'</td>';
          break;
     case "mp4":
-         line+='<td><i id="icon'+cpt+'"class="fa fa-file-movie-o fa-1x" ></i></td><td>'+cpt+'</td><td>'+getFilename(slideShowData.file)+'</td>';
-         line+='<td>start <input type="time" step="1" min="00:00:00" max="24:00:00" size="1" id="startFile'+cpt+'" value="' + getStartTime(slideShowData.file) +'"/>';
-         line+=' end <input type="time" step="1" min="00:00:00" max="24:00:00" size="1" id="endFile'+cpt+'" value="' + getEndTime(slideShowData.file)+'"/></td>';
+         line+='<td><i id="icon'+cpt+'"class="fa fa-file-movie-o fa-1x" ></i></td><td>'+cpt+'</td><td>'+getFilename(slideShowObject.file)+'</td>';
          break;
     case "img":
          line+='<td><div class="tooltip"><i id="icon'+cpt+'"class="fa fa-file-photo-o fa-1x" ></i><span class="tooltiptext">';
-         line+='<img width="100" heigth="100" src="'+slideShowData.file+'"></span></div></td>';
-         line+='<td>'+cpt+'</td><td>'+getFilename(slideShowData.file)+'</td>';
-         line+='<td>duration <input type="time" step="1" min="00:00:00" max="24:00:00" size="1" id="durationFile'+cpt+'" value="' + afficheTemps(slideShowData.duration) +'"/></td>';
+         line+='<img width="100" heigth="100" src="'+slideShowObject.file+'"></span></div></td>';
+         line+='<td>'+cpt+'</td><td>'+getFilename(slideShowObject.file)+'</td>';
          break;
     case "txt":
-         line+='<td><i id="icon'+cpt+'"class="fa fa-file-text-o fa-1x" ></i></td><td>'+cpt+'</td><td>'+slideShowData.file+'</td>';
-         line+='<td>duration <input type="time" step="1" min="00:00:00" max="24:00:00" size="1" id="durationFile'+cpt+'" value="' + afficheTemps(slideShowData.duration) +'"/>';
-         line+=' <a class="js-open-modal btn" href="#" title="Modify Text" onclick="updateTextAnimation('+cpt+');"><i class="fa fa-pencil-square fa-1x" ></i></a></td>';
+         line+='<td><i id="icon'+cpt+'"class="fa fa-file-text-o fa-1x" ></i></td><td>'+cpt+'</td><td>'+slideShowObject.file+'</td>';
          break; 
     defaut:
          break;    
   }
-  
+  line+='<td><input type="time" step="1" min="00:00:00" max="24:00:00" size="1" id="comingAt'+cpt+'" value="' + afficheTemps(slideShowObject.comingAt) +'"/></td>';
   line+='<td>';
-  line+='<a class="js-open-modal btn" href="#" title="move" onclick="showMoveAnimation('+cpt+');"><i class="fa fa-arrow-circle-up fa-1x" ></i><i class="fa fa-arrow-circle-down fa-1x" ></i></a>';
-  line+='&nbsp;<a class="js-open-modal btn" href="#" title="Modify Effect" onclick="updateEffectAnimation('+cpt+');"><i class="fa fa-film fa-1x" ></i></a>';
-  line+='&nbsp;<a class="js-open-modal btn" href="#" title="Save" onclick="saveAnimation('+cpt+');"><i class="fa fa-save fa-1x" ></i></a>';
+  line+='&nbsp;<a class="js-open-modal btn" href="#" title="Save" onclick="changeComingAt('+cpt+');"><i class="fa fa-save fa-1x" ></i></a>';
+  line+='&nbsp;<a class="js-open-modal btn" href="#" title="Modify Effect" onclick="updateAnimation('+cpt+');"><i class="fa fa-film fa-1x" ></i></a>';
   line+='&nbsp;<a class="js-open-modal btn" href="#" title="Play" onclick="runAnimation('+cpt+');"><i class="fa fa-play-circle fa-1x" ></i></a>';
   line+='&nbsp;&nbsp;<a class="js-open-modal btn" href="#" title="Remove" onclick="removeAnimation('+cpt+');"><i class="fa fa-times-circle fa-1x" style="color:red;"></i></a></td>';
   
@@ -229,20 +216,6 @@ $('a[set-slideshow-id]').click(function(e) {
    id =$('#idSlideShow').val();
 });
 
-function saveAnimation(currentDataId){
-  hideAll();
-  currentData=slideShowDatas[currentDataId];
-  if ($('#durationFile'+currentDataId).val()!=undefined) {
-    currentData.duration= toSecond($('#durationFile'+currentDataId).val());
-  }
-  currentData.effect=$('#effectFile'+currentDataId).val();
-  if (currentData.media=='mp3' || currentData.media=='mp4'){
-    currentData.file= getFilePath(currentData.file)+'#t='+ toSecond($('#startFile'+currentDataId).val()) +','+toSecond($('#endFile'+currentDataId).val());
-  }
-  changeSaveallColorRed();
-  fillSlideShow();
-}
-
 
 function removeAnimation(currentDataId){
   hideAll();
@@ -251,107 +224,84 @@ function removeAnimation(currentDataId){
   fillSlideShow();
 }
 
-function moveDownAnimation(currentDataId){
-  hideAll();
-  if (currentDataId<slideShowDatas.length-1){
-    currentData=slideShowDatas[currentDataId];
-    if (currentData.media=='txt'){
-      currentData["file"]='Texte_'+(currentDataId+1);
-    }
-    slideShowDatas[currentDataId]=slideShowDatas[currentDataId+1];
-    slideShowDatas[currentDataId+1]=currentData;
-    changeSaveallColorRed();
-  }
-  fillSlideShow();
-}
-
-function moveUpAnimation(currentDataId){
-  hideAll();
-  if (currentDataId>0){
-    currentData=slideShowDatas[currentDataId];
-    if (currentData.media=='txt'){
-      currentData["file"]='Texte_'+(currentDataId-1);
-    }
-    slideShowDatas[currentDataId]=slideShowDatas[currentDataId-1];
-    slideShowDatas[currentDataId-1]=currentData;
-    changeSaveallColorRed();
-  }
-  fillSlideShow();
-}
-
-function showMoveAnimation(currentDataId){
-  var line='';
-  line+="<center>N°"+currentDataId+" move to <input type='number' id='moveTo' value='' min='0' max='9999'>";
-  line+="&nbsp;<a class='js-open-modal btn' href='#' move-Animation='move-Animation' title='move animation' onclick='moveAnimation("+currentDataId+");'><i class='fa fa fa-save fa-2x'></i></a></center>";
-  $("#divMoveAnimation").html(line); 
-  $("#divMoveAnimation").show();
-}
-
-function moveAnimation(currentDataId){
-  $("#divMoveAnimation").hide();
-  if (currentDataId>$("#moveTo").val()){
-    while (currentDataId!=$("#moveTo").val()){
-      moveUpAnimation(currentDataId);
-      currentDataId--;
-    }
-  }else {
-    while (currentDataId!=$("#moveTo").val()){
-      moveDownAnimation(currentDataId);
-      currentDataId++;
-    }
-  }
-}
-
-
-
-function addTxtAnimation(){
-    var dataToAdd={};
-    dataToAdd["media"]="txt";
-    dataToAdd["file"]=($("#textname").val()=='')?'Texte_'+slideShowDatas.length:$("#textname").val();
-    dataToAdd["title"]='Titre';
-    dataToAdd["subTitle"]='Sous-Titre';
-    dataToAdd["lines"]=[{"line":"ceci est une ligne"}];
-    dataToAdd["duration"]='5';
-    dataToAdd["styleEffect"]="none";
-    dataToAdd["movementEffect"]="none";
-    dataToAdd["comeInEffect"]="none";
-    dataToAdd["comeOutEffect"]="none";
-    dataToAdd["soundEffectComeIn"]="none";
-    dataToAdd["soundEffectComeOut"]="none";
-    dataToAdd["font"]="none";
-    dataToAdd["fontcolor"]="#ff0000";
-    dataToAdd["fontsize"]="100";
-    
-    slideShowDatas.push(dataToAdd);
-    changeSaveallColorRed();
-    fillSlideShow();
+function sortslideShowObjects(){
+  slideShowObjects.sort(function compare(a, b) {
+    if (a.comingAt < b.comingAt)
+      return -1;
+    if (a.comingAt > b.comingAt )
+      return 1;
+    return 0;
+  });
 }
 
 function addAnimationObject(){
   var dataToAdd={};
+
   dataToAdd["name"]=$("#objectName").val();
   dataToAdd["media"]=$("#objectMedia").val();
-  dataToAdd["file"]='photos/'+$("#objectFile")[0].files[0].name;
+  if ($("#objectFileHidden").val()!="" ){
+    dataToAdd["file"]=  $("#objectFileHidden").val();
+  } else {
+    dataToAdd["file"]='photos/'+$("#objectFile")[0].files[0].name;
+  }
   dataToAdd["width"]=$("#objectWidth").val();
   dataToAdd["height"]=$("#objectWidth").val();
   dataToAdd["top"]=$("#objectTop").val();
   dataToAdd["left"]=$("#objectLeft").val();
   dataToAdd["z-index"]=$("#objectZindex").val();
-  dataToAdd["commingAt"]=$("#objetComingTime").val();
-  dataToAdd["duration"]=$("#objetDuration").val();
+  dataToAdd["comingAt"]=toSecond($("#objetComingTime").val());
+  dataToAdd["duration"]=toSecond($("#objetDuration").val());
   dataToAdd["volume"]=$("#objectVolume").val();
   dataToAdd["styleEffect"]=$("#objectStyleEffect").val();
   dataToAdd["comeInEffect"]=$("#objectComeInEffect").val();
   dataToAdd["comeOutEffect"]=$("#objectComeOutEffect").val();
 
-  slideShowObjects=JSON.parse("[]");
+  //dataToAdd["font"]="none";
+  //dataToAdd["fontcolor"]="#ff0000";
+  //dataToAdd["fontsize"]="100";
+
   slideShowObjects.push(dataToAdd);
+  sortslideShowObjects();
+  changeSaveallColorRed();
+  fillSlideShow();
 }
+
+function fillForUpdateAnimationObject(dataToUpdate){
+  $("#objectName").val(dataToUpdate["name"]);
+  $("#objectMedia").val(dataToUpdate["media"]).change();
+  $("#objectFileHidden").val(dataToUpdate["file"]);
+  $("#objectWidth").val(dataToUpdate["width"]);
+  $("#objectWidth").val(dataToUpdate["height"]);
+  $("#objectTop").val(dataToUpdate["top"]);
+  $("#objectLeft").val(dataToUpdate["left"]);
+  $("#objectZindex").val(dataToUpdate["z-index"]);
+  $("#objetComingTime").val(afficheTemps(dataToUpdate["comingAt"]));
+  $("#objetDuration").val(afficheTemps(dataToUpdate["duration"]));
+  $("#objectVolume").val(dataToUpdate["volume"]);
+  $("#objectStyleEffect").val(dataToUpdate["styleEffect"]).change();
+  $("#objectComeInEffect").val(dataToUpdate["comeInEffect"]).change();
+  $("#objectComeOutEffect").val(dataToUpdate["comeOutEffect"]).change();
+}
+
+function updateAnimation(id){
+  fillForUpdateAnimationObject(slideShowObjects[id]);
+}
+
+function changeComingAt(id){
+  var comingAt="#comingAt"+id;
+  slideShowObjects[id].comingAt=toSecond($(comingAt).val());
+  sortslideShowObjects();
+  changeSaveallColorRed();
+  fillSlideShow();
+}
+
+
 function playAnimationObject(){
   var dataToAdd={};
   dataToAdd["name"]='igloo';
   dataToAdd["media"]='img';
   dataToAdd["file"]='photos/igloo.jpg';
+  dataToAdd["styleEffect"]="imageEffectNone";
   dataToAdd["comeInEffect"]="movementEffectUpToDown";
   dataToAdd["comeOutEffect"]="movementEffectDownToUp";
   dataToAdd["width"]=200;
@@ -359,12 +309,12 @@ function playAnimationObject(){
   dataToAdd["top"]='50';
   dataToAdd["left"]='100';
   dataToAdd["z-index"]=2;
-  dataToAdd["commingAt"]=2;
+  dataToAdd["comingAt"]=2;
   dataToAdd["duration"]=10;
   //var dataToAdd=slideShowObjects[0];
   createObjectImage(dataToAdd);
   runObjectAnimation(dataToAdd);
-
+  fillForUpdateAnimationObject(dataToAdd);
   var dataToAdd2={};
   dataToAdd2["name"]='green'
   dataToAdd["media"]='img';
@@ -374,7 +324,7 @@ function playAnimationObject(){
   dataToAdd2["top"]='220';
   dataToAdd2["left"]='450';
   dataToAdd2["z-index"]=3;
-  dataToAdd2["commingAt"]=4;
+  dataToAdd2["comingAt"]=4;
   dataToAdd2["duration"]=12;
   createObjectImage(dataToAdd2);
   runObjectAnimation(dataToAdd2);
@@ -388,7 +338,7 @@ function playAnimationObject(){
   dataToAdd4["top"]='220';
   dataToAdd4["left"]='200';
   dataToAdd4["z-index"]=4;
-  dataToAdd4["commingAt"]=6;
+  dataToAdd4["comingAt"]=6;
   dataToAdd4["duration"]=10;
   createObjectText(dataToAdd4);
   runObjectAnimation(dataToAdd4);
@@ -402,7 +352,7 @@ function playAnimationObject(){
   dataToAdd3["top"]='90';
   dataToAdd3["left"]='250';
   dataToAdd3["z-index"]=1;
-  dataToAdd3["commingAt"]=4;
+  dataToAdd3["comingAt"]=4;
   dataToAdd3["duration"]=10;
   createObjectVideo(dataToAdd3);
   runObjectAnimation(dataToAdd3);
@@ -441,7 +391,6 @@ function createObjectText(slideShowObject){
 
 }
 
-
 function createObjectVideo(slideShowObject){
   var elem = document.createElement("video");
   elem.id= slideShowObject["name"];
@@ -455,6 +404,18 @@ function createObjectVideo(slideShowObject){
   document.getElementById("previewSlideShow").appendChild(elem);
 }
 
+function createObjectMusic(slideShowObject){
+  var elem = document.createElement("audio");
+  elem.id= slideShowObject["name"];
+  elem.src=slideShowObject["file"];
+  elem.style.cssText = 'display:none;border: solid red;object-fit:contain;position:absolute;top:'
+    +slideShowObject["top"]+'px;left:'
+    +slideShowObject["left"]+'px;width:'
+    +slideShowObject["width"]+'px;height:'
+    +slideShowObject["height"]+'px;z-index:'
+    +slideShowObject["z-index"]+';';
+  document.getElementById("previewSlideShow").appendChild(elem);
+}
 
 function runObjectAnimation(slideShowObject){
   console.log(slideShowObject["name"]);
@@ -477,53 +438,28 @@ function runObjectAnimation(slideShowObject){
       $(id).hide();
       document.getElementById("previewSlideShow").removeChild(elem);
     }, slideShowObject["duration"]*1000);
-  }, slideShowObject["commingAt"]*1000);  
+  }, slideShowObject["comingAt"]*1000);  
   return elem;
 }
 
-
-
-
-
-
-function addAnimation(){
-  var files = $("#files")[0].files;
-  for (i=0;i<files.length;i++){ 
-    var dataToAdd={};
-    dataToAdd["media"]=$('#mediaToAdd').val();
-    switch (dataToAdd["media"])
-    {
-      case "mp3":
-          dataToAdd.file='musics/'+files[i].name;
-          break;
-      case "mp4":
-          dataToAdd.file='videos/'+files[i].name;
-          dataToAdd["orientationEffect"]="landscape";
-          break;
-      case "img":
-          dataToAdd.file='photos/'+files[i].name;
-          dataToAdd["duration"]='5';
-          dataToAdd["orientationEffect"]="landscape";
-          break;
-      defaut:
-          break; 
-    }
-    dataToAdd["styleEffect"]="none";
-    dataToAdd["volume"]="100";
-    dataToAdd["movementEffect"]="none";
-    dataToAdd["comeInEffect"]="none";
-    dataToAdd["comeOutEffect"]="none";
-    dataToAdd["soundEffectComeIn"]="none";
-    dataToAdd["soundEffectComeOut"]="none";
-    slideShowDatas.push(dataToAdd);
+function runAnimation(id){
+  var slideShowObject = slideShowObjects[id];
+  slideShowObject["comingAt"]=1;
+  if (slideShowObject["media"]=="img"){
+    createObjectImage(slideShowObject);
+  } else if (slideShowObject["media"]=="txt"){
+    createObjectText(slideShowObject);
+  } else if (slideShowObject["media"]=="mp4"){
+    createObjectVideo(slideShowObject);
+  } else if (slideShowObject["media"]=="mp3"){
+    createObjectMusic(slideShowObject);
   }
-  changeSaveallColorRed();
-  fillSlideShow();
+  runObjectAnimation(slideShowObject);
 }
 
+
 function saveAllAnimation(){
-  hideAll();
-  downAll(JSON.stringify(slideShowDatas),'slideshowData-'+Date.now()+'.json','application/json');
+  downAll(JSON.stringify(slideShowObjects),'slideShowObjects-'+Date.now()+'.json','application/json');
   $("#isaveall").attr({'style':'color:green;'});
 }
 
@@ -562,124 +498,6 @@ function downAll(data, filename, mime) {
         }, 200)
     }
 }
-
-function hideAll(){
-    $('#srcVideo').attr('src','');
-    $('#videos').hide();
-    $('#images').hide();
-    $('#musics').hide();
-    $('#textes').hide();
-    $('#updateTexte').hide();
-    $('#updateEffect').hide();
-    $('#addNewAnimation').hide();
-}
-
-function runAnimation(currentDataId){
-  hideAll();
-  playAnimation(currentDataId);
-}  
-
-function playAnimation(currentDataId){ 
-  $('#srcVideo').attr('src','');
-  $("#music").attr('controls', '');
-  $('#videos').hide();
-  $('#images').hide();
-  $('#musics').hide();
-  $('#textes').hide(); 
-  currentData=slideShowDatas[currentDataId];
-  switch (currentData.media)
-  {
-    case "mp3":
-         playMusic(currentDataId,currentData.file);
-         break;
-    case "mp4":
-         playMovie(currentDataId);
-         break;
-    case "img":
-         playImage(currentDataId);
-         break;
-    case "txt":
-         playText(currentDataId);
-         break; 
-    defaut:
-         break;    
-  }
-}
-
-function playImage(currentDataId){
-  $("#music").removeAttr('controls');
-  currentData=slideShowDatas[currentDataId];
-  $('#srcImage').attr('src',currentData.file);
-  $("#srcImage").addClass(currentData["orientationEffect"]);
-  $("#images").addClass(currentData["styleEffect"]);
-  $("#images").addClass(currentData["comeInEffect"]);
-  $("#images").addClass(currentData["movementEffect"]);
-  playMusic(currentDataId,currentData["soundEffectComeIn"]);
-  $('#images').show();
-  
-  setTimeout(function() {
-    $("#images").removeClass(currentData["comeInEffect"]);
-    $("#images").removeClass(currentData["movementEffect"]);
-    $("#images").addClass(currentData["comeOutEffect"]);
-    if ("comeOutEffectShowNextImage"==currentData["comeOutEffect"]){
-      $('#srcNextImage').attr('src',currentData.file);
-      $("#nextImage").addClass("comeOutEffectShowNextImage2"); 
-      $('#nextImage').show(); 
-      if (currentDataId+1<slideShowDatas.length && slideShowDatas[currentDataId+1].media=="img"){
-        $('#srcImage').attr('src',slideShowDatas[currentDataId+1].file);
-      }
-    }
-    playMusic(currentDataId,currentData["soundEffectComeOut"]);
-  }, currentData["duration"]*1000);
-
-  durationEffect=2000;
-  if ("comeOutEffectShowNextImage"==currentData["comeOutEffect"]){
-    durationEffect=5000;
-  }
-
-  setTimeout(function() {
-    $("#srcImage").removeClass(currentData["orientationEffect"]);
-    $("#images").removeClass(currentData["styleEffect"]);
-    $("#images").removeClass(currentData["comeOutEffect"]);
-    if ("comeOutEffectShowNextImage"==currentData["comeOutEffect"]){
-      $('#srcNextImage').attr('src','photos/black.png');
-      $("#nextImage").removeClass("comeOutEffectShowNextImage2"); 
-      $('#nextImage').hide(); 
-    }
-    stopMusic();
-  }, currentData["duration"]*1000+durationEffect) ;
-  
-};
-
-function playMovie(currentDataId){
-  currentData=slideShowDatas[currentDataId];
-  volume=currentData["volume"]==undefined ?1:currentData["volume"]/100;
-  $("#video").addClass(currentData["orientationEffect"]);
-  $('#srcVideo').attr('src',currentData.file);
-  $('#video')[0].load();
-  $('#videos').show();
-  $('#video').get(0).volume=volume;//0.0 to 1.0
-  $('#video').get(0).play();
-  //$('#video').get(0).requestFullscreen();
-}
-  
-function stopMusic(){
-    $('#music').get(0).pause();
-    $('#srcMusic').attr('src','');
-}
-
-function playMusic(currentDataId,soundFile){
-  currentData=slideShowDatas[currentDataId];
-  if (soundFile!='none' && soundFile!==undefined){
-    stopMusic();
-    volume=currentData["volume"]==undefined ?1:currentData["volume"]/100;
-    $('#srcMusic').attr('src',soundFile);
-    $('#music')[0].load();
-    $('#musics').show();
-    $('#musics').get(0).volume=volume;
-    $('#music').get(0).play();
-  }
-};
 
 
 function playText(currentDataId){
@@ -772,221 +590,6 @@ function hideTextAnimation(){
   $('#updateTexte').hide();
 }
 
-function addNewAnimation(){
-  if ($('#addNewAnimation').is(":visible")){
-    hideAll();
-  }else {
-    hideAll();
-    $('#addNewAnimation').show();
-  }
-}
-
-function hideAddNewAnimation(){
-  $('#addNewAnimation').hide();
-}
-
-
-function  updateEffectAnimation(currentDataId){
-  oldCurrentDataId=$('#effetCurrentDataId').val();
-  currentData=slideShowDatas[currentDataId];
-  var div_effect ='<p>Style Modification '+currentData.file+'</p>';
-  switch (currentData.media)
-  {
-    case "mp3":
-         div_effect+=getStartEndEffect(currentData);
-         div_effect+=getVolume(currentData.volume);
-         break;
-    case "mp4":
-         div_effect+=getOrientationEffect(currentData.styleEffect);
-         div_effect+=getVolume(currentData.volume);
-         div_effect+=getMovieEffect(currentData.styleEffect);
-         div_effect+=getStartEndEffect(currentData);
-         break;
-    case "img":
-        div_effect+=getOrientationEffect(currentData.styleEffect);
-        div_effect+=getImageEffect(currentData.styleEffect);
-        div_effect+=getSoundEffect(currentData);
-        div_effect+=getMovementEffect(currentData.movementEffect);
-        div_effect+=getComeInEffect(currentData.comeInEffect);
-        div_effect+=getComeOutEffect(currentData.comeOutEffect);
-         break;
-    case "txt":
-         div_effect+=getTextEffect(currentData.styleEffect);
-         div_effect+=getSoundEffect(currentData);
-         div_effect+=getMovementEffect(currentData.movementEffect);
-         div_effect+=getComeInEffect(currentData.comeInEffect);
-         div_effect+=getComeOutEffect(currentData.comeOutEffect);
-         break; 
-    defaut:
-         break;    
-  }
-  div_effect+='<br><center><a class="js-open-modal btn" href="#" save-media="save-media" title="Modify" onclick="saveEffectAnimation('+currentDataId+');"><i class="fa fa-save fa-2x"></i></a>';
-  div_effect+='&nbsp;<a class="js-open-modal btn" href="#" title="Play" onclick="playAnimation('+currentDataId+');"><i class="fa fa-play-circle fa-2x" ></i></a>';
-  div_effect+='&nbsp;<a class="js-open-modal btn" href="#"  title="Cancel" onclick="hideEffectAnimation();"><i class="fa fa-times-circle fa-2x"></i></a></center>';
-  div_effect+='<input type="hidden" id="effetCurrentDataId" value="'+currentDataId+'">';
-  
-  $("#updateEffect").html(div_effect);  
-  $('#orientationEffect').val(currentData["orientationEffect"]);
-  $('#styleEffect').val(currentData["styleEffect"]);
-  $('#volume').val(currentData["volume"]);
-  $('#movementEffect').val(currentData["movementEffect"]);
-  $('#comeInEffect').val(currentData["comeInEffect"]);
-  $('#comeOutEffect').val(currentData["comeOutEffect"]);
-  
-  $('#updateTexte').hide();
-  if (oldCurrentDataId==currentDataId){
-    $('#updateEffect').toggle();
-  } else {
-    $('#updateEffect').show();
-  }
-
-}
-function  saveEffectAnimation(currentDataId){
-  currentData=slideShowDatas[currentDataId];
-  if ( currentData.media=="mp4"){
-    currentData["styleEffect"]=$('#styleEffect').val();
-  }
-  if ( currentData.media=="mp4" || currentData.media=="img"){
-    $("#video").removeClass(currentData["orientationEffect"]);
-    currentData["orientationEffect"]=$('#orientationEffect').val();
-  } 
-  if (currentData.media=="txt" || currentData.media=="img"){
-    currentData["styleEffect"]=$('#styleEffect').val();
-    currentData["movementEffect"]=$('#movementEffect').val();
-    currentData["comeInEffect"]=$('#comeInEffect').val();
-    currentData["comeOutEffect"]=$('#comeOutEffect').val();
-    currentData["soundEffectComeIn"]=$('#soundEffectComeIn').val();
-    currentData["soundEffectComeOut"]=$('#soundEffectComeOut').val();
-  } else if (currentData.media=="mp3" || currentData.media=="mp4"){
-    currentData["volume"]=$('#volume').val();
-    currentData.file= getFilePath(currentData.file)+'#t='+ toSecond($('#startFileUpdate').val()) +','+toSecond($('#endFileUpdate').val());
-    $('#startFile'+currentDataId).val($('#startFileUpdate').val()); 
-    $('#endFile'+currentDataId).val($('#endFileUpdate').val());
-  }
-  changeSaveallColorRed();
-}
-
-function hideEffectAnimation(){
-  $('#updateEffect').hide();
-}
-
-  function getMovementEffect(selectedEffect){
-    var selectEffect='<label><i class="fa fa-film fa-1x"></i> Movement Effect</label>'; 
-    selectEffect+='<select name="movementEffect" id="movementEffect">';
-    selectEffect+='<option value="movementEffectNone">none</option>';
-    selectEffect+='<option value="movementEffectUpToDown">Up to Down</option>';
-    selectEffect+='<option value="movementEffectDownToUp">Down to Up</option>';
-    selectEffect+='<option value="movementEffectLeftToRight">Left to Right</option>';
-    selectEffect+='<option value="movementEffectRightToLeft">Right to Left</option>';
-    selectEffect+='</select>';                                                                                                         
-    return selectEffect;
-  }
-
-  function getComeInEffect(selectedEffect){
-    var selectEffect='<br><label><i class="fa fa-film fa-1x"></i> Come In Effect</label> ';
-    selectEffect+='<select name="comeInEffect" id="comeInEffect">';
-    selectEffect+='<option value="comeInEffectNone">none</option>';
-    selectEffect+='<option value="comeInEffectFadeIn">Fade In</option>';
-    selectEffect+='<option value="comeInEffectZoomIn">Zoom In</option>';
-    selectEffect+='<option value="comeInEffectZoomInWithRotate">Zoom In with Rotate</option>';
-    selectEffect+='<option value="comeInEffectZoomInSlowMotion">Zoom in slow-motion</option>';
-    selectEffect+='</select>';
-    return selectEffect;
-  }
-  
-  function getComeOutEffect(selectedEffect){
-    var selectEffect='<br><label><i class="fa fa-film fa-1x"></i> Come Out Effect</label> ';
-    selectEffect+='<select name="comeOutEffect" id="comeOutEffect">';
-    selectEffect+='<option value="comeOutEffectNone">none</option>';
-    selectEffect+='<option value="comeOutEffectFadeOut">Fade Out</option>';
-    selectEffect+='<option value="comeOutEffectZoomOut">Zoom Out</option>';
-    selectEffect+='<option value="comeOutEffectZoomOutWithRotate">Zoom Out with Rotate</option>';
-    selectEffect+='<option value="comeOutEffectZoomOutSlowMotion">Zoom Out slow-motion</option>';
-    selectEffect+='<option value="comeOutEffectShowNextImage">Show Next Image</option>';
-    selectEffect+='</select>';
-    return selectEffect;
-  }
-
-  function getImageEffect(selectedEffect){
-    var selectEffect='<label><i class="fa fa-film fa-1x"></i> Style Effect</label> ';
-    selectEffect+='<select name="styleEffect" id="styleEffect">';
-    selectEffect+='<option value="imageEffectNone">none</option>';
-    selectEffect+='<option value="imageEffectSepia">Sepia</option>';
-    selectEffect+='<option value="imageEffectBlackAndWhite">Black and White</option>';
-    selectEffect+='</select>';
-    return selectEffect;
-  }
-
-  function getMovieEffect(selectedEffect){
-    var selectEffect='<br><label><i class="fa fa-film fa-1x"></i> Style Effect</label> ';
-    selectEffect+='<select name="styleEffect" id="styleEffect">';
-    selectEffect+='<option value="keepMusic">Keep Music</option>';
-    selectEffect+='<option value="stopMusic">Stop Music</option>';
-    selectEffect+='</select>';
-    return selectEffect;
-  }
-  
-  function getOrientationEffect(selectedEffect){
-    var selectEffect='<label><i class="fa fa-film fa-1x"></i> Orientation</label> ';
-    selectEffect+='<select name="orientationEffect" id="orientationEffect">';
-    selectEffect+='<option value="landscape">landscape</option>';
-    selectEffect+='<option value="portrait">portrait</option>';
-    selectEffect+='</select>';
-    return selectEffect;
-  }
-  
-  function getTextEffect(selectedEffect){
-    var selectEffect='<label><i class="fa fa-film fa-1x"></i> Style Effect</label> ';
-    selectEffect+='<select name="styleEffect" id="styleEffect">';
-    selectEffect+='<option value="none">none</option>';
-    selectEffect+='<option value="starwars">starwars</option>';
-    selectEffect+='</select>';
-    return selectEffect;
-  }
-  
-  function getVolume(volume){
-    var selectEffect=' Volume <input name="volume" id="volume" type="range" min="0" max="100" value="'+volume+'">';
-    return selectEffect;
-  }
-
-  function getStartEndEffect(currentData){
-    var selectEffect='<label><i class="fa fa-film fa-2x"></i> Style Effect</label> ';
-    selectEffect+='start in mm:ss <input type="time" step="1" min="00:00:00" max="24:00:00"" size="1" id="startFileUpdate" value="' + getStartTime(currentData.file) +'"/> <i class="fa fa-hourglass-o fa-2x" title="fix start time" style="cursor: pointer;" onclick="setStartCurrentTime(\''+currentData.media+'\');"></i>';
-    selectEffect+=' end in mm:ss <input type="time" step="1" min="00:00:00" max="24:00:00" size="1" id="endFileUpdate" value="' + getEndTime(currentData.file)+'"/> <i class="fa fa-hourglass fa-2x" title="fix end time" style="cursor: pointer;" onclick="setEndCurrentTime(\''+currentData.media+'\');"></i><br>';
-    return selectEffect;
-  }
-  function setStartCurrentTime(media){
-   var mediaComponent="#video";
-   if (media=='mp3'){
-     mediaComponent="#music";
-   }
-   $("#startFileUpdate").val($(mediaComponent)[0].currentTime);
-  }
-  
-  function setEndCurrentTime(media){
-   var mediaComponent="#video";
-   if (media=='mp3'){
-     mediaComponent="#music";
-   }
-   $("#endFileUpdate").val($(mediaComponent)[0].currentTime);
-  }
-                                                                                                  
-  function getSoundEffect(currentData){
-    var selectEffect='<br><label><i class="fa fa-film fa-1x"></i> Come In Sound Effect</label><input type="text" id="soundEffectComeIn" value="'+currentData.soundEffectComeIn+'">';
-    selectEffect+=' <input type="file" id="comeInfile" name="comeInfile" accept="audio/mp3,audio/ogg,audio/wav,audio/mpeg"  onchange="openComeInSoundFile(event)">';
-    selectEffect+='<br><label><i class="fa fa-film fa-1x"></i> Come Out Sound Effect</label><input type="text" id="soundEffectComeOut" value="'+currentData.soundEffectComeOut+'">';
-    selectEffect+=' <input type="file" id="comeOutfile" name="comeoutfile" accept="audio/mp3,audio/ogg,audio/wav,audio/mpeg" onchange="openComeOutSoundFile(event)"><br>';
-    return selectEffect;
-  }
-  
-  var openComeInSoundFile = function(event) {
-        var input = event.target;
-        $("#soundEffectComeIn").val("sons/"+input.files[0].name);
-  };
-  var openComeOutSoundFile = function(event) {
-        var input = event.target;
-        $("#soundEffectComeOut").val("sons/"+input.files[0].name);
-  };
 
 function getFonts(){
 var fonts= [
