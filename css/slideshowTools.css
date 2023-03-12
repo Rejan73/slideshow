@@ -36,8 +36,8 @@ body {
 }
 
 #previewSlideShow {
-  height: 360px;
-  width: 640px;
+  height: 300px;
+  width: 400px;
   border: solid green;
   overflow: hidden;
   position: relative;

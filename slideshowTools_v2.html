@@ -6,8 +6,7 @@
   <link rel="stylesheet" href="css/font-awesome.min.css">
   <link rel="stylesheet" href="css/slideshow.css">   
   <link rel="stylesheet" href="css/slideshowFonts.css">  
-  <link rel="stylesheet" href="css/slideshowTools.css">
-  <link rel="stylesheet" href="css/starwars.css">
+  <link rel="stylesheet" href="css/slideshowTools2.css">
 </head>
 <body>
 <div id="divMenu">
@@ -25,57 +24,10 @@
 </div>  
 <div id="divRight">  
     <div id="previewSlideShow">
-      <div id="images" style="display:none" >
-        <center>
-          <img id="srcImage" src="" />
-        </center>
-      </div>
-      <div id="nextImage" style="display:none" >
-        <center>
-          <img id="srcNextImage" src="" />
-        </center>
-      </div>
-      <div id="videos" style="display:none">
-        <center>
-        <video id="video" controls>
-            <source id="srcVideo" src="" type="video/mp4">
-        </video>
-        </center>
-      </div>       
-      <div id="musics" style="display:none">
-        <audio id="music" controls>
-          <source id="srcMusic" src="" type="audio/mpeg">
-        </audio>
-      </div>
-      <div id="divSoundEffect" style="display:none">
-        <audio id="soundEffect" controls>
-          <source id="srcSoundEffect" src="" type="audio/mpeg">
-        </audio>
-      </div>
-      <div id="textes" style="display:none">
-        <div id ="divText"></div>
-      </div>
-    </div>
-    <div id="divUpdateConfiguration">
-      <div id="updateTexte" style="display:none">
-      </div>
-      <div id="updateEffect" style="display:none">
-      </div>
-      <div id="addNewAnimation" style="display:none">
-         <br>Ajout Animation : <br><br>
-         <i class="fa fa-file-o fa-2x" ></i> Type : <select name="mediaToAdd" id="mediaToAdd">';
-           <option value="img">Photo</option>
-           <option value="mp3">Music</option>
-           <option value="mp4">Video</option>
-         </select>
-         Multiples Files <input type="file" id="files" name="files" accept="audio/mp3,audio/ogg,audio/wav,audio/mpeg,video/mp4,video/ogg,video/webm,image/*" multiple>
-         <a class="js-open-modal btn" href="#" add-media="add-media" title="add media" onclick="addAnimation();"><i class="fa fa fa-save fa-2x"></i></a><br><br>
-         <i class="fa fa-file-movie-o fa-2x" ></i> Type Text nom: <input type="text" id="textname" size="10"> <a class="js-open-modal btn" href="#" title="add txt media" onclick="addTxtAnimation();"><i class="fa fa fa-save fa-2x"></i></a>
-         <br><center><a class="js-open-modal btn" href="#"  title="Cancel" onclick="hideAddNewAnimation();"><i class="fa fa-times-circle fa-2x"></i></a></center>  
-      </div>
     </div>
     <div id="divObject">
       <form action="javascript:addAnimationObject();">
+        Id : <input type="text" id="objectId" value="-1" readonly>
         Nom : <input type="text" id="objectName"><br>
         Type : <select name="objectMedia" id="objectMedia">';
           <option value="img">Photo</option>
@@ -84,7 +36,6 @@
           <option value="txt">Text</option>
         </select>
         File : <input type="file" id="objectFile"  accept="audio/mp3,audio/ogg,audio/wav,audio/mpeg,video/mp4,video/ogg,video/webm,image/*"><br>
-        <input type="text" id="objectFileHidden" value="">
         Size Width: <input type="number" id="objectWidth" min="0" max="800" value="800"> Size Height: <input type="number" id="objectHeight" min="0" max="800" value="800"> <br>
         Position Top: <input type="number" id="objectTop" min="0" max="600" value="0"> Position Left: <input type="number" id="objectLeft" min="0" max="800" value="0"> Z-Index : <input type="number" id="objectZindex" value="1"><br>
         Coming At : <input type="time" step="1" min="00:00:00" max="24:00:00" size="1" id="objetComingTime" value="00:00:00"> Duration : <input type="time" step="1" min="00:00:00" max="24:00:00"" size="1" id="objetDuration" value="00:00:05"><br>

@@ -235,17 +235,19 @@ function sortslideShowObjects(){
 }
 
 function addAnimationObject(){
+  
   var dataToAdd={};
-
-  dataToAdd["name"]=$("#objectName").val();
-  dataToAdd["media"]=$("#objectMedia").val();
-  if ($("#objectFileHidden").val()!="" ){
-    dataToAdd["file"]=  $("#objectFileHidden").val();
+  if ($("#objectId").val()>-1){
+    dataToAdd=slideShowObjects[$("#objectId").val()];
   } else {
     dataToAdd["file"]='photos/'+$("#objectFile")[0].files[0].name;
   }
+
+  dataToAdd["name"]=$("#objectName").val();
+  dataToAdd["media"]=$("#objectMedia").val();
+ 
   dataToAdd["width"]=$("#objectWidth").val();
-  dataToAdd["height"]=$("#objectWidth").val();
+  dataToAdd["height"]=$("#objectHeight").val();
   dataToAdd["top"]=$("#objectTop").val();
   dataToAdd["left"]=$("#objectLeft").val();
   dataToAdd["z-index"]=$("#objectZindex").val();
@@ -259,33 +261,51 @@ function addAnimationObject(){
   //dataToAdd["font"]="none";
   //dataToAdd["fontcolor"]="#ff0000";
   //dataToAdd["fontsize"]="100";
-
-  slideShowObjects.push(dataToAdd);
+  //dataToAdd["start"]="100";
+  //dataToAdd["end"]="100";
+  if ($("#objectId").val()<0){
+    slideShowObjects.push(dataToAdd);
+  }
   sortslideShowObjects();
   changeSaveallColorRed();
   fillSlideShow();
 }
 
-function fillForUpdateAnimationObject(dataToUpdate){
-  $("#objectName").val(dataToUpdate["name"]);
-  $("#objectMedia").val(dataToUpdate["media"]).change();
-  $("#objectFileHidden").val(dataToUpdate["file"]);
-  $("#objectWidth").val(dataToUpdate["width"]);
-  $("#objectWidth").val(dataToUpdate["height"]);
-  $("#objectTop").val(dataToUpdate["top"]);
-  $("#objectLeft").val(dataToUpdate["left"]);
-  $("#objectZindex").val(dataToUpdate["z-index"]);
-  $("#objetComingTime").val(afficheTemps(dataToUpdate["comingAt"]));
-  $("#objetDuration").val(afficheTemps(dataToUpdate["duration"]));
-  $("#objectVolume").val(dataToUpdate["volume"]);
-  $("#objectStyleEffect").val(dataToUpdate["styleEffect"]).change();
-  $("#objectComeInEffect").val(dataToUpdate["comeInEffect"]).change();
-  $("#objectComeOutEffect").val(dataToUpdate["comeOutEffect"]).change();
+function updateAnimation(id){
+  $("#objectId").val(id);
+  $("#objectName").val(slideShowObjects[id]["name"]);
+  $("#objectMedia").val(slideShowObjects[id]["media"]).change();
+  $("#objectWidth").val(slideShowObjects[id]["width"]);
+  $("#objectHeight").val(slideShowObjects[id]["height"]);
+  $("#objectTop").val(slideShowObjects[id]["top"]);
+  $("#objectLeft").val(slideShowObjects[id]["left"]);
+  $("#objectZindex").val(slideShowObjects[id]["z-index"]);
+  $("#objetComingTime").val(afficheTemps(slideShowObjects[id]["comingAt"]));
+  $("#objetDuration").val(afficheTemps(slideShowObjects[id]["duration"]));
+  $("#objectVolume").val(slideShowObjects[id]["volume"]);
+  $("#objectStyleEffect").val(slideShowObjects[id]["styleEffect"]).change();
+  $("#objectComeInEffect").val(slideShowObjects[id]["comeInEffect"]).change();
+  $("#objectComeOutEffect").val(slideShowObjects[id]["comeOutEffect"]).change();
 }
 
-function updateAnimation(id){
-  fillForUpdateAnimationObject(slideShowObjects[id]);
+function addNewAnimation(){
+  $("#objectId").val(-1);
+  $("#objectName").val("");
+  $("#objectMedia").val("img").change();
+  $("#objectWidth").val(800);
+  $("#objectHeight").val(600);
+  $("#objectTop").val(0);
+  $("#objectLeft").val(0);
+  $("#objectZindex").val(1);
+  $("#objetComingTime").val(afficheTemps(0));
+  $("#objetDuration").val(afficheTemps(5));
+  $("#objectVolume").val(100);
+  $("#objectStyleEffect").val("imageEffectNone").change();
+  $("#objectComeInEffect").val("comeInEffectNone").change();
+  $("#objectComeOutEffect").val("comeOutEffectNone").change();
 }
+
+
 
 function changeComingAt(id){
   var comingAt="#comingAt"+id;
@@ -296,69 +316,10 @@ function changeComingAt(id){
 }
 
 
-function playAnimationObject(){
-  var dataToAdd={};
-  dataToAdd["name"]='igloo';
-  dataToAdd["media"]='img';
-  dataToAdd["file"]='photos/igloo.jpg';
-  dataToAdd["styleEffect"]="imageEffectNone";
-  dataToAdd["comeInEffect"]="movementEffectUpToDown";
-  dataToAdd["comeOutEffect"]="movementEffectDownToUp";
-  dataToAdd["width"]=200;
-  dataToAdd["height"]=200;
-  dataToAdd["top"]='50';
-  dataToAdd["left"]='100';
-  dataToAdd["z-index"]=2;
-  dataToAdd["comingAt"]=2;
-  dataToAdd["duration"]=10;
-  //var dataToAdd=slideShowObjects[0];
-  createObjectImage(dataToAdd);
-  runObjectAnimation(dataToAdd);
-  fillForUpdateAnimationObject(dataToAdd);
-  var dataToAdd2={};
-  dataToAdd2["name"]='green'
-  dataToAdd["media"]='img';
-  dataToAdd2["file"]='photos/doudou.png';
-  dataToAdd2["width"]=50;
-  dataToAdd2["height"]=50;
-  dataToAdd2["top"]='220';
-  dataToAdd2["left"]='450';
-  dataToAdd2["z-index"]=3;
-  dataToAdd2["comingAt"]=4;
-  dataToAdd2["duration"]=12;
-  createObjectImage(dataToAdd2);
-  runObjectAnimation(dataToAdd2);
-  
-  var dataToAdd4={};
-  dataToAdd4["name"]='textT'
-  dataToAdd4["media"]='txt';
-  dataToAdd4["txt"]='ceci est du text<br><b>GRAS</b><br><br><i>italic</i>';
-  dataToAdd4["width"]=200;
-  dataToAdd4["height"]=100;
-  dataToAdd4["top"]='220';
-  dataToAdd4["left"]='200';
-  dataToAdd4["z-index"]=4;
-  dataToAdd4["comingAt"]=6;
-  dataToAdd4["duration"]=10;
-  createObjectText(dataToAdd4);
-  runObjectAnimation(dataToAdd4);
-  var dataToAdd3={};
-  dataToAdd3["name"]='videoOgg'
-  dataToAdd3["media"]='mp4';
-  dataToAdd3["volume"]=100;
-  dataToAdd3["file"]='videos/v_0002.mp4';
-  dataToAdd3["width"]=250;
-  dataToAdd3["height"]=250;
-  dataToAdd3["top"]='90';
-  dataToAdd3["left"]='250';
-  dataToAdd3["z-index"]=1;
-  dataToAdd3["comingAt"]=4;
-  dataToAdd3["duration"]=10;
-  createObjectVideo(dataToAdd3);
-  runObjectAnimation(dataToAdd3);
-
+function playAnimation(){
+  createObjectVideo(slideShowObjects[0]);
+  runObjectAnimation(slideShowObjects[0]);
   return "Let's go !"
-
 }
 
 function createObjectImage(slideShowObject){

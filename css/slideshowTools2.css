@@ -1,0 +1,74 @@
+body {
+  width: 95%;
+  height: 95%;
+  background: #000;
+  color: #fff;
+}
+
+#divMenu{
+  width: 95%;
+}
+
+#mainSlideShow {
+  width: 95%;
+  clear:both;
+}
+
+#divLeft {
+  width: 42%;
+  float:left;
+}
+
+#divRight {   
+  float:left;
+}
+
+#divBottom {
+  height: 20%;
+  width: 100%;
+  clear:both;
+  float:left;
+}
+
+#slideShow {
+  height: 590px;
+  overflow-x: hidden;
+}
+
+#previewSlideShow {
+  height: 300px;
+  width: 400px;
+  border: solid green;
+/*  overflow: hidden;*/
+  position: relative;
+}
+
+#timelineDiv {
+  background: #fff;
+  height: 150px;
+  clear:both;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 110px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+input[type='number']{
+  width: 45px;
+} 
