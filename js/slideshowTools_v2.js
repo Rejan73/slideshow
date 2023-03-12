@@ -339,13 +339,21 @@ function addAnimationObject(){
   dataToAdd["z-index"]=$("#objectZindex").val();
   dataToAdd["commingAt"]=$("#objetComingTime").val();
   dataToAdd["duration"]=$("#objetDuration").val();
+  dataToAdd["volume"]=$("#objectVolume").val();
+  dataToAdd["styleEffect"]=$("#objectStyleEffect").val();
+  dataToAdd["comeInEffect"]=$("#objectComeInEffect").val();
+  dataToAdd["comeOutEffect"]=$("#objectComeOutEffect").val();
+
   slideShowObjects=JSON.parse("[]");
   slideShowObjects.push(dataToAdd);
 }
 function playAnimationObject(){
   var dataToAdd={};
-  dataToAdd["name"]='igloo'
+  dataToAdd["name"]='igloo';
+  dataToAdd["media"]='img';
   dataToAdd["file"]='photos/igloo.jpg';
+  dataToAdd["comeInEffect"]="movementEffectUpToDown";
+  dataToAdd["comeOutEffect"]="movementEffectDownToUp";
   dataToAdd["width"]=200;
   dataToAdd["height"]=200;
   dataToAdd["top"]='50';
@@ -355,9 +363,11 @@ function playAnimationObject(){
   dataToAdd["duration"]=10;
   //var dataToAdd=slideShowObjects[0];
   createObjectImage(dataToAdd);
+  runObjectAnimation(dataToAdd);
 
   var dataToAdd2={};
   dataToAdd2["name"]='green'
+  dataToAdd["media"]='img';
   dataToAdd2["file"]='photos/doudou.png';
   dataToAdd2["width"]=50;
   dataToAdd2["height"]=50;
@@ -367,10 +377,12 @@ function playAnimationObject(){
   dataToAdd2["commingAt"]=4;
   dataToAdd2["duration"]=12;
   createObjectImage(dataToAdd2);
+  runObjectAnimation(dataToAdd2);
   
   var dataToAdd4={};
   dataToAdd4["name"]='textT'
-  dataToAdd4["txt"]='ceci est du text';
+  dataToAdd4["media"]='txt';
+  dataToAdd4["txt"]='ceci est du text<br><b>GRAS</b><br><br><i>italic</i>';
   dataToAdd4["width"]=200;
   dataToAdd4["height"]=100;
   dataToAdd4["top"]='220';
@@ -379,9 +391,11 @@ function playAnimationObject(){
   dataToAdd4["commingAt"]=6;
   dataToAdd4["duration"]=10;
   createObjectText(dataToAdd4);
-
+  runObjectAnimation(dataToAdd4);
   var dataToAdd3={};
   dataToAdd3["name"]='videoOgg'
+  dataToAdd3["media"]='mp4';
+  dataToAdd3["volume"]=100;
   dataToAdd3["file"]='videos/v_0002.mp4';
   dataToAdd3["width"]=250;
   dataToAdd3["height"]=250;
@@ -391,6 +405,7 @@ function playAnimationObject(){
   dataToAdd3["commingAt"]=4;
   dataToAdd3["duration"]=10;
   createObjectVideo(dataToAdd3);
+  runObjectAnimation(dataToAdd3);
 
   return "Let's go !"
 
@@ -408,21 +423,13 @@ function createObjectImage(slideShowObject){
     +slideShowObject["height"]+'px;z-index:'
     +slideShowObject["z-index"]+';';
   document.getElementById("previewSlideShow").appendChild(elem);
-  setTimeout(function() { 
-    var id="#"+elem.id;
-    $(id).show();
-    setTimeout(function() {    
-      $(id).hide();
-      document.getElementById("previewSlideShow").removeChild(elem);
-    }, slideShowObject["duration"]*1000);
-  }, slideShowObject["commingAt"]*1000);  
-  return elem;
+ 
 }
 
 function createObjectText(slideShowObject){
-  var elem = document.createElement("p");
+  var elem = document.createElement("div");
   elem.id= slideShowObject["name"];
-  elem.innerText=slideShowObject["txt"];
+  elem.innerHTML+=slideShowObject["txt"];
   //border: solid red;
   elem.style.cssText = 'display:none;object-fit:contain;position:absolute;top:'
     +slideShowObject["top"]+'px;left:'
@@ -431,16 +438,9 @@ function createObjectText(slideShowObject){
     +slideShowObject["height"]+'px;z-index:'
     +slideShowObject["z-index"]+';';
   document.getElementById("previewSlideShow").appendChild(elem);
-  setTimeout(function() { 
-    var id="#"+elem.id;
-    $(id).show();
-    setTimeout(function() {    
-      $(id).hide();
-      document.getElementById("previewSlideShow").removeChild(elem);
-    }, slideShowObject["duration"]*1000);
-  }, slideShowObject["commingAt"]*1000);  
-  return elem;
+
 }
+
 
 function createObjectVideo(slideShowObject){
   var elem = document.createElement("video");
@@ -453,20 +453,36 @@ function createObjectVideo(slideShowObject){
     +slideShowObject["height"]+'px;z-index:'
     +slideShowObject["z-index"]+';';
   document.getElementById("previewSlideShow").appendChild(elem);
+}
+
+
+function runObjectAnimation(slideShowObject){
+  console.log(slideShowObject["name"]);
+  var elem= document.getElementById(slideShowObject["name"]);
   setTimeout(function() { 
+    console.log(slideShowObject["name"]+"show");
     var id="#"+elem.id;
-    $(id).show();
-    $(id)[0].load();
-    $(id).show();
-    $(id).get(0).volume=1;//volume;//0.0 to 1.0
-    $(id).get(0).play();
+    if (slideShowObject["media"]=="mp4" || slideShowObject["media"]=="mp3"){
+      $(id)[0].load();
+      volume=slideShowObject["volume"]==undefined ?1:slideShowObject["volume"]/100;
+      $(id).get(0).volume=volume;//0.0 to 1.0
+      $(id).get(0).play();
+    } 
+    if (slideShowObject["media"]!="mp3") {
+      $(id).show();
+      $(id).addClass(slideShowObject["comeInEffect"]);
+    }
     setTimeout(function() {    
+      console.log(slideShowObject["name"]+"remove");
       $(id).hide();
       document.getElementById("previewSlideShow").removeChild(elem);
     }, slideShowObject["duration"]*1000);
   }, slideShowObject["commingAt"]*1000);  
   return elem;
 }
+
+
+
 
 
 
