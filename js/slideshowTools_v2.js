@@ -217,9 +217,8 @@ $('a[set-slideshow-id]').click(function(e) {
 });
 
 
-function removeAnimation(currentDataId){
-  hideAll();
-  slideShowDatas.splice(currentDataId, 1);
+function removeAnimation(id){
+  slideShowObjects.splice(id, 1);
   changeSaveallColorRed();
   fillSlideShow();
 }
