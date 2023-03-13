@@ -239,9 +239,21 @@ function addAnimationObject(){
   if ($("#objectId").val()>-1){
     dataToAdd=slideShowObjects[$("#objectId").val()];
   } else {
-    dataToAdd["file"]='photos/'+$("#objectFile")[0].files[0].name;
+    if ($("#objectMedia").val()!="txt"){
+      var folder="";
+      if ($("#objectMedia").val()=="mp4"){
+        folder="videos/";
+      } else if ($("#objectMedia").val()=="mp3"){
+        folder="musics/";
+      } else if ($("#objectMedia").val()=="img"){
+        folder="photos/";
+      }
+      dataToAdd["file"]=folder+$("#objectFile")[0].files[0].name;
+    }
   }
-
+  if ($("#objectMedia").val()=="mp4" || $("#objectMedia").val()=="mp3"){
+    dataToAdd["file"]= getFilePath(dataToAdd["file"])+'#t='+ toSecond($('#objetStartFile').val()) +','+toSecond($('#objectEndFile').val());
+  }
   dataToAdd["name"]=$("#objectName").val();
   dataToAdd["media"]=$("#objectMedia").val();
  
@@ -260,8 +272,7 @@ function addAnimationObject(){
   //dataToAdd["font"]="none";
   //dataToAdd["fontcolor"]="#ff0000";
   //dataToAdd["fontsize"]="100";
-  //dataToAdd["start"]="100";
-  //dataToAdd["end"]="100";
+
   if ($("#objectId").val()<0){
     slideShowObjects.push(dataToAdd);
   }
@@ -281,6 +292,8 @@ function updateAnimation(id){
   $("#objectZindex").val(slideShowObjects[id]["z-index"]);
   $("#objetComingTime").val(afficheTemps(slideShowObjects[id]["comingAt"]));
   $("#objetDuration").val(afficheTemps(slideShowObjects[id]["duration"]));
+  $("#objetStartFile").val(getStartTime(slideShowObjects[id]["file"]));
+  $("#objectEndFile").val(getEndTime(slideShowObjects[id]["file"]));
   $("#objectVolume").val(slideShowObjects[id]["volume"]);
   $("#objectStyleEffect").val(slideShowObjects[id]["styleEffect"]).change();
   $("#objectComeInEffect").val(slideShowObjects[id]["comeInEffect"]).change();
@@ -416,7 +429,6 @@ function runAnimation(id){
   }
   runObjectAnimation(slideShowObject);
 }
-
 
 function saveAllAnimation(){
   downAll(JSON.stringify(slideShowObjects),'slideShowObjects-'+Date.now()+'.json','application/json');
