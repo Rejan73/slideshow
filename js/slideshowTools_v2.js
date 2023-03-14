@@ -334,60 +334,46 @@ function playAnimation(){
   return "Let's go !"
 }
 
-function createObjectImage(slideShowObject){
-  var elem = document.createElement("img");
-  elem.id= slideShowObject["name"];
-  elem.src=slideShowObject["file"];
-  //border: solid red;
-  elem.style.cssText = 'display:none;object-fit:contain;position:absolute;top:'
-    +slideShowObject["top"]+'px;left:'
-    +slideShowObject["left"]+'px;width:'
-    +slideShowObject["width"]+'px;height:'
-    +slideShowObject["height"]+'px;z-index:'
-    +slideShowObject["z-index"]+';';
-  document.getElementById("previewSlideShow").appendChild(elem);
- 
-}
-
 function createObjectText(slideShowObject){
   var elem = document.createElement("div");
   elem.id= slideShowObject["name"];
   elem.innerHTML+=slideShowObject["txt"];
   //border: solid red;
-  elem.style.cssText = 'display:none;object-fit:contain;position:absolute;top:'
-    +slideShowObject["top"]+'px;left:'
-    +slideShowObject["left"]+'px;width:'
-    +slideShowObject["width"]+'px;height:'
-    +slideShowObject["height"]+'px;z-index:'
-    +slideShowObject["z-index"]+';';
+  elem.style.cssText = addStyle(slideShowObject);
   document.getElementById("previewSlideShow").appendChild(elem);
-
 }
 
 function createObjectVideo(slideShowObject){
   var elem = document.createElement("video");
   elem.id= slideShowObject["name"];
   elem.src=slideShowObject["file"];
-  elem.style.cssText = 'display:none;border: solid red;object-fit:contain;position:absolute;top:'
-    +slideShowObject["top"]+'px;left:'
-    +slideShowObject["left"]+'px;width:'
-    +slideShowObject["width"]+'px;height:'
-    +slideShowObject["height"]+'px;z-index:'
-    +slideShowObject["z-index"]+';';
+  elem.style.cssText = addStyle(slideShowObject);
   document.getElementById("previewSlideShow").appendChild(elem);
 }
 
+function createObjectImage(slideShowObject){
+  var elem = document.createElement("img");
+  elem.id= slideShowObject["name"];
+  elem.src=slideShowObject["file"];
+  elem.style.cssText = addStyle(slideShowObject);
+  document.getElementById("previewSlideShow").appendChild(elem);
+ 
+}
 function createObjectMusic(slideShowObject){
   var elem = document.createElement("audio");
   elem.id= slideShowObject["name"];
   elem.src=slideShowObject["file"];
-  elem.style.cssText = 'display:none;border: solid red;object-fit:contain;position:absolute;top:'
+  elem.style.cssText = addStyle(slideShowObject);
+  document.getElementById("previewSlideShow").appendChild(elem);
+}
+
+function addStyle(slideShowObject){
+  return 'display:none;object-fit:contain;position:absolute;top:'
     +slideShowObject["top"]+'px;left:'
     +slideShowObject["left"]+'px;width:'
     +slideShowObject["width"]+'px;height:'
     +slideShowObject["height"]+'px;z-index:'
     +slideShowObject["z-index"]+';';
-  document.getElementById("previewSlideShow").appendChild(elem);
 }
 
 function runObjectAnimation(slideShowObject){
@@ -396,7 +382,9 @@ function runObjectAnimation(slideShowObject){
   setTimeout(function() { 
     console.log(slideShowObject["name"]+"show");
     var id="#"+elem.id;
+    var duration=slideShowObject["duration"]*1000;
     if (slideShowObject["media"]=="mp4" || slideShowObject["media"]=="mp3"){
+      duration=getDuration(slideShowObject["file"]);
       $(id)[0].load();
       volume=slideShowObject["volume"]==undefined ?1:slideShowObject["volume"]/100;
       $(id).get(0).volume=volume;//0.0 to 1.0
@@ -410,7 +398,7 @@ function runObjectAnimation(slideShowObject){
       console.log(slideShowObject["name"]+"remove");
       $(id).hide();
       document.getElementById("previewSlideShow").removeChild(elem);
-    }, slideShowObject["duration"]*1000);
+    }, duration*1000);
   }, slideShowObject["comingAt"]*1000);  
   return elem;
 }
