@@ -278,6 +278,7 @@ function addAnimationObject(){
   if ($("#objectId").val()<0){
     slideShowObjects.push(dataToAdd);
   }
+  $("#divObject").hide();
   sortslideShowObjects();
   changeSaveallColorRed();
   fillSlideShow();
@@ -311,6 +312,7 @@ function updateAnimation(id){
     $("#fontColor").val(slideShowObjects[id]["fontcolor"]);
     $("#fontSize").val(slideShowObjects[id]["fontsize"]);
   }
+  $("#divObject").show();
 }
 
 function addNewAnimation(){
@@ -328,6 +330,7 @@ function addNewAnimation(){
   $("#objectStyleEffect").val("imageEffectNone").change();
   $("#objectComeInEffect").val("comeInEffectNone").change();
   $("#objectComeOutEffect").val("comeOutEffectNone").change();
+  $("#divObject").show();
 }
 
 
@@ -487,100 +490,40 @@ function downAll(data, filename, mime) {
 }
 
 
-function playText(currentDataId){
-  $("#music").removeAttr('controls');
-  currentData=slideShowDatas[currentDataId];
-  $("#textes").css("font-family", currentData["font"]);
-  $("#textes").css("color", currentData["fontcolor"]);
-  $("#textes").css("font-size", currentData["fontsize"]+"%");
-     
-  playMusic(currentDataId,currentData["soundEffectComeIn"]);
-  if (currentData.styleEffect=='starwars'){
-    var div_data ='<p id="startStarWars">Il y a bien longtemps, dans une galaxie lointaine, tr&egrave;s lontaine</p>';
-    div_data+='<h1 id="h1StarWars">'+currentData.title+'</h1>';
-    div_data+='<div id="titlesStarWars">';
-    div_data+='<div id="titlecontentStarWars">';
-    div_data+='<p class="centerStarWars">'+currentData.subTitle+'</p>';
+function changeMedia(){
 
-    currentData.lines.forEach(object => div_data=div_data+'<p>'+object.line+'<p>');
+  $("#divConfigurationText").hide();
+  $("#divConfigurationVideoAudio").hide();
+  $("#divConfigurationPosition").hide();
+  $("#divConfigurationEffect").hide();
+  $("#divConfigurationFile").hide();
+  $("#divConfigurationDuration").hide();
     
-    div_data+="</div></div>";   
-    $("#divText").html(div_data);
-       
-  } else {  
-    var div_data ='<center><h1>'+currentData.title+'</h1><h2>'+currentData.subTitle+'</h2>' ;
-    currentData.lines.forEach(object => div_data=div_data+'<p>'+object.line+'<p>');
-    div_data+='<br></center>';
-    $("#textes").addClass(currentData["styleEffect"]);
-    $("#textes").addClass(currentData["comeInEffect"]);
-    $("#textes").addClass(currentData["movementEffect"]);
-    $("#divText").html(div_data);
-    $("#divCrawl").html("");
-    setTimeout(function() {
-      playMusic(currentDataId,currentData["soundEffectComeOut"]);
-      $("#textes").removeClass(currentData["comeInEffect"]);
-      $("#textes").removeClass(currentData["movementEffect"]);
-      $("#textes").addClass(currentData["comeOutEffect"]);
-    }, currentData["duration"]*1000);
-  
-    setTimeout(function() {
-      stopMusic();
-      $("#textes").removeClass(currentData["styleEffect"]);
-      $("#textes").removeClass(currentData["comeOutEffect"]);
-    }, currentData["duration"]*1000+2000) ;
-  }                   
-  $('#textes').show(); 
-  
-}
-
-
-function  updateTextAnimation(currentDataId){
-  oldCurrentDataId=$('#textCurrentDataId').val();
-  currentData=slideShowDatas[currentDataId];
-  var div_text ='<p>Text Modification '+currentData.file+'</p>';
-  div_text+='Title : <input type="text" size="50" id="updatetitle" value="'+currentData.title+'"/><br>';
-  div_text+='SubTitle : <input type="text" size="50" id="updatesubtitle" value="'+currentData.subTitle+'"/><br>';
-  div_text+='Text : <textarea id="updatelines" rows="5" cols="60">';
-  currentData.lines.forEach(object => div_text=div_text+object.line+'\n');
-  div_text+='</textarea>'; 
-  div_text+='<br>Font:'+getFonts();
-  div_text+='&nbsp;&nbsp;&nbsp;&nbsp;<a class="js-open-modal btn" href="#" title="Modify" onclick="saveTextAnimation('+currentDataId+');"><i class="fa fa-save fa-2x"></i></a>';
-  div_text+='&nbsp;<a class="js-open-modal btn" href="#" title="Play" onclick="playAnimation('+currentDataId+');"><i class="fa fa-play-circle fa-2x" ></i></a>';
-  div_text+='&nbsp;<a class="js-open-modal btn" href="#"  title="Cancel" onclick="hideTextAnimation();"><i class="fa fa-times-circle fa-2x"></i></a>';
-  div_text+='<input type="hidden" id="textCurrentDataId" value="'+currentDataId+'">';
-  $("#updateTexte").html(div_text); 
-  $('#fontEffect').val(currentData["font"]);
-  $('#fontColor').val(currentData["fontcolor"]);
-  $('#fontSize').val(currentData["fontsize"]);
-  $('#updateEffect').hide(); 
-  if (oldCurrentDataId==currentDataId){
-    $('#updateTexte').toggle();
-  } else {
-    $('#updateTexte').show();
+  if ($("#objectMedia").val()=="mp3"){
+    $("#divConfigurationFile").show();
+    $("#divConfigurationVideoAudio").show();
+  }
+  if ($("#objectMedia").val()=="mp4"){
+    $("#divConfigurationFile").show();
+    $("#divConfigurationVideoAudio").show();
+    $("#divConfigurationEffect").show();
   }
 
-}
-function  saveTextAnimation(currentDataId){
-  currentData=slideShowDatas[currentDataId];
-  currentData["title"]=$('#updatetitle').val();
-  currentData["subTitle"]=$('#updatesubtitle').val();
-  currentData["font"]=$('#fontEffect').val();
-  currentData["fontcolor"]=$('#fontColor').val();
-  currentData["fontsize"]=$('#fontSize').val();
-  var dataLine= $('#updatelines').val().split('\n');
-  currentData["lines"]=[];
-  dataLine.forEach(object => currentData["lines"].push({"line": object }));
-  changeSaveallColorRed();
-}
+  if ($("#objectMedia").val()=="img"){
+    $("#divConfigurationFile").show();
+    $("#divConfigurationDuration").show();
+    $("#divConfigurationPosition").show();
+    $("#divConfigurationEffect").show();
+  } 
 
-function hideTextAnimation(){
-  $('#updateTexte').hide();
-}
+  if ($("#objectMedia").val()=="txt"){
+    $("#divConfigurationText").show();
+    $("#divConfigurationPosition").show();
+    $("#divConfigurationEffect").show();
+    $("#divConfigurationDuration").show();
+  } 
+  
 
 
-function changeFont(){
-       $("#textes").css("font-family", $('#fontEffect').val());
-       $("#textes").css("color", $('#fontColor').val());
-       $("#textes").css("font-size", $('#fontSize').val()+"%");
+  
 }
-

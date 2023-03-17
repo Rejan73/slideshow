@@ -25,23 +25,34 @@
 <div id="divRight">  
     <div id="previewSlideShow">
     </div>
-    <div id="divObject">
+    <div id="divObject" style="display:none">
       <form action="javascript:addAnimationObject();">
-        Id : <input type="text" id="objectId" value="-1" readonly>
+        Id : <input type="number" id="objectId" value="-1" readonly>
         Nom : <input type="text" id="objectName" required><br>
-        Type : <select name="objectMedia" id="objectMedia">';
+        Type : <select name="objectMedia" id="objectMedia" onchange="changeMedia()">';
+          <option disabled selected value> -- select an option -- </option>
           <option value="img">Photo</option>
           <option value="mp3">Music</option>
           <option value="mp4">Video</option>
           <option value="txt">Text</option>
         </select>
+        <div id="divConfigurationFile" style="display:none">
         File : <input type="file" id="objectFile"  accept="audio/mp3,audio/ogg,audio/wav,audio/mpeg,video/mp4,video/ogg,video/webm,image/*"><br>
+       </div>
+        <div id="divConfigurationPosition" style="display:none">
         Size Width: <input type="number" id="objectWidth" min="0" max="800" value="800"> Size Height: <input type="number" id="objectHeight" min="0" max="800" value="800"> <br>
         Position Top: <input type="number" id="objectTop" min="0" max="600" value="0"> Position Left: <input type="number" id="objectLeft" min="0" max="800" value="0"> Z-Index : <input type="number" id="objectZindex" value="1"><br>
-        Coming At : <input type="time" step="1" min="00:00:00" max="24:00:00" size="1" id="objetComingTime" value="00:00:00"> Duration : <input type="time" step="1" min="00:00:00" max="24:00:00"" size="1" id="objetDuration" value="00:00:05"><br>
+        </div>
+        Coming At : <input type="time" step="1" min="00:00:00" max="24:00:00" size="1" id="objetComingTime" value="00:00:00"><br>
+        <div id="divConfigurationDuration"  style="display:none">
+        Duration : <input type="time" step="1" min="00:00:00" max="24:00:00"" size="1" id="objetDuration" value="00:00:05"><br>
+        </div>
+        <div id="divConfigurationVideoAudio"  style="display:none">
         Start <input type="time" step="1" min="00:00:00" max="24:00:00" size="1" id="objetStartFile" value="00:00:00"/>';
         End <input type="time" step="1" min="00:00:00" max="24:00:00" size="1" id="objectEndFile" value="00:00:10"/>
         Volume <input id="objectVolume" type="range" min="0" max="100" value="100">
+        </div>
+        <div id="divConfigurationEffect" style="display:none">
         <br><label><i class="fa fa-film fa-1x"></i> Style Effect</label>
         <select id="objectStyleEffect">
           <option value="imageEffectNone">none</option>
@@ -72,16 +83,17 @@
           <option value="comeOutEffectZoomOutWithRotate">Zoom Out with Rotate</option>
           <option value="comeOutEffectZoomOutSlowMotion">Zoom Out slow-motion</option>
         </select>
-        <div>
+        </div>
+        <div id="divConfigurationText" style="display:none">
           Heading 1 2 3 
           B I U
           align left rigth center
-          Police : <select name="fontEffect" id="fontEffect" onchange="changeFont()">
+          Police : <select name="fontEffect" id="fontEffect">
               <option value="Friends">Friends</option>
               <option value="Friends">Caribbean</option>
           </select>  
-          Color : <input type="color" id="fontColor" name="fontColor" value="#ff0000" onchange="changeFont()">
-          size : <input type="number" id="fontSize" name="fontSize" value="100" onchange="changeFont()">
+          Color : <input type="color" id="fontColor" name="fontColor" value="#ff0000">
+          size : <input type="number" id="fontSize" name="fontSize" value="100" >
         <div contenteditable="true" id="objectTextarea" style="border: solid green; resize: both;overflow: scroll;">type your texte <b>ici</b></div> 
         </div>
         <br><input type="submit">
