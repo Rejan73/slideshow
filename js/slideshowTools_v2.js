@@ -145,7 +145,7 @@ function printSlideShowData(slideShowObject,cpt){
          line+='<td>'+cpt+'</td><td>'+getFilename(slideShowObject.file)+'</td>';
          break;
     case "txt":
-         line+='<td><i id="icon'+cpt+'"class="fa fa-file-text-o fa-1x" ></i></td><td>'+cpt+'</td><td>'+slideShowObject.file+'</td>';
+         line+='<td><i id="icon'+cpt+'"class="fa fa-file-text-o fa-1x" ></i></td><td>'+cpt+'</td><td>'+slideShowObject.name+'</td>';
          break; 
     defaut:
          break;    
@@ -236,9 +236,9 @@ function sortslideShowObjects(){
 function addAnimationObject(){
   
   var dataToAdd={};
-  if ($("#objectId").val()>-1){
+  if ($("#objectId").val()>-1){//Update
     dataToAdd=slideShowObjects[$("#objectId").val()];
-  } else {
+  } else {//Creation
     if ($("#objectMedia").val()!="txt"){
       var folder="";
       if ($("#objectMedia").val()=="mp4"){
@@ -250,6 +250,12 @@ function addAnimationObject(){
       }
       dataToAdd["file"]=folder+$("#objectFile")[0].files[0].name;
     }
+  }
+  if ($("#objectMedia").val()=="txt"){
+    dataToAdd["txt"]=$("#objectTextarea").html();
+    dataToAdd["font"]=$("#fontEffect").val();
+    dataToAdd["fontcolor"]=$("#fontColor").val();
+    dataToAdd["fontsize"]=$("#fontSize").val();
   }
   if ($("#objectMedia").val()=="mp4" || $("#objectMedia").val()=="mp3"){
     dataToAdd["file"]= getFilePath(dataToAdd["file"])+'#t='+ toSecond($('#objetStartFile').val()) +','+toSecond($('#objectEndFile').val());
@@ -269,10 +275,6 @@ function addAnimationObject(){
   dataToAdd["comeInEffect"]=$("#objectComeInEffect").val();
   dataToAdd["comeOutEffect"]=$("#objectComeOutEffect").val();
 
-  //dataToAdd["font"]="none";
-  //dataToAdd["fontcolor"]="#ff0000";
-  //dataToAdd["fontsize"]="100";
-
   if ($("#objectId").val()<0){
     slideShowObjects.push(dataToAdd);
   }
@@ -291,13 +293,24 @@ function updateAnimation(id){
   $("#objectLeft").val(slideShowObjects[id]["left"]);
   $("#objectZindex").val(slideShowObjects[id]["z-index"]);
   $("#objetComingTime").val(afficheTemps(slideShowObjects[id]["comingAt"]));
-  $("#objetDuration").val(afficheTemps(slideShowObjects[id]["duration"]));
-  $("#objetStartFile").val(getStartTime(slideShowObjects[id]["file"]));
-  $("#objectEndFile").val(getEndTime(slideShowObjects[id]["file"]));
-  $("#objectVolume").val(slideShowObjects[id]["volume"]);
+  
+  if (slideShowObjects[id]["media"]=="mp4" || slideShowObjects[id]["media"]=="mp3"){
+    $("#objetStartFile").val(getStartTime(slideShowObjects[id]["file"]));
+    $("#objectEndFile").val(getEndTime(slideShowObjects[id]["file"]));
+    $("#objectVolume").val(slideShowObjects[id]["volume"]);
+  } else {
+    $("#objetDuration").val(afficheTemps(slideShowObjects[id]["duration"]));
+  }
+  
   $("#objectStyleEffect").val(slideShowObjects[id]["styleEffect"]).change();
   $("#objectComeInEffect").val(slideShowObjects[id]["comeInEffect"]).change();
   $("#objectComeOutEffect").val(slideShowObjects[id]["comeOutEffect"]).change();
+  if (slideShowObjects[id]["media"]=="txt"){
+    $("#objectTextarea").html(slideShowObjects[id]["txt"]);
+    $("#fontEffect").val(slideShowObjects[id]["font"]);
+    $("#fontColor").val(slideShowObjects[id]["fontcolor"]);
+    $("#fontSize").val(slideShowObjects[id]["fontsize"]);
+  }
 }
 
 function addNewAnimation(){
@@ -339,7 +352,7 @@ function createObjectText(slideShowObject){
   elem.id= slideShowObject["name"];
   elem.innerHTML+=slideShowObject["txt"];
   //border: solid red;
-  elem.style.cssText = addStyle(slideShowObject);
+  elem.style.cssText = addStyleText(slideShowObject);
   document.getElementById("previewSlideShow").appendChild(elem);
 }
 
@@ -375,6 +388,20 @@ function addStyle(slideShowObject){
     +slideShowObject["height"]+'px;z-index:'
     +slideShowObject["z-index"]+';';
 }
+
+function addStyleText(slideShowObject){
+  return 'display:none;object-fit:contain;position:absolute;top:'
+    +slideShowObject["top"]+'px;left:'
+    +slideShowObject["left"]+'px;width:'
+    +slideShowObject["width"]+'px;height:'
+    +slideShowObject["height"]+'px;z-index:'
+    +slideShowObject["z-index"]+';font-size:'
+    +slideShowObject["fontsize"]+'px;font-family:'
+    +slideShowObject["font"]+';color:'
+    +slideShowObject["fontcolor"]+';';
+}
+
+
 
 function runObjectAnimation(slideShowObject){
   console.log(slideShowObject["name"]);
@@ -550,163 +577,6 @@ function hideTextAnimation(){
   $('#updateTexte').hide();
 }
 
-
-function getFonts(){
-var fonts= [
-'Friends',
-'hobbitonbrushhand',  
-'A-Bug-s-Life---Debugged',
-'A-Bug-s-Life',
-'akaPotsley_0',
-'AL-Cinderella',
-'aladdin',
-'ALGERIA',
-'algerian_becker',
-'algerian_becker_basic',
-'algerian_becker_basic_caps',
-'Alice_in_Wonderland_3',
-'BFG-Font',
-'bighero_v4',
-'blasteei',
-'blasteet',
-'blasteii',
-'blastein',
-'blaster',
-'blasteri',
-'BLKCHCRY',
-'BUBBALOB',
-'bubbalove-bold',
-'Buka-Bird',
-'Caribbean',
-'Caribbean_0',
-'celticmd',
-'columbusdb',
-'columbusregular',
-'DENMARK',
-'Diner-Regular',
-'DIOGENES',
-'disney-print',
-'Findet-Nemo',
-'Flat-Earth-Scribe',
-'Florida-Project-Phase-One',
-'Florida-Project-Phase-One',
-'Florida-Project-Phase-Two',
-'Florida-Project-Phase-Two',
-'graceyscurse',
-'graceyscurse_0',
-'gunship',
-'gunship3d',
-'gunship3dital',
-'gunshipacad',
-'gunshipacadital',
-'gunshipbold',
-'gunshipboldital',
-'gunshipcond',
-'gunshipcondital',
-'gunshipexpand',
-'gunshipexpandital',
-'gunshipgrad',
-'gunshipgradital',
-'gunshiphalf',
-'gunshiphalfital',
-'gunshipital',
-'gunshiplaser',
-'gunshiplaserital',
-'gunshipleft',
-'gunshipout',
-'gunshipoutital',
-'gunshipsemital',
-'gunshipsuperital',
-'heroesassemble2',
-'heroesassemble3d',
-'heroesassemble3dital',
-'heroesassembleacad',
-'heroesassembleacadital',
-'heroesassemblebold2',
-'heroesassembleboldexpand2',
-'heroesassembleboldexpandital2',
-'heroesassembleboldital2',
-'heroesassemblecond2',
-'heroesassemblecondital2',
-'heroesassembleexpand2',
-'heroesassembleexpandital2',
-'heroesassemblegrad',
-'heroesassemblegradital',
-'heroesassembleital2',
-'heroesassembleleft2',
-'heroesassembleout',
-'heroesassembleoutital',
-'Ice-kingdom---Bold---Por-Kustren',
-'Incredibles,-The',
-'Intensa-Fuente',
-'JUNGLEFE',
-'lion_king',
-'LMS-Happily-Ever-After',
-'MAGNETOB',
-'Maleficio',
-'Mickey-Ears',
-'mickey-m-tfb',
-'MICKEY',
-'mickeymousebats',
-'Minnie',
-'Monster-AG',
-'Mouse-Tags',
-'MouseMemoirs-Regular',
-'mulan',
-'Nightmare-Before-Christmas',
-'Orange-Grove',
-'PentaGrams-Malefissent',
-'PokerHunters',
-'PrincesS-AND-THE-FROG',
-'rapierletletplain1.0',
-'RAPSCALL',
-'SANFW',
-'SHADSER',
-'sonic_advance_2',
-'Space-Station-77',
-'Space-Station-77_0',
-'Spaceship-Bullet_0',
-'Starjedi',
-'Starjhol',
-'Starjout',
-'startedbyamouse_0',
-'STJEDISE',
-'Stjldbl1',
-'Stjldbl2',
-'Storyboo',
-'Storyboo_0',
-'Strjmono',
-'Tangled',
-'Tr2n',
-'Walter',
-'waltograph42',
-'waltographUI',
-'WOODCUT',
-'Zootopia-JPosters.com.ar',
-'AvenirLTStd-Black',
-'AvenirLTStd-BlackOblique',
-'AvenirLTStd-Book',
-'AvenirLTStd-BookOblique',
-'AvenirLTStd-Heavy',
-'AvenirLTStd-HeavyOblique',
-'AvenirLTStd-Light',
-'AvenirLTStd-LightOblique',
-'AvenirLTStd-Medium',
-'AvenirLTStd-MediumOblique',
-'AvenirLTStd-Oblique',
-'AvenirLTStd-Roman'
-];
-
-
-    var selectEffect='<select name="fontEffect" id="fontEffect" onchange="changeFont()">';
-    $.each( fonts, function( i, l ){
-      selectEffect+='<option value="'+l+'">'+l+'</option>';
-    });
-    selectEffect+='</select>';
-    selectEffect+=' <input type="color" id="fontColor" name="fontColor" value="#ff0000" onchange="changeFont()">';
-    selectEffect+=' size : <input type="number" id="fontSize" name="fontSize" value="100" onchange="changeFont()">';
-    return selectEffect;
-}
 
 function changeFont(){
        $("#textes").css("font-family", $('#fontEffect').val());

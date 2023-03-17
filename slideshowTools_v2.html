@@ -28,7 +28,7 @@
     <div id="divObject">
       <form action="javascript:addAnimationObject();">
         Id : <input type="text" id="objectId" value="-1" readonly>
-        Nom : <input type="text" id="objectName"><br>
+        Nom : <input type="text" id="objectName" required><br>
         Type : <select name="objectMedia" id="objectMedia">';
           <option value="img">Photo</option>
           <option value="mp3">Music</option>
@@ -72,6 +72,18 @@
           <option value="comeOutEffectZoomOutWithRotate">Zoom Out with Rotate</option>
           <option value="comeOutEffectZoomOutSlowMotion">Zoom Out slow-motion</option>
         </select>
+        <div>
+          Heading 1 2 3 
+          B I U
+          align left rigth center
+          Police : <select name="fontEffect" id="fontEffect" onchange="changeFont()">
+              <option value="Friends">Friends</option>
+              <option value="Friends">Caribbean</option>
+          </select>  
+          Color : <input type="color" id="fontColor" name="fontColor" value="#ff0000" onchange="changeFont()">
+          size : <input type="number" id="fontSize" name="fontSize" value="100" onchange="changeFont()">
+        <div contenteditable="true" id="objectTextarea" style="border: solid green; resize: both;overflow: scroll;">type your texte <b>ici</b></div> 
+        </div>
         <br><input type="submit">
     </form>
     </div>
