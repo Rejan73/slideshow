@@ -7,7 +7,6 @@
 var slideShowObjects;
 slideShowObjects=JSON.parse("[]");
 
-
 (function($) {
   $(document).ready(function(){
     // ajout du listener
@@ -30,8 +29,7 @@ var openFile = function(event) {
           $('#timelines').show();
         };
           reader.readAsText(input.files[0]);
-      };
-      
+};
 
 function fillSlideShow(){
     var div_data='<table><th></th><th>N°</th><th>File</th><th>Coming at</th><th>Actions</th>';
@@ -41,7 +39,6 @@ function fillSlideShow(){
     $('#slideShow').html(div_data); 
     $('#slideShow').show(); 
     drawChart() ;
-                                                                                         
 }
 
 function calculeAnimationTime(){
@@ -343,13 +340,6 @@ function changeComingAt(id){
   fillSlideShow();
 }
 
-
-function playAnimation(){
-  createObjectVideo(slideShowObjects[0]);
-  runObjectAnimation(slideShowObjects[0]);
-  return "Let's go !"
-}
-
 function createObjectText(slideShowObject){
   var elem = document.createElement("div");
   elem.id= slideShowObject["name"];
@@ -410,9 +400,9 @@ function runObjectAnimation(slideShowObject){
   console.log(slideShowObject["name"]);
   var elem= document.getElementById(slideShowObject["name"]);
   setTimeout(function() { 
-    console.log(slideShowObject["name"]+"show");
+    console.log(slideShowObject["name"]+" show");
     var id="#"+elem.id;
-    var duration=slideShowObject["duration"]*1000;
+    var duration=slideShowObject["duration"];
     if (slideShowObject["media"]=="mp4" || slideShowObject["media"]=="mp3"){
       duration=getDuration(slideShowObject["file"]);
       $(id)[0].load();
@@ -425,7 +415,7 @@ function runObjectAnimation(slideShowObject){
       $(id).addClass(slideShowObject["comeInEffect"]);
     }
     setTimeout(function() {    
-      console.log(slideShowObject["name"]+"remove");
+      console.log(slideShowObject["name"]+" remove");
       $(id).hide();
       document.getElementById("previewSlideShow").removeChild(elem);
     }, duration*1000);
@@ -436,6 +426,10 @@ function runObjectAnimation(slideShowObject){
 function runAnimation(id){
   var slideShowObject = slideShowObjects[id];
   slideShowObject["comingAt"]=1;
+  createAndRunAnimation(slideShowObject);
+}
+
+function createAndRunAnimation(slideShowObject){
   if (slideShowObject["media"]=="img"){
     createObjectImage(slideShowObject);
   } else if (slideShowObject["media"]=="txt"){
@@ -448,50 +442,17 @@ function runAnimation(id){
   runObjectAnimation(slideShowObject);
 }
 
+function playAllAnimation(){
+  slideShowObjects.forEach(slideShowObject => createAndRunAnimation(slideShowObject));
+  return "Let's go !"
+}
+
 function saveAllAnimation(){
   downAll(JSON.stringify(slideShowObjects),'slideShowObjects-'+Date.now()+'.json','application/json');
   $("#isaveall").attr({'style':'color:green;'});
 }
 
-function downAll(data, filename, mime) {
-    var blobData = [data];
-    var blob = new Blob(blobData, {type: mime || 'application/octet-stream'});
-    if (typeof window.navigator.msSaveBlob !== 'undefined') {
-        // IE workaround for "HTML7007: One or more blob URLs were
-        // revoked by closing the blob for which they were created.
-        // These URLs will no longer resolve as the data backing
-        // the URL has been freed."
-        window.navigator.msSaveBlob(blob, filename);
-    }
-    else {
-        var blobURL = (window.URL && window.URL.createObjectURL) ? window.URL.createObjectURL(blob) : window.webkitURL.createObjectURL(blob);
-        var tempLink = document.createElement('a');
-        tempLink.style.display = 'none';
-        tempLink.href = blobURL;
-        tempLink.setAttribute('download', filename);
-
-        // Safari thinks _blank anchor are pop ups. We only want to set _blank
-        // target if the browser does not support the HTML5 download attribute.
-        // This allows you to download files in desktop safari if pop up blocking
-        // is enabled.
-        if (typeof tempLink.download === 'undefined') {
-            tempLink.setAttribute('target', '_blank');
-        }
-
-        document.body.appendChild(tempLink);
-        tempLink.click();
-
-        // Fixes "webkit blob resource error 1"
-        setTimeout(function() {
-            document.body.removeChild(tempLink);
-            window.URL.revokeObjectURL(blobURL);
-        }, 200)
-    }
-}
-
-
 function changeMedia(){
-
   $("#divConfigurationText").hide();
   $("#divConfigurationVideoAudio").hide();
   $("#divConfigurationPosition").hide();
@@ -505,25 +466,56 @@ function changeMedia(){
   }
   if ($("#objectMedia").val()=="mp4"){
     $("#divConfigurationFile").show();
+    $("#divConfigurationPosition").show();    
     $("#divConfigurationVideoAudio").show();
     $("#divConfigurationEffect").show();
   }
-
   if ($("#objectMedia").val()=="img"){
     $("#divConfigurationFile").show();
     $("#divConfigurationDuration").show();
     $("#divConfigurationPosition").show();
     $("#divConfigurationEffect").show();
   } 
-
   if ($("#objectMedia").val()=="txt"){
     $("#divConfigurationText").show();
     $("#divConfigurationPosition").show();
     $("#divConfigurationEffect").show();
     $("#divConfigurationDuration").show();
-  } 
-  
+  }   
+}
 
+function downAll(data, filename, mime) {
+  var blobData = [data];
+  var blob = new Blob(blobData, {type: mime || 'application/octet-stream'});
+  if (typeof window.navigator.msSaveBlob !== 'undefined') {
+      // IE workaround for "HTML7007: One or more blob URLs were
+      // revoked by closing the blob for which they were created.
+      // These URLs will no longer resolve as the data backing
+      // the URL has been freed."
+      window.navigator.msSaveBlob(blob, filename);
+  }
+  else {
+      var blobURL = (window.URL && window.URL.createObjectURL) ? window.URL.createObjectURL(blob) : window.webkitURL.createObjectURL(blob);
+      var tempLink = document.createElement('a');
+      tempLink.style.display = 'none';
+      tempLink.href = blobURL;
+      tempLink.setAttribute('download', filename);
 
-  
+      // Safari thinks _blank anchor are pop ups. We only want to set _blank
+      // target if the browser does not support the HTML5 download attribute.
+      // This allows you to download files in desktop safari if pop up blocking
+      // is enabled.
+      if (typeof tempLink.download === 'undefined') {
+          tempLink.setAttribute('target', '_blank');
+      }
+
+      document.body.appendChild(tempLink);
+      tempLink.click();
+
+      // Fixes "webkit blob resource error 1"
+      setTimeout(function() {
+          document.body.removeChild(tempLink);
+          window.URL.revokeObjectURL(blobURL);
+      }, 200)
+  }
 }
