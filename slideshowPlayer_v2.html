@@ -12,18 +12,15 @@
 </head>
 <body>
 <div>
-  <a class="js-open-modal btn" href="#" start-slideshow-id="start-slideshow" title="Start"><i class="fa fa-play-circle fa-2x"></i></a>
-  <a class="js-open-modal btn" href="#" config-id="config-id" title="Configuration"><i class="fa fa-cog fa-2x"></i></a>
+  <a class="js-open-modal btn" href="#" config-id="config-id" title="Play"><i class="fa fa-play-circle fa-1x"></i></a><br>
+  <a class="js-open-modal btn" href="slideshowTools_v2.html" add-media="Configuration" title="Configuration"><i class="fa fa-cog fa-1x"></i></a>
 </div>
 <center>
 
 <div id="configurationSlideShow">
-  <input type='file' accept='application/JSON' onchange='openFile(event)'><br>
-  <a class="js-open-modal btn" href="slideshowTools.html" add-media="add-media" title="Ajout Média"><i class="fa fa-briefcase fa-2x" ></i></a>
+  <input type='file' accept='application/JSON' onchange='openFile(event)'>
   <br><br>
-  <label for="fname"><i class="fa fa-film fa-2x"></i></label>                                            
-  <input type="text" id="idSlideShow" value="0" size="1" pattern="[0-9]{3}" >
-  <a class="js-open-modal btn" href="#" set-slideshow-id="set-slideshow" title="Sauvegarder"><i class="fa fa-rotate-left fa-2x"></i></a>
+  <a class="js-open-modal btn" href="#" start-slideshow-id="start-slideshow" title="Start"><i class="fa fa-play-circle fa-4x"></i></a>
 </div>
 
 <div id="playSlideShow">
