@@ -15,21 +15,6 @@ function hideAll(){
 var slideShowObjects;
 var currentDataId=0;
 
-(function($) {
-  $(document).ready(function(){
-    currentDataId=0;
-    // ajout du listener
-    $('#video').get(0).addEventListener('pause', function(e) {
-              //$('#video').get(0).exitFullscreen();
-              currentDataId++;
-              runAnimation();
-    });
-    $.getJSON('slideshowDataDemo.json', function(data) {         
-        slideShowObjects = data;
-    });  
-  });
-})(jQuery);
-
 var openFile = function(event) {
         var input = event.target;
         var reader = new FileReader();
@@ -155,7 +140,15 @@ function createAndRunAnimation(slideShowObject){
 }
 
 
-
+function toSecond(mmss){
+  if (mmss.split(':').length<2){
+    return mmss;
+  }
+  if (mmss.split(':').length<3){
+    return mmss.split(':')[0]*60 + mmss.split(':')[1]*1;;
+  }
+  return mmss.split(':')[0]*3600+mmss.split(':')[1]*60 + mmss.split(':')[2]*1;
+}
 
 function getDuration(file){
   return parseFloat(toSecond(getEndTime(file)))-parseFloat(toSecond(getStartTime(file)));
@@ -176,6 +169,15 @@ function getEndTime(file){
   var temps=file.split('#t=')[1].split(',')[1];
   return  afficheTemps(temps);
 }
+
+
+function afficheTemps(temps){
+  var heures= Math.floor(temps/3600);
+  var minutes = Math.floor((temps%3600)/60);
+  var secondes = Math.floor((temps%3600)%60);
+  return  (heures<10?"0"+heures:heures)+":"+(minutes<10?"0"+minutes:minutes)+":"+(secondes<10?"0"+secondes:secondes);
+}
+
 
 function runAnimation(){
   $("#configurationSlideShow").hide();
