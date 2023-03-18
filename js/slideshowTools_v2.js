@@ -316,8 +316,8 @@ function addNewAnimation(){
   $("#objectId").val(-1);
   $("#objectName").val("");
   $("#objectMedia").val("img").change();
-  $("#objectWidth").val(800);
-  $("#objectHeight").val(600);
+  $("#objectWidth").val(1260);
+  $("#objectHeight").val(720);
   $("#objectTop").val(0);
   $("#objectLeft").val(0);
   $("#objectZindex").val(1);
@@ -374,20 +374,28 @@ function createObjectMusic(slideShowObject){
 }
 
 function addStyle(slideShowObject){
+  top=slideShowObject["top"]/2;
+  left=slideShowObject["left"]/2;
+  width=slideShowObject["width"]/2;
+  height=slideShowObject["height"]/2;
   return 'display:none;object-fit:contain;position:absolute;top:'
-    +slideShowObject["top"]+'px;left:'
-    +slideShowObject["left"]+'px;width:'
-    +slideShowObject["width"]+'px;height:'
-    +slideShowObject["height"]+'px;z-index:'
+    +top+'px;left:'
+    +left+'px;width:'
+    +width+'px;height:'
+    +height+'px;z-index:'
     +slideShowObject["z-index"]+';';
 }
 
 function addStyleText(slideShowObject){
+  top=slideShowObject["top"]/2;
+  left=slideShowObject["left"]/2;
+  width=slideShowObject["width"]/2;
+  height=slideShowObject["height"]/2;
   return 'display:none;object-fit:contain;position:absolute;top:'
-    +slideShowObject["top"]+'px;left:'
-    +slideShowObject["left"]+'px;width:'
-    +slideShowObject["width"]+'px;height:'
-    +slideShowObject["height"]+'px;z-index:'
+    +top+'px;left:'
+    +left+'px;width:'
+    +width+'px;height:'
+    +height+'px;z-index:'
     +slideShowObject["z-index"]+';font-size:'
     +slideShowObject["fontsize"]+'px;font-family:'
     +slideShowObject["font"]+';color:'

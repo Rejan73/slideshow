@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Slide Show by Rod</title>
+  <link rel="stylesheet" href="css/slideshow.css">
+  <link rel="stylesheet" href="css/slideshowFonts.css"> 
+  <link rel="stylesheet" href="css/slideshowPlayer2.css">
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/starwars.css">
+  <script src="js/jquery-3.5.0.js"></script>
+</head>
+<body>
+<div>
+  <a class="js-open-modal btn" href="#" start-slideshow-id="start-slideshow" title="Start"><i class="fa fa-play-circle fa-2x"></i></a>
+  <a class="js-open-modal btn" href="#" config-id="config-id" title="Configuration"><i class="fa fa-cog fa-2x"></i></a>
+</div>
+<center>
+
+<div id="configurationSlideShow">
+  <input type='file' accept='application/JSON' onchange='openFile(event)'><br>
+  <a class="js-open-modal btn" href="slideshowTools.html" add-media="add-media" title="Ajout Média"><i class="fa fa-briefcase fa-2x" ></i></a>
+  <br><br>
+  <label for="fname"><i class="fa fa-film fa-2x"></i></label>                                            
+  <input type="text" id="idSlideShow" value="0" size="1" pattern="[0-9]{3}" >
+  <a class="js-open-modal btn" href="#" set-slideshow-id="set-slideshow" title="Sauvegarder"><i class="fa fa-rotate-left fa-2x"></i></a>
+</div>
+
+<div id="playSlideShow">
+</div>
+</center>  
+<script src="js/jquery-3.5.0.js"></script>
+<script src="js/slideshowPlayer_v2.js"></script> 
+</body>
+</html>
