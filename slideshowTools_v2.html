@@ -92,15 +92,15 @@
           <a class="js-open-modal btn" href="#" title="align left" onclick="alignLeftText();"><i id="objectTextLeft" style="color:grey" class="fa fa-solid fa-align-left fa-1x"></i></a>
           <a class="js-open-modal btn" href="#" title="align center" onclick="alignCenterText();"><i id="objectTextCenter" style="color:grey" class="fa fa-solid fa-align-center fa-1x"></i></a>
           <a class="js-open-modal btn" href="#" title="align rigth" onclick="alignRightText();"><i id="objectTextRight" style="color:grey" class="fa fa-solid fa-align-right fa-1x"></i></a>
-          Police : <select id="fontFamily">
+          Police : <select id="fontFamily" onchange="previewTextWithoutAnimation()">
               <option value="Arial">Arial</option>
               <option value="Friends">Friends</option>
               <option value="Caribbean">Caribbean</option>
           </select>  
-          Color : <input type="color" id="fontColor" name="fontColor" value="#ff0000">
-          size : <input type="number" id="fontSize" name="fontSize" value="100" >
+          Color : <input type="color" id="fontColor" name="fontColor" value="#ff0000"  onchange="previewTextWithoutAnimation()"> 
+          size : <input type="number" id="fontSize" name="fontSize" value="100"  onchange="previewTextWithoutAnimation()">
           <a class="js-open-modal btn" href="#" title="preview text" onclick="previewText();"><i class="fa fa-solid fa-search fa-1x"></i></a>
-        <div contenteditable="true" id="objectTextarea" style="border: solid green; resize: both;overflow: scroll;">type your texte <b>ici</b></div> 
+        <div contenteditable="true" id="objectTextarea" style="border: solid green; resize: both;overflow: scroll;" onfocusout="previewTextWithoutAnimation()">type your texte <b>ici</b></div> 
         </div>
         <br><input type="submit" value="save">
     </form>

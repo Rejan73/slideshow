@@ -412,27 +412,33 @@ function addStyleText(slideShowObject){
 
 function boldText(){
   switchIconColor($("#objectTextBold"));
+  previewTextWithoutAnimation();
 }
 function italicText(){
   switchIconColor($("#objectTextItalic"));
+  previewTextWithoutAnimation();
 }
 function underlineText(){
   switchIconColor($("#objectTextUnderline"));
+  previewTextWithoutAnimation();
 }
 function alignLeftText(){
   switchIconColor($("#objectTextLeft"));
   $("#objectTextCenter").css("color", "grey");
   $("#objectTextRight").css("color", "grey");
+  previewTextWithoutAnimation();
 }
 function alignCenterText(){
   switchIconColor($("#objectTextCenter"));
   $("#objectTextLeft").css("color", "grey");
   $("#objectTextRight").css("color", "grey");
+  previewTextWithoutAnimation();
 }
 function alignRightText(){
   switchIconColor($("#objectTextRight"));
   $("#objectTextCenter").css("color", "grey");
   $("#objectTextLeft").css("color", "grey");
+  previewTextWithoutAnimation();
 }
 
 function switchIconColor(objectIcone){
@@ -473,11 +479,45 @@ function getTextDecoration(){
   }
   return "normal";
 }
-
+function previewTextWithoutAnimation() {
+  var elem= document.getElementById($("#objectName").val());
+  if (elem!=null){
+    document.getElementById("previewSlideShow").removeChild(elem);
+  }
+  var dataToAdd={};
+  dataToAdd["txt"]=$("#objectTextarea").html();
+  dataToAdd["fontFamily"]=$("#fontFamily").val();
+  dataToAdd["fontColor"]=$("#fontColor").val();
+  dataToAdd["fontSize"]=$("#fontSize").val();
+  dataToAdd["name"]=$("#objectName").val();
+  dataToAdd["media"]=$("#objectMedia").val();
+ 
+  dataToAdd["width"]=$("#objectWidth").val();
+  dataToAdd["height"]=$("#objectHeight").val();
+  dataToAdd["top"]=$("#objectTop").val();
+  dataToAdd["left"]=$("#objectLeft").val();
+  dataToAdd["z-index"]=$("#objectZindex").val();
+  dataToAdd["comingAt"]=1;
+  dataToAdd["duration"]=toSecond($("#objetDuration").val());
+  dataToAdd["volume"]=$("#objectVolume").val();
+  dataToAdd["styleEffect"]=$("#objectStyleEffect").val();
+  dataToAdd["comeInEffect"]=$("#objectComeInEffect").val();
+  dataToAdd["comeOutEffect"]=$("#objectComeOutEffect").val();
+  dataToAdd["textAlign"]=getTextFontAlign();
+  dataToAdd["fontStyle"]=getTextFontStyle();
+  dataToAdd["fontWeight"]=getTextFontWeight();
+  dataToAdd["textDecoration"]=getTextDecoration();
+  createObjectText(dataToAdd);
+  var id="#"+dataToAdd.name;
+  $(id).show();
+}
 
 function previewText(){
+  var elem= document.getElementById($("#objectName").val());
+  if (elem!=null){
+    document.getElementById("previewSlideShow").removeChild(elem);
+  }
   var dataToAdd={};
-  
   dataToAdd["txt"]=$("#objectTextarea").html();
   dataToAdd["fontFamily"]=$("#fontFamily").val();
   dataToAdd["fontColor"]=$("#fontColor").val();
