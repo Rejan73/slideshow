@@ -5,6 +5,7 @@
  */
 
 var slideShowObjects;
+var debugMode=true;
 slideShowObjects=JSON.parse("[]");
 
 (function($) {
@@ -507,6 +508,10 @@ function previewText(){
 
 function runObjectAnimation(slideShowObject){
   console.log(slideShowObject["name"]);
+  var commingAt=slideShowObject["comingAt"];
+  if (debugMode){
+    commingAt=1;
+  }
   var elem= document.getElementById(slideShowObject["name"]);
   setTimeout(function() { 
     console.log(slideShowObject["name"]+" show");
@@ -528,13 +533,13 @@ function runObjectAnimation(slideShowObject){
       $(id).hide();
       document.getElementById("previewSlideShow").removeChild(elem);
     }, duration*1000);
-  }, slideShowObject["comingAt"]*1000);  
+  }, commingAt*1000);  
   return elem;
 }
 
 function runAnimation(id){
   var slideShowObject = slideShowObjects[id];
-  slideShowObject["comingAt"]=1;
+  debugMode=true;
   createAndRunAnimation(slideShowObject);
 }
 
@@ -552,6 +557,7 @@ function createAndRunAnimation(slideShowObject){
 }
 
 function playAllAnimation(){
+  debugMode=false;
   slideShowObjects.forEach(slideShowObject => createAndRunAnimation(slideShowObject));
   return "Let's go !"
 }
