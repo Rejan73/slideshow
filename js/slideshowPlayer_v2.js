@@ -82,10 +82,15 @@ function addStyle(slideShowObject){
 
 function addStyleText(slideShowObject){
   return addStyle(slideShowObject)
-    +'font-size:'+slideShowObject["fontsize"]
-    +'px;font-family:'+slideShowObject["font"]
-    +';color:'+slideShowObject["fontcolor"]+';';
+    +'font-size:'+slideShowObject["fontSize"]+'px;'
+    +'font-family:'+slideShowObject["fontFamily"]+';'
+    +'color:'+slideShowObject["fontColor"]+';'
+    +'text-align:'+slideShowObject["textAlign"]+';'
+    +'font-weight:'+slideShowObject["fontWeight"]+';'
+    +'font-style:'+slideShowObject["fontStyle"]+';'
+    +'text-decoration:'+slideShowObject["textDecoration"]+';';
 }
+
 
 function runObjectAnimation(slideShowObject){
   console.log(slideShowObject["name"]);

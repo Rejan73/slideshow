@@ -66,8 +66,10 @@ function  buildData(slideShowObject) {
     } else{
        return [ slideShowObject.media ,timeCpt+':'+ getFilename(slideShowObject.file),toDateTime(startTime), toDateTime(startTime+getDuration(slideShowObject.file))];
     } 
+    if (slideShowObject["media"]=="txt"){
+      return [ slideShowObject.media ,timeCpt+':'+ slideShowObject.name, toDateTime(startTime),  toDateTime(time)];
+    }
     return [ slideShowObject.media ,timeCpt+':'+ getFilename(slideShowObject.file), toDateTime(startTime),  toDateTime(time)];
-    
 }
 
 function showTimeLine(){
@@ -231,7 +233,6 @@ function sortslideShowObjects(){
 }
 
 function addAnimationObject(){
-  
   var dataToAdd={};
   if ($("#objectId").val()>-1){//Update
     dataToAdd=slideShowObjects[$("#objectId").val()];
@@ -250,9 +251,13 @@ function addAnimationObject(){
   }
   if ($("#objectMedia").val()=="txt"){
     dataToAdd["txt"]=$("#objectTextarea").html();
-    dataToAdd["font"]=$("#fontEffect").val();
-    dataToAdd["fontcolor"]=$("#fontColor").val();
-    dataToAdd["fontsize"]=$("#fontSize").val();
+    dataToAdd["fontFamily"]=$("#fontFamily").val();
+    dataToAdd["fontColor"]=$("#fontColor").val();
+    dataToAdd["fontSize"]=$("#fontSize").val();
+    dataToAdd["textAlign"]=getTextFontAlign();
+    dataToAdd["fontStyle"]=getTextFontStyle();
+    dataToAdd["fontWeight"]=getTextFontWeight();
+    dataToAdd["textDecoration"]=getTextDecoration();
   }
   if ($("#objectMedia").val()=="mp4" || $("#objectMedia").val()=="mp3"){
     dataToAdd["file"]= getFilePath(dataToAdd["file"])+'#t='+ toSecond($('#objetStartFile').val()) +','+toSecond($('#objectEndFile').val());
@@ -305,9 +310,15 @@ function updateAnimation(id){
   $("#objectComeOutEffect").val(slideShowObjects[id]["comeOutEffect"]).change();
   if (slideShowObjects[id]["media"]=="txt"){
     $("#objectTextarea").html(slideShowObjects[id]["txt"]);
-    $("#fontEffect").val(slideShowObjects[id]["font"]);
-    $("#fontColor").val(slideShowObjects[id]["fontcolor"]);
-    $("#fontSize").val(slideShowObjects[id]["fontsize"]);
+    $("#fontFamily").val(slideShowObjects[id]["fontFamily"]);
+    $("#fontColor").val(slideShowObjects[id]["fontColor"]);
+    $("#fontSize").val(slideShowObjects[id]["fontSize"]);
+    $("#objectTextBold").css("color",slideShowObjects[id]["fontWeight"]=='bold'?"green":"grey");
+    $("#objectTextItalic").css("color",slideShowObjects[id]["fontStyle"]=='italic'?"green":"grey");
+    $("#objectTextUnderline").css("color",slideShowObjects[id]["textDecoration"]=='underline'?"green":"grey");
+    $("#objectTextLeft").css("color",slideShowObjects[id]["textAlign"]=='left'?"green":"grey");
+    $("#objectTextCenter").css("color",slideShowObjects[id]["textAlign"]=='center'?"green":"grey");
+    $("#objectTextRight").css("color",slideShowObjects[id]["textAlign"]=='right'?"green":"grey");
   }
   $("#divObject").show();
 }
@@ -387,11 +398,15 @@ function addStyle(slideShowObject){
 }
 
 function addStyleText(slideShowObject){
-  objectFontsize=slideShowObject["fontsize"]/2;
+  objectFontsize=slideShowObject["fontSize"]/2;
   return addStyle(slideShowObject)
-    +'font-size:'+objectFontsize+'px;font-family:'
-    +slideShowObject["font"]+';color:'
-    +slideShowObject["fontcolor"]+';';
+    +'font-size:'+objectFontsize+'px;'
+    +'font-family:'+slideShowObject["fontFamily"]+';'
+    +'color:'+slideShowObject["fontColor"]+';'
+    +'text-align:'+slideShowObject["textAlign"]+';'
+    +'font-weight:'+slideShowObject["fontWeight"]+';'
+    +'font-style:'+slideShowObject["fontStyle"]+';'
+    +'text-decoration:'+slideShowObject["textDecoration"]+';';
 }
 
 function boldText(){
@@ -427,13 +442,45 @@ function switchIconColor(objectIcone){
   }
 }
 
+function getTextFontAlign(){
+  if ('rgb(128, 128, 128)'!=$("#objectTextCenter").css("color")){
+    return "center";
+  }
+  if ('rgb(128, 128, 128)'!=$("#objectTextRight").css("color")){
+    return "right";
+  } 
+  return "left";
+}
+
+function getTextFontWeight(){
+  if ('rgb(128, 128, 128)'!=$("#objectTextBold").css("color")){
+    return "bold";
+  }
+  return "normal";
+}
+
+function getTextFontStyle(){
+  if ('rgb(128, 128, 128)'!=$("#objectTextItalic").css("color")){
+    return "italic";
+  }
+  return "normal";
+}
+
+function getTextDecoration(){
+  if ('rgb(128, 128, 128)'!=$("#objectTextUnderline").css("color")){
+    return "underline";
+  }
+  return "normal";
+}
+
+
 function previewText(){
   var dataToAdd={};
   
   dataToAdd["txt"]=$("#objectTextarea").html();
-  dataToAdd["font"]=$("#fontEffect").val();
-  dataToAdd["fontcolor"]=$("#fontColor").val();
-  dataToAdd["fontsize"]=$("#fontSize").val();
+  dataToAdd["fontFamily"]=$("#fontFamily").val();
+  dataToAdd["fontColor"]=$("#fontColor").val();
+  dataToAdd["fontSize"]=$("#fontSize").val();
   dataToAdd["name"]=$("#objectName").val();
   dataToAdd["media"]=$("#objectMedia").val();
  
@@ -448,6 +495,11 @@ function previewText(){
   dataToAdd["styleEffect"]=$("#objectStyleEffect").val();
   dataToAdd["comeInEffect"]=$("#objectComeInEffect").val();
   dataToAdd["comeOutEffect"]=$("#objectComeOutEffect").val();
+  dataToAdd["textAlign"]=getTextFontAlign();
+  dataToAdd["fontStyle"]=getTextFontStyle();
+  dataToAdd["fontWeight"]=getTextFontWeight();
+  dataToAdd["textDecoration"]=getTextDecoration();
+
   createObjectText(dataToAdd);
   runObjectAnimation(dataToAdd);
 }
