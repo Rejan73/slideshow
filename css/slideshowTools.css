@@ -36,10 +36,11 @@ body {
 }
 
 #previewSlideShow {
-  height: 360px;
-  width: 640px;
+  height: 300px;
+  width: 400px;
   border: solid green;
   overflow: hidden;
+  position: relative;
 }
 
 #divUpdateConfiguration {
@@ -136,3 +137,8 @@ body {
     from { opacity:0; }
     to { opacity:1; }
 }
+
+
+input[type='number']{
+  width: 45px;
+} 

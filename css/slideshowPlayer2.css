@@ -11,19 +11,11 @@ body {
 }
 /*1280 x 720*/
 #playSlideShow {
-  width: 95%;
-  height: 95%;
+  height: 720px;
+  width: 1280px;
+  /*border: solid green;*/
+  position: relative;
   background-color: black;
-  position: absolute; 
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-  max-width: 100%;
-  max-height: 100%;
-  overflow: auto;
-  border: solid green;
 }
 #srcImage,  #video, #srcNextImage  {
   left: 0;

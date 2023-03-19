@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Slide Show by Rod</title>
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/slideshow.css">   
+  <link rel="stylesheet" href="css/slideshowFonts.css">  
+  <link rel="stylesheet" href="css/slideshowTools2.css">
+</head>
+<body>
+<div id="divMenu">
+  <i class="fa fa-cog fa-2x"></i> Slideshow Tools by Rod <input type='file' accept='application/JSON' onchange='openFile(event)'>
+  <a class="js-open-modal btn" href="#" title="show timeline" onclick="showTimeLine();"><i class="fa fa-bar-chart fa-2x"></i></a>
+  <a class="js-open-modal btn" href="#" title="add animation" onclick="addNewAnimation();"><i class="fa fa-plus-circle fa-2x"></i></a>
+  <a class="js-open-modal btn" href="#" title="save all" onclick="saveAllAnimation();"><i id="isaveall" class="fa fa-save fa-2x"></i></a>
+  <a class="js-open-modal btn" href="#" title="play here" onclick="playAllAnimation();"><i class="fa fa-solid fa-bug fa-2x"></i></a>
+  <a class="js-open-modal btn" href="slideshowPlayer.html" target="_blank" title="start player"><i class="fa fa-play-circle fa-2x"></i></a>
+  <a class="js-open-modal btn" href="https://github.com/Rejan73/slideshow/blob/main/README.md" target="_blank" title="info"><i class="fa fa-info-circle fa-2x"></i></a>
+</div>
+<div id="mainSlideShow">
+<div id="divLeft">
+  <div id="slideShow" style="display:none"></div>
+</div>  
+<div id="divRight">  
+    <div id="previewSlideShow"></div>
+    <div id="divObject" style="display:none">
+      <form action="javascript:addAnimationObject();">
+        Id : <input type="number" id="objectId" value="-1" readonly>
+        Nom : <input type="text" id="objectName" required>
+        Type : <select name="objectMedia" id="objectMedia" onchange="changeMedia()">';
+          <option disabled selected value> -- select an option -- </option>
+          <option value="img">Photo</option>
+          <option value="mp3">Music</option>
+          <option value="mp4">Video</option>
+          <option value="txt">Text</option>
+        </select>
+        <div id="divConfigurationFile" style="display:none">
+        File : <input type="file" id="objectFile"  accept="audio/mp3,audio/ogg,audio/wav,audio/mpeg,video/mp4,video/ogg,video/webm,image/*">
+       </div>
+        <div id="divConfigurationPosition" style="display:none">
+        Size Width: <input type="number" id="objectWidth" min="0" max="1600" value="1280"> Size Height: <input type="number" id="objectHeight" min="0" max="800" value="720"> <br>
+        Position Top: <input type="number" id="objectTop" min="0" max="1600" value="0"> Position Left: <input type="number" id="objectLeft" min="0" max="800" value="0"> Z-Index : <input type="number" id="objectZindex" value="1"><br>
+        </div>
+        Coming At : <input type="time" step="1" min="00:00:00" max="24:00:00" size="1" id="objetComingTime" value="00:00:00">
+        <div id="divConfigurationDuration"  style="display:none">
+        Duration : <input type="time" step="1" min="00:00:00" max="24:00:00"" size="1" id="objetDuration" value="00:00:05">
+        </div>
+        <div id="divConfigurationVideoAudio"  style="display:none">
+        Start <input type="time" step="1" min="00:00:00" max="24:00:00" size="1" id="objetStartFile" value="00:00:00"/>';
+        End <input type="time" step="1" min="00:00:00" max="24:00:00" size="1" id="objectEndFile" value="00:00:10"/>
+        Volume <input id="objectVolume" type="range" min="0" max="100" value="100">
+        </div>
+        <div id="divConfigurationImageEffect" style="display:none">
+          <label><i class="fa fa-film fa-1x"></i> Style Effect</label>
+          <select id="objectStyleEffect">
+            <option value="imageEffectNone">none</option>
+            <option value="imageEffectSepia">Sepia</option>
+            <option value="imageEffectBlackAndWhite">Black and White</option>
+          </select>
+        </div>
+        <div id="divConfigurationEffect" style="display:none">
+          <label><i class="fa fa-film fa-1x"></i> Come In Effect</label>
+          <select id="objectComeInEffect">
+            <option value="comeInEffectNone">none</option>
+            <option value="movementEffectUpToDown">Up to Down</option>
+            <option value="movementEffectDownToUp">Down to Up</option>
+            <option value="movementEffectLeftToRight">Left to Right</option>
+            <option value="movementEffectRightToLeft">Right to Left</option>
+            <option value="comeInEffectFadeIn">Fade In</option>
+            <option value="comeInEffectZoomIn">Zoom In</option>
+            <option value="comeInEffectZoomInWithRotate">Zoom In with Rotate</option>
+            <option value="comeInEffectZoomInSlowMotion">Zoom in slow-motion</option>
+          </select>
+          <label>Out Effect</label>
+          <select id="objectComeOutEffect">
+            <option value="comeOutEffectNone">none</option>
+            <option value="movementEffectUpToDown">Up to Down</option>
+            <option value="movementEffectDownToUp">Down to Up</option>
+            <option value="movementEffectLeftToRight">Left to Right</option>
+            <option value="movementEffectRightToLeft">Right to Left</option>
+            <option value="comeOutEffectFadeOut">Fade Out</option>
+            <option value="comeOutEffectZoomOut">Zoom Out</option>
+            <option value="comeOutEffectZoomOutWithRotate">Zoom Out with Rotate</option>
+            <option value="comeOutEffectZoomOutSlowMotion">Zoom Out slow-motion</option>
+          </select>
+        </div>
+        <div id="divConfigurationText" style="display:none">
+          <a class="js-open-modal btn" href="#" title="bold text" onclick="boldText();"><i id="objectTextBold" style="color:grey" class="fa fa-solid fa-bold fa-1x"></i></a>
+          <a class="js-open-modal btn" href="#" title="italic text" onclick="italicText();"><i style="color:grey" id="objectTextItalic" class="fa fa-solid fa-italic fa-1x"></i></a>
+          <a class="js-open-modal btn" href="#" title="underline text" onclick="underlineText();"><i id="objectTextUnderline" style="color:grey" class="fa fa-solid fa-underline fa-1x"></i></a>
+          <a class="js-open-modal btn" href="#" title="align left" onclick="alignLeftText();"><i id="objectTextLeft" style="color:grey" class="fa fa-solid fa-align-left fa-1x"></i></a>
+          <a class="js-open-modal btn" href="#" title="align center" onclick="alignCenterText();"><i id="objectTextCenter" style="color:grey" class="fa fa-solid fa-align-center fa-1x"></i></a>
+          <a class="js-open-modal btn" href="#" title="align rigth" onclick="alignRightText();"><i id="objectTextRight" style="color:grey" class="fa fa-solid fa-align-right fa-1x"></i></a>
+          Police : <select id="fontFamily" onchange="previewTextWithoutAnimation()">
+              <option value="Arial">Arial</option>
+              <option value="Brush Script MT">Brush Script MT</option> 
+              <option value="Courier New">Courier New"</option>
+              <option value="Garamond">Garamond</option>
+              <option value="Georgia">Georgia</option>
+              <option value="Tahoma">Tahoma</option>
+              <option value="Times New Roman">Times New Roman</option>
+              <option value="Trebuchet MS">Trebuchet MS</option>
+              <option value="Verdana">Verdana</option>
+              <option value="Friends">Friends</option>
+              <option value="A-Bug-s-Life---Debugged">A-Bug-s-Life---Debugged</option>
+              <option value="A-Bug-s-Life">A-Bug-s-Life</option>
+              <option value="akaPotsley_0">akaPotsley_0</option>
+              <option value="AL-Cinderella">AL-Cinderella</option>
+              <option value="aladdin">aladdin</option>
+              <option value="ALGERIA">ALGERIA</option>
+              <option value="algerian_becker">algerian_becker</option>
+              <option value="algerian_becker_basic">algerian_becker_basic</option>
+              <option value="algerian_becker_basic_caps">algerian_becker_basic_caps</option>
+              <option value="Alice_in_Wonderland_3">Alice_in_Wonderland_3</option>
+              <option value="BFG-Font">BFG-Font</option>
+              <option value="bighero_v4">bighero_v4</option>
+              <option value="blasteei">blasteei</option>
+              <option value="blasteet">blasteet</option>
+              <option value="blasteii">blasteii</option>
+              <option value="blastein">blastein</option>
+              <option value="blaster">blaster</option>
+              <option value="blasteri">blasteri</option>
+              <option value="BLKCHCRY">BLKCHCRY</option>
+              <option value="BUBBALOB">BUBBALOB</option>
+              <option value="bubbalove-bold">bubbalove-bold</option>
+              <option value="Buka-Bird">Buka-Bird</option>
+              <option value="Caribbean">Caribbean</option>
+              <option value="Caribbean_0">Caribbean_0</option>
+              <option value="celticmd">celticmd</option>
+              <option value="columbusdb">columbusdb</option>
+              <option value="columbusregular">columbusregular</option>
+              <option value="DENMARK">DENMARK</option>
+              <option value="Diner-Regular">Diner-Regular</option>
+              <option value="DIOGENES">DIOGENES</option>
+              <option value="disney-print">disney-print</option>
+              <option value="Findet-Nemo">Findet-Nemo</option>
+              <option value="Flat-Earth-Scribe">Flat-Earth-Scribe</option>
+              <option value="Florida-Project-Phase-One">Florida-Project-Phase-One</option>
+              <option value="Florida-Project-Phase-One">Florida-Project-Phase-One</option>
+              <option value="Florida-Project-Phase-Two">Florida-Project-Phase-Two</option>
+              <option value="Florida-Project-Phase-Two">Florida-Project-Phase-Two</option>
+              <option value="graceyscurse">graceyscurse</option>
+              <option value="graceyscurse_0">graceyscurse_0</option>
+              <option value="gunship">gunship</option>
+              <option value="gunship3d">gunship3d</option>
+              <option value="gunship3dital">gunship3dital</option>
+              <option value="gunshipacad">gunshipacad</option>
+              <option value="gunshipacadital">gunshipacadital</option>
+              <option value="gunshipbold">gunshipbold</option>
+              <option value="gunshipboldital">gunshipboldital</option>
+              <option value="gunshipcond">gunshipcond</option>
+              <option value="gunshipcondital">gunshipcondital</option>
+              <option value="gunshipexpand">gunshipexpand</option>
+              <option value="gunshipexpandital">gunshipexpandital</option>
+              <option value="gunshipgrad">gunshipgrad</option>
+              <option value="gunshipgradital">gunshipgradital</option>
+              <option value="gunshiphalf">gunshiphalf</option>
+              <option value="gunshiphalfital">gunshiphalfital</option>
+              <option value="gunshipital">gunshipital</option>
+              <option value="gunshiplaser">gunshiplaser</option>
+              <option value="gunshiplaserital">gunshiplaserital</option>
+              <option value="gunshipleft">gunshipleft</option>
+              <option value="gunshipout">gunshipout</option>
+              <option value="gunshipoutital">gunshipoutital</option>
+              <option value="gunshipsemital">gunshipsemital</option>
+              <option value="gunshipsuperital">gunshipsuperital</option>
+              <option value="heroesassemble2">heroesassemble2</option>
+              <option value="heroesassemble3d">heroesassemble3d</option>
+              <option value="heroesassemble3dital">heroesassemble3dital</option>
+              <option value="heroesassembleacad">heroesassembleacad</option>
+              <option value="heroesassembleacadital">heroesassembleacadital</option>
+              <option value="heroesassemblebold2">heroesassemblebold2</option>
+              <option value="heroesassembleboldexpand2">heroesassembleboldexpand2</option>
+              <option value="heroesassembleboldexpandital2">heroesassembleboldexpandital2</option>
+              <option value="heroesassembleboldital2">heroesassembleboldital2</option>
+              <option value="heroesassemblecond2">heroesassemblecond2</option>
+              <option value="heroesassemblecondital2">heroesassemblecondital2</option>
+              <option value="heroesassembleexpand2">heroesassembleexpand2</option>
+              <option value="heroesassembleexpandital2">heroesassembleexpandital2</option>
+              <option value="heroesassemblegrad">heroesassemblegrad</option>
+              <option value="heroesassemblegradital">heroesassemblegradital</option>
+              <option value="heroesassembleital2">heroesassembleital2</option>
+              <option value="heroesassembleleft2">heroesassembleleft2</option>
+              <option value="heroesassembleout">heroesassembleout</option>
+              <option value="heroesassembleoutital">heroesassembleoutital</option>
+              <option value="Ice-kingdom---Bold---Por-Kustren">Ice-kingdom---Bold---Por-Kustren</option>
+              <option value="Incredibles,-The">Incredibles,-The</option>
+              <option value="Intensa-Fuente">Intensa-Fuente</option>
+              <option value="JUNGLEFE">JUNGLEFE</option>
+              <option value="lion_king">lion_king</option>
+              <option value="LMS-Happily-Ever-After">LMS-Happily-Ever-After</option>
+              <option value="MAGNETOB">MAGNETOB</option>
+              <option value="Maleficio">Maleficio</option>
+              <option value="Mickey-Ears">Mickey-Ears</option>
+              <option value="mickey-m-tfb">mickey-m-tfb</option>
+              <option value="MICKEY">MICKEY</option>
+              <option value="mickeymousebats">mickeymousebats</option>
+              <option value="Minnie">Minnie</option>
+              <option value="Monster-AG">Monster-AG</option>
+              <option value="Mouse-Tags">Mouse-Tags</option>
+              <option value="MouseMemoirs-Regular">MouseMemoirs-Regular</option>
+              <option value="mulan">mulan</option>
+              <option value="Nightmare-Before-Christmas">Nightmare-Before-Christmas</option>
+              <option value="Orange-Grove">Orange-Grove</option>
+              <option value="PentaGrams-Malefissent">PentaGrams-Malefissent</option>
+              <option value="PokerHunters">PokerHunters</option>
+              <option value="PrincesS-AND-THE-FROG">PrincesS-AND-THE-FROG</option>
+              <option value="rapierletletplain1.0">rapierletletplain1.0</option>
+              <option value="RAPSCALL">RAPSCALL</option>
+              <option value="SANFW">SANFW</option>
+              <option value="SHADSER">SHADSER</option>
+              <option value="sonic_advance_2">sonic_advance_2</option>
+              <option value="Space-Station-77">Space-Station-77</option>
+              <option value="Space-Station-77_0">Space-Station-77_0</option>
+              <option value="Spaceship-Bullet_0">Spaceship-Bullet_0</option>
+              <option value="Starjedi">Starjedi</option>
+              <option value="Starjhol">Starjhol</option>
+              <option value="Starjout">Starjout</option>
+              <option value="startedbyamouse_0">startedbyamouse_0</option>
+              <option value="STJEDISE">STJEDISE</option>
+              <option value="Stjldbl1">Stjldbl1</option>
+              <option value="Stjldbl2">Stjldbl2</option>
+              <option value="Storyboo">Storyboo</option>
+              <option value="Storyboo_0">Storyboo_0</option>
+              <option value="Strjmono">Strjmono</option>
+              <option value="Tangled">Tangled</option>
+              <option value="Tr2n">Tr2n</option>
+              <option value="Walter">Walter</option>
+              <option value="waltograph42">waltograph42</option>
+              <option value="waltographUI">waltographUI</option>
+              <option value="WOODCUT">WOODCUT</option>
+              <option value="Zootopia-JPosters.com.ar">Zootopia-JPosters.com.ar</option>
+              <option value="AvenirLTStd-Black">AvenirLTStd-Black</option>
+              <option value="AvenirLTStd-BlackOblique">AvenirLTStd-BlackOblique</option>
+              <option value="AvenirLTStd-Book">AvenirLTStd-Book</option>
+              <option value="AvenirLTStd-BookOblique">AvenirLTStd-BookOblique</option>
+              <option value="AvenirLTStd-Heavy">AvenirLTStd-Heavy</option>
+              <option value="AvenirLTStd-HeavyOblique">AvenirLTStd-HeavyOblique</option>
+              <option value="AvenirLTStd-Light">AvenirLTStd-Light</option>
+              <option value="AvenirLTStd-LightOblique">AvenirLTStd-LightOblique</option>
+              <option value="AvenirLTStd-Medium">AvenirLTStd-Medium</option>
+              <option value="AvenirLTStd-MediumOblique">AvenirLTStd-MediumOblique</option>
+              <option value="AvenirLTStd-Oblique">AvenirLTStd-Oblique</option>
+              <option value="AvenirLTStd-Roman">AvenirLTStd-Roman</option>
+
+
+          </select>  
+          Color : <input type="color" id="fontColor" name="fontColor" value="#ff0000"  onchange="previewTextWithoutAnimation()"> 
+          size : <input type="number" id="fontSize" name="fontSize" value="100"  onchange="previewTextWithoutAnimation()">
+          <a class="js-open-modal btn" href="#" title="preview text" onclick="previewText();"><i class="fa fa-solid fa-search fa-1x"></i></a>
+        <div contenteditable="true" id="objectTextarea" style="border: solid green; resize: both;overflow: scroll;" onfocusout="previewTextWithoutAnimation()">type your texte <b>ici</b></div> 
+        </div>
+        <br><input type="submit" value="save">
+    </form>
+    </div>
+</div>
+<div id="divBottom">  
+  <div id="timelines" style="display:none">
+    <div id="timelineDiv"></div>
+  </div>   
+</div>  
+</div>
+<script type="text/javascript" src="js/charts/loader.js"></script>
+<script src="js/jquery-3.5.0.js"></script>
+<script src="js/slideshowTools_v2.js"></script> 
+</body>
+</html>
