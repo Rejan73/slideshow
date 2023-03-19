@@ -374,34 +374,83 @@ function createObjectMusic(slideShowObject){
 }
 
 function addStyle(slideShowObject){
-  top=slideShowObject["top"]/2;
-  left=slideShowObject["left"]/2;
-  width=slideShowObject["width"]/2;
-  height=slideShowObject["height"]/2;
+  objectTop=slideShowObject["top"]/2;
+  objectLeft=slideShowObject["left"]/2;
+  objectWidth=slideShowObject["width"]/2;
+  objectHeight=slideShowObject["height"]/2;
   return 'display:none;object-fit:contain;position:absolute;top:'
-    +top+'px;left:'
-    +left+'px;width:'
-    +width+'px;height:'
-    +height+'px;z-index:'
+    +objectTop+'px;left:'
+    +objectLeft+'px;width:'
+    +objectWidth+'px;height:'
+    +objectHeight+'px;z-index:'
     +slideShowObject["z-index"]+';';
 }
 
 function addStyleText(slideShowObject){
-  top=slideShowObject["top"]/2;
-  left=slideShowObject["left"]/2;
-  width=slideShowObject["width"]/2;
-  height=slideShowObject["height"]/2;
-  return 'display:none;object-fit:contain;position:absolute;top:'
-    +top+'px;left:'
-    +left+'px;width:'
-    +width+'px;height:'
-    +height+'px;z-index:'
-    +slideShowObject["z-index"]+';font-size:'
-    +slideShowObject["fontsize"]+'px;font-family:'
+  objectFontsize=slideShowObject["fontsize"]/2;
+  return addStyle(slideShowObject)
+    +'font-size:'+objectFontsize+'px;font-family:'
     +slideShowObject["font"]+';color:'
     +slideShowObject["fontcolor"]+';';
 }
 
+function boldText(){
+  switchIconColor($("#objectTextBold"));
+}
+function italicText(){
+  switchIconColor($("#objectTextItalic"));
+}
+function underlineText(){
+  switchIconColor($("#objectTextUnderline"));
+}
+function alignLeftText(){
+  switchIconColor($("#objectTextLeft"));
+  $("#objectTextCenter").css("color", "grey");
+  $("#objectTextRight").css("color", "grey");
+}
+function alignCenterText(){
+  switchIconColor($("#objectTextCenter"));
+  $("#objectTextLeft").css("color", "grey");
+  $("#objectTextRight").css("color", "grey");
+}
+function alignRightText(){
+  switchIconColor($("#objectTextRight"));
+  $("#objectTextCenter").css("color", "grey");
+  $("#objectTextLeft").css("color", "grey");
+}
+
+function switchIconColor(objectIcone){
+  if ('rgb(128, 128, 128)'==objectIcone.css("color")){
+    objectIcone.css("color", "green");
+  }else{
+    objectIcone.css("color", "grey");
+  }
+}
+
+function previewText(){
+  var dataToAdd={};
+  
+  dataToAdd["txt"]=$("#objectTextarea").html();
+  dataToAdd["font"]=$("#fontEffect").val();
+  dataToAdd["fontcolor"]=$("#fontColor").val();
+  dataToAdd["fontsize"]=$("#fontSize").val();
+  dataToAdd["name"]=$("#objectName").val();
+  dataToAdd["media"]=$("#objectMedia").val();
+ 
+  dataToAdd["width"]=$("#objectWidth").val();
+  dataToAdd["height"]=$("#objectHeight").val();
+  dataToAdd["top"]=$("#objectTop").val();
+  dataToAdd["left"]=$("#objectLeft").val();
+  dataToAdd["z-index"]=$("#objectZindex").val();
+  dataToAdd["comingAt"]=1;
+  dataToAdd["duration"]=toSecond($("#objetDuration").val());
+  dataToAdd["volume"]=$("#objectVolume").val();
+  dataToAdd["styleEffect"]=$("#objectStyleEffect").val();
+  dataToAdd["comeInEffect"]=$("#objectComeInEffect").val();
+  dataToAdd["comeOutEffect"]=$("#objectComeOutEffect").val();
+  createObjectText(dataToAdd);
+  runObjectAnimation(dataToAdd);
+}
 
 
 function runObjectAnimation(slideShowObject){
@@ -464,6 +513,7 @@ function changeMedia(){
   $("#divConfigurationText").hide();
   $("#divConfigurationVideoAudio").hide();
   $("#divConfigurationPosition").hide();
+  $("#divConfigurationImageEffect").hide();
   $("#divConfigurationEffect").hide();
   $("#divConfigurationFile").hide();
   $("#divConfigurationDuration").hide();
@@ -482,6 +532,7 @@ function changeMedia(){
     $("#divConfigurationFile").show();
     $("#divConfigurationDuration").show();
     $("#divConfigurationPosition").show();
+    $("#divConfigurationImageEffect").show();
     $("#divConfigurationEffect").show();
   } 
   if ($("#objectMedia").val()=="txt"){

@@ -72,32 +72,19 @@ function createObjectMusic(slideShowObject){
 }
 
 function addStyle(slideShowObject){
-  top=slideShowObject["top"];
-  left=slideShowObject["left"];
-  width=slideShowObject["width"];
-  height=slideShowObject["height"];
   return 'display:none;object-fit:contain;position:absolute;top:'
-    +top+'px;left:'
-    +left+'px;width:'
-    +width+'px;height:'
-    +height+'px;z-index:'
+    +slideShowObject["top"]+'px;left:'
+    +slideShowObject["left"]+'px;width:'
+    +slideShowObject["width"]+'px;height:'
+    +slideShowObject["height"]+'px;z-index:'
     +slideShowObject["z-index"]+';';
 }
 
 function addStyleText(slideShowObject){
-  top=slideShowObject["top"];
-  left=slideShowObject["left"];
-  width=slideShowObject["width"];
-  height=slideShowObject["height"];
-  return 'display:none;object-fit:contain;position:absolute;top:'
-    +top+'px;left:'
-    +left+'px;width:'
-    +width+'px;height:'
-    +height+'px;z-index:'
-    +slideShowObject["z-index"]+';font-size:'
-    +slideShowObject["fontsize"]+'px;font-family:'
-    +slideShowObject["font"]+';color:'
-    +slideShowObject["fontcolor"]+';';
+  return addStyle(slideShowObject)
+    +'font-size:'+slideShowObject["fontsize"]
+    +'px;font-family:'+slideShowObject["font"]
+    +';color:'+slideShowObject["fontcolor"]+';';
 }
 
 function runObjectAnimation(slideShowObject){
