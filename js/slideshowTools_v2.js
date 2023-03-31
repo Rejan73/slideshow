@@ -140,7 +140,7 @@ function printSlideShowData(slideShowObject,cpt){
          line+='<td><i id="icon'+cpt+'"class="fa fa-file-movie-o fa-1x" ></i></td><td>'+cpt+'</td><td>'+getFilename(slideShowObject.file)+'</td>';
          break;
     case "img":
-         line+='<td><div class="tooltip"><i id="icon'+cpt+'"class="fa fa-file-photo-o fa-1x" ></i><span class="tooltiptext">';
+         line+='<td><div class="tooltip"><i id="icon'+cpt+'" class="fa fa-file-photo-o fa-1x" ></i><span class="tooltiptext">';
          line+='<img width="100" heigth="100" src="'+slideShowObject.file+'"></span></div></td>';
          line+='<td>'+cpt+'</td><td>'+getFilename(slideShowObject.file)+'</td>';
          break;
@@ -150,9 +150,9 @@ function printSlideShowData(slideShowObject,cpt){
     defaut:
          break;    
   }
-  line+='<td><input type="time" step="1" min="00:00:00" max="24:00:00" size="1" id="comingAt'+cpt+'" value="' + afficheTemps(slideShowObject.comingAt) +'"/></td>';
+  line+='<td><input type="time" step="1" min="00:00:00" max="24:00:00" size="1" id="comingAt'+cpt+'" value="' + afficheTemps(slideShowObject.comingAt) +'" onchange="colorRedSave('+cpt+');"/></td>';
   line+='<td>';
-  line+='&nbsp;<a class="js-open-modal btn" href="#" title="Save" onclick="changeComingAt('+cpt+');"><i class="fa fa-save fa-1x" ></i></a>';
+  line+='&nbsp;<a class="js-open-modal btn" href="#" title="Save" onclick="changeComingAt('+cpt+');"><i id="saveIcon'+cpt+'" class="fa fa-save fa-1x" ></i></a>';
   line+='&nbsp;<a class="js-open-modal btn" href="#" title="Modify Effect" onclick="updateAnimation('+cpt+');"><i class="fa fa-film fa-1x" ></i></a>';
   line+='&nbsp;<a class="js-open-modal btn" href="#" title="Play" onclick="runAnimation('+cpt+');"><i class="fa fa-play-circle fa-1x" ></i></a>';
   line+='&nbsp;&nbsp;<a class="js-open-modal btn" href="#" title="Remove" onclick="removeAnimation('+cpt+');"><i class="fa fa-times-circle fa-1x" style="color:red;"></i></a></td>';
@@ -288,6 +288,14 @@ function addAnimationObject(){
 }
 
 function updateAnimation(id){
+  var icon; 
+  for (i=0;i<slideShowObjects.length;i++){
+    var icon="#icon"+i;
+    $(icon).attr({'style': 'color:green;'});
+  }
+  icon="#icon"+id;
+  $(icon).attr({'style': 'color:orange;'});
+  
   $("#objectId").val(id);
   $("#objectName").val(slideShowObjects[id]["name"]);
   $("#objectMedia").val(slideShowObjects[id]["media"]).change();
@@ -326,7 +334,7 @@ function updateAnimation(id){
 
 function addNewAnimation(){
   $("#objectId").val(-1);
-  $("#objectName").val("");
+  $("#objectName").val(Date.now());
   $("#objectMedia").val("img").change();
   $("#objectWidth").val(1260);
   $("#objectHeight").val(720);
@@ -343,10 +351,16 @@ function addNewAnimation(){
 }
 
 
+function colorRedSave(id){
+  var icon="#saveIcon"+id;
+  $(icon).attr({'style': 'color:red;'});
+}
 
 function changeComingAt(id){
   var comingAt="#comingAt"+id;
   slideShowObjects[id].comingAt=toSecond($(comingAt).val());
+  var icon="#saveIcon"+id;
+  $(icon).attr({'style': 'color:green;'});
   sortslideShowObjects();
   changeSaveallColorRed();
   fillSlideShow();
