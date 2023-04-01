@@ -283,6 +283,17 @@ function addAnimationObject(){
   }
   $("#divObject").hide();
   sortslideShowObjects();
+  var pos=-1;
+  if ($("#objetInsertedBefore").is(":checked")){
+    for(i=0;i<slideShowObjects.length;i++){
+      if(pos!=-1){
+        slideShowObjects[i].comingAt=slideShowObjects[i].comingAt+dataToAdd["duration"];
+      }
+      if(slideShowObjects[i].name==dataToAdd["name"]){
+        pos=i;
+      }
+    }
+  }
   changeSaveallColorRed();
   fillSlideShow();
 }
