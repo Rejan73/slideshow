@@ -22,20 +22,32 @@ i {
 /*****************/
 /* Image effects */
 /*****************/
-#images.imageEffectNone{
+.imageEffectNone{
 }
-#images.imageEffectSepia{
+.imageEffectSepia{
     filter:sepia(100%);
 }
-#images.imageEffectBlackAndWhite{
+.imageEffectBlackAndWhite{
     filter:grayscale(100%);
 }
+
+
+
 /***********************/
 /* Come In/out effects */
 /***********************/
 .comeInEffectNone{}
 .comeOutEffectNone{}
 /***********************/
+.effectRotate90{
+  transform: rotate(90deg);
+}
+.effectRotateInverse90{
+  transform: rotate(-90deg);
+}
+.effectRotate180{
+  transform: rotate(180deg);
+}
 .comeInEffectFadeIn{
   animation: fadeInAnimation 3s;
 }

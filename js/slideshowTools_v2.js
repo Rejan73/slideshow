@@ -591,6 +591,7 @@ function runObjectAnimation(slideShowObject){
     } 
     if (slideShowObject["media"]!="mp3") {
       $(id).show();
+      $(id).addClass(slideShowObject["styleEffect"]);
       $(id).addClass(slideShowObject["comeInEffect"]);
     }
     setTimeout(function() {    
