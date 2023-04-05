@@ -8,6 +8,15 @@ var slideShowObjects;
 var debugMode=true;
 slideShowObjects=JSON.parse("[]");
 
+var mouseX;
+var mouseY;
+$(document).ready(function(){
+  $(document).mousemove(function(event){ 
+    mouseX= event.pageX;
+    mouseY= event.pageY; 
+  });
+});
+
 (function($) {
   $(document).ready(function(){
     // ajout du listener
@@ -140,8 +149,7 @@ function printSlideShowData(slideShowObject,cpt){
          line+='<td><i id="icon'+cpt+'"class="fa fa-file-movie-o fa-1x" ></i></td><td>'+cpt+'</td><td>'+getFilename(slideShowObject.file)+'</td>';
          break;
     case "img":
-         line+='<td><div class="tooltip"><i id="icon'+cpt+'" class="fa fa-file-photo-o fa-1x" ></i><span class="tooltiptext">';
-         line+='<img width="100" heigth="100" src="'+slideShowObject.file+'"></span></div></td>';
+         line+='<td><div class="tooltip" onmouseout="hideLittleImage()" onmouseover="showLittleImage(\''+slideShowObject.file+'\')"><i id="icon'+cpt+'" class="fa fa-file-photo-o fa-1x" ></i></div></td>';
          line+='<td>'+cpt+'</td><td>'+getFilename(slideShowObject.file)+'</td>';
          break;
     case "txt":
@@ -158,6 +166,15 @@ function printSlideShowData(slideShowObject,cpt){
   line+='&nbsp;&nbsp;<a class="js-open-modal btn" href="#" title="Remove" onclick="removeAnimation('+cpt+');"><i class="fa fa-times-circle fa-1x" style="color:red;"></i></a></td>';
   
   return '<tr>'+line+'</tr>';
+}
+
+function showLittleImage(file){
+  $("#picto").attr('src',file);
+  $("#picto").css({top: mouseY, left: mouseX, position:'absolute'});
+  $("#picto").show();
+}
+function hideLittleImage(){
+  $("#picto").hide();
 }
 
 function changeSaveallColorRed(){
