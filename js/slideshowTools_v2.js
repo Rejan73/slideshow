@@ -262,8 +262,10 @@ function sortslideShowObjects(){
 
 function addAnimationObject(){
   var dataToAdd={};
+  var oldDuration=0;
   if ($("#objectId").val()>-1){//Update
     dataToAdd=slideShowObjects[$("#objectId").val()];
+    oldDuration=dataToAdd["duration"];
   } else {//Creation
     if ($("#objectMedia").val()!="txt"){
       var folder="";
@@ -314,7 +316,7 @@ function addAnimationObject(){
   if ($("#objetInsertedBefore").is(":checked")){
     for(i=0;i<slideShowObjects.length;i++){
       if(pos!=-1){
-        slideShowObjects[i].comingAt=slideShowObjects[i].comingAt+dataToAdd["duration"];
+        slideShowObjects[i].comingAt=slideShowObjects[i].comingAt+dataToAdd["duration"]-oldDuration;
       }
       if(slideShowObjects[i].name==dataToAdd["name"]){
         pos=i;
