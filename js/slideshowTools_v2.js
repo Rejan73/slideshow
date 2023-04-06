@@ -149,7 +149,7 @@ function printSlideShowData(slideShowObject,cpt){
          line+='<td><i id="icon'+cpt+'"class="fa fa-file-movie-o fa-1x" ></i></td><td>'+cpt+'</td><td>'+getFilename(slideShowObject.file)+'</td>';
          break;
     case "img":
-         line+='<td><div class="tooltip" onmouseout="hideLittleImage()" onmouseover="showLittleImage(\''+slideShowObject.file+'\')"><i id="icon'+cpt+'" class="fa fa-file-photo-o fa-1x" ></i></div></td>';
+         line+='<td><div class="tooltip" onmouseout="hideLittleImage()" onmouseover="showLittleImage(\''+cpt+'\')"><i id="icon'+cpt+'" class="fa fa-file-photo-o fa-1x" ></i></div></td>';
          line+='<td>'+cpt+'</td><td>'+getFilename(slideShowObject.file)+'</td>';
          break;
     case "txt":
@@ -168,9 +168,19 @@ function printSlideShowData(slideShowObject,cpt){
   return '<tr>'+line+'</tr>';
 }
 
-function showLittleImage(file){
-  $("#picto").attr('src',file);
-  $("#picto").css({top: mouseY, left: mouseX, position:'absolute'});
+function showLittleImage(id){
+  $("#picto").removeClass();
+  $("#picto").addClass("picto");  
+  $("#picto").attr('src',slideShowObjects[id].file);
+  $("#picto").css({top: mouseY, left: mouseX});
+  
+  if (slideShowObjects[id]["comeInEffect"]=="effectRotate90" || slideShowObjects[id]["comeInEffect"]=="effectRotateInverse90" || slideShowObjects[id]["comeInEffect"]=="effectRotate180"){
+    $("#picto").addClass(slideShowObjects[id]["comeInEffect"]);  
+  }
+
+   
+
+
   $("#picto").show();
 }
 function hideLittleImage(){

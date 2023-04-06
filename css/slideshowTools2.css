@@ -64,6 +64,11 @@ body {
   position: absolute;
   z-index: 1;
 }
+.picto {
+  position: absolute;
+  border: solid green;
+}
+
 
 input[type='number']{
   width: 45px;
