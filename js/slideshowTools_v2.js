@@ -42,7 +42,7 @@ var openFile = function(event) {
 };
 
 function fillSlideShow(){
-    var div_data='<table><th></th><th>N°</th><th>File</th><th>Coming at</th><th>Actions</th>';
+    var div_data='<table><th></th><th>N°</th><th>File</th><th>Coming at</th><th>Actions <input type="checkbox" id="objetInsertedBefore" value="1" checked title="the change can impact the others objects">change impact</th>';
     var cpt=0;
     slideShowObjects.forEach(slideShowObjects => div_data+=printSlideShowData(slideShowObjects,cpt++));
     div_data+='</table>';
@@ -245,6 +245,17 @@ $('a[set-slideshow-id]').click(function(e) {
 
 
 function removeAnimation(id){
+  if ($("#objetInsertedBefore").is(":checked")){
+    var pos=-1;
+    for(i=0;i<slideShowObjects.length;i++){
+      if(pos!=-1){
+        slideShowObjects[i].comingAt=slideShowObjects[i].comingAt-slideShowObjects[id]["duration"];
+      }
+      if(slideShowObjects[i].name==slideShowObjects[id]["name"]){
+        pos=i;
+      }
+    }
+  }
   slideShowObjects.splice(id, 1);
   changeSaveallColorRed();
   fillSlideShow();
@@ -263,9 +274,11 @@ function sortslideShowObjects(){
 function addAnimationObject(){
   var dataToAdd={};
   var oldDuration=0;
+  var oldComingAt=0;
   if ($("#objectId").val()>-1){//Update
     dataToAdd=slideShowObjects[$("#objectId").val()];
     oldDuration=dataToAdd["duration"];
+    oldComingAt=dataToAdd["comingAt"];
   } else {//Creation
     if ($("#objectMedia").val()!="txt"){
       var folder="";
@@ -291,7 +304,11 @@ function addAnimationObject(){
   }
   if ($("#objectMedia").val()=="mp4" || $("#objectMedia").val()=="mp3"){
     dataToAdd["file"]= getFilePath(dataToAdd["file"])+'#t='+ toSecond($('#objetStartFile').val()) +','+toSecond($('#objectEndFile').val());
+    dataToAdd["duration"]=toSecond($('#objectEndFile').val())-toSecond($('#objetStartFile').val());
+  } else {
+    dataToAdd["duration"]=toSecond($("#objetDuration").val());
   }
+
   dataToAdd["name"]=$("#objectName").val();
   dataToAdd["media"]=$("#objectMedia").val();
  
@@ -301,7 +318,7 @@ function addAnimationObject(){
   dataToAdd["left"]=$("#objectLeft").val();
   dataToAdd["z-index"]=$("#objectZindex").val();
   dataToAdd["comingAt"]=toSecond($("#objetComingTime").val());
-  dataToAdd["duration"]=toSecond($("#objetDuration").val());
+
   dataToAdd["volume"]=$("#objectVolume").val();
   dataToAdd["styleEffect"]=$("#objectStyleEffect").val();
   dataToAdd["comeInEffect"]=$("#objectComeInEffect").val();
@@ -311,8 +328,21 @@ function addAnimationObject(){
     slideShowObjects.push(dataToAdd);
   }
   $("#divObject").hide();
-  sortslideShowObjects();
+  //Modify comingAt
   var pos=-1;
+  if ($("#objetInsertedBefore").is(":checked")){
+    for(i=0;i<slideShowObjects.length;i++){
+      if(pos!=-1){
+        slideShowObjects[i].comingAt=slideShowObjects[i].comingAt+dataToAdd["comingAt"]-oldComingAt;
+      }
+      if(slideShowObjects[i].name==dataToAdd["name"]){
+        pos=i;
+      }
+    }
+  }
+  sortslideShowObjects();
+  //Modify duration 
+  pos=-1;
   if ($("#objetInsertedBefore").is(":checked")){
     for(i=0;i<slideShowObjects.length;i++){
       if(pos!=-1){
@@ -398,9 +428,22 @@ function colorRedSave(id){
 
 function changeComingAt(id){
   var comingAt="#comingAt"+id;
-  slideShowObjects[id].comingAt=toSecond($(comingAt).val());
+  var oldComingAt=slideShowObjects[id].comingAt;
+  var dataToUpdate=slideShowObjects[id];
+  var pos=-1;
+  dataToUpdate.comingAt=toSecond($(comingAt).val());
   var icon="#saveIcon"+id;
   $(icon).attr({'style': 'color:green;'});
+  if ($("#objetInsertedBefore").is(":checked")){
+    for(i=0;i<slideShowObjects.length;i++){
+      if(pos!=-1){
+        slideShowObjects[i].comingAt=slideShowObjects[i].comingAt+dataToUpdate["comingAt"]-oldComingAt;
+      }
+      if(slideShowObjects[i].name==dataToUpdate["name"]){
+        pos=i;
+      }
+    }
+  }
   sortslideShowObjects();
   changeSaveallColorRed();
   fillSlideShow();
