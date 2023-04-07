@@ -42,7 +42,7 @@ var openFile = function(event) {
 };
 
 function fillSlideShow(){
-    var div_data='<table><th></th><th>N°</th><th>File</th><th>Coming at</th><th>Actions <input type="checkbox" id="objetInsertedBefore" value="1" checked title="the change can impact the others objects">change impact</th>';
+    var div_data='<table><th></th><th>N°</th><th>File</th><th>Coming at</th><th>Actions</th>';
     var cpt=0;
     slideShowObjects.forEach(slideShowObjects => div_data+=printSlideShowData(slideShowObjects,cpt++));
     div_data+='</table>';
