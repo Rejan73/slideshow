@@ -28,8 +28,12 @@
     <div id="previewSlideShow"></div>
     <div id="divObject" style="display:none">
       <form action="javascript:addAnimationObject();">
-        Id : <input type="number" id="objectId" value="-1" readonly>
+        <div id="divInfoConfiguration" style="display:none">
+          <span id="objectSpanFile"></span>
+        </div>
+        <input type="hidden" id="objectId" value="-1">
         <input type="hidden" id="objectName" >
+        <div id="divConfigurationMedia">
         Type : <select name="objectMedia" id="objectMedia" onchange="changeMedia()">';
           <option disabled selected value> -- select an option -- </option>
           <option value="img">Photo</option>
@@ -37,6 +41,7 @@
           <option value="mp4">Video</option>
           <option value="txt">Text</option>
         </select>
+        </div>
         <div id="divConfigurationFile" style="display:none">
         File : <input type="file" id="objectFile"  accept="audio/mp3,audio/ogg,audio/wav,audio/mpeg,video/mp4,video/ogg,video/webm,image/*">
        </div>

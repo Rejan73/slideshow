@@ -399,6 +399,27 @@ function updateAnimation(id){
     $("#objectTextCenter").css("color",slideShowObjects[id]["textAlign"]=='center'?"green":"grey");
     $("#objectTextRight").css("color",slideShowObjects[id]["textAlign"]=='right'?"green":"grey");
   }
+  
+  switch (slideShowObjects[id]["media"])
+  {
+    case "mp3":
+         $("#objectSpanFile").html('<i class="fa fa-file-audio-o fa-1x" title="'+id+'"></i> '+getFilename(slideShowObjects[id].file));
+         break;
+    case "mp4":
+         $("#objectSpanFile").html('<i class="fa fa-file-movie-o fa-1x" title="'+id+'"></i> '+getFilename(slideShowObjects[id].file));
+         break;
+    case "img":
+         $("#objectSpanFile").html('<i class="fa fa-file-photo-o fa-1x" title="'+id+'"></i> '+getFilename(slideShowObjects[id].file));
+         break;
+    case "txt":
+         $("#objectSpanFile").html('<i class="fa fa-file-text-o fa-1x" title="'+id+'"></i> '+slideShowObjects[id].name);
+         break; 
+    defaut:
+         break;    
+  }
+  $("#divConfigurationMedia").hide();
+  $("#divConfigurationFile").hide();
+  $("#divInfoConfiguration").show();
   $("#divObject").show();
 }
 
@@ -417,6 +438,8 @@ function addNewAnimation(){
   $("#objectStyleEffect").val("imageEffectNone").change();
   $("#objectComeInEffect").val("comeInEffectNone").change();
   $("#objectComeOutEffect").val("comeOutEffectNone").change();
+  $("#divInfoConfiguration").hide();
+  $("#divConfigurationMedia").show();
   $("#divObject").show();
 }
 
