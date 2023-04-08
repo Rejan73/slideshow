@@ -245,7 +245,7 @@ $('a[set-slideshow-id]').click(function(e) {
 
 
 function removeAnimation(id){
-  if ($("#objetInsertedBefore").is(":checked")){
+  if ($("#objetInsertedBefore").is(":checked") && slideShowObjects[id]["media"]!="mp3"){
     var pos=-1;
     for(i=0;i<slideShowObjects.length;i++){
       if(pos!=-1){
@@ -330,7 +330,7 @@ function addAnimationObject(){
   $("#divObject").hide();
   //Modify comingAt
   var pos=-1;
-  if ($("#objetInsertedBefore").is(":checked")){
+  if ($("#objetInsertedBefore").is(":checked")  && slideShowObjects[id]["media"]!="mp3"){
     for(i=0;i<slideShowObjects.length;i++){
       if(pos!=-1){
         slideShowObjects[i].comingAt=slideShowObjects[i].comingAt+dataToAdd["comingAt"]-oldComingAt;
@@ -343,7 +343,7 @@ function addAnimationObject(){
   sortslideShowObjects();
   //Modify duration 
   pos=-1;
-  if ($("#objetInsertedBefore").is(":checked")){
+  if ($("#objetInsertedBefore").is(":checked")  && slideShowObjects[id]["media"]!="mp3"){
     for(i=0;i<slideShowObjects.length;i++){
       if(pos!=-1){
         slideShowObjects[i].comingAt=slideShowObjects[i].comingAt+dataToAdd["duration"]-oldDuration;
@@ -457,7 +457,7 @@ function changeComingAt(id){
   dataToUpdate.comingAt=toSecond($(comingAt).val());
   var icon="#saveIcon"+id;
   $(icon).attr({'style': 'color:green;'});
-  if ($("#objetInsertedBefore").is(":checked")){
+  if ($("#objetInsertedBefore").is(":checked") && slideShowObjects[id]["media"]!="mp3"){
     for(i=0;i<slideShowObjects.length;i++){
       if(pos!=-1){
         slideShowObjects[i].comingAt=slideShowObjects[i].comingAt+dataToUpdate["comingAt"]-oldComingAt;
