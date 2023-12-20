@@ -6,6 +6,7 @@
 
 var slideShowObjects;
 var debugMode=true;
+
 slideShowObjects=JSON.parse("[]");
 
 var mouseX;
@@ -164,7 +165,6 @@ function printSlideShowData(slideShowObject,cpt){
   line+='&nbsp;<a class="js-open-modal btn" href="#" title="Modify Effect" onclick="updateAnimation('+cpt+');"><i class="fa fa-film fa-1x" ></i></a>';
   line+='&nbsp;<a class="js-open-modal btn" href="#" title="Play" onclick="runAnimation('+cpt+');"><i class="fa fa-play-circle fa-1x" ></i></a>';
   line+='&nbsp;&nbsp;<a class="js-open-modal btn" href="#" title="Remove" onclick="removeAnimation('+cpt+');"><i class="fa fa-times-circle fa-1x" style="color:red;"></i></a></td>';
-  
   return '<tr>'+line+'</tr>';
 }
 
@@ -510,6 +510,7 @@ function addStyle(slideShowObject){
   objectLeft=slideShowObject["left"]/2;
   objectWidth=slideShowObject["width"]/2;
   objectHeight=slideShowObject["height"]/2;
+  //fixme  object-fit:contain si on joue avec les dimensions, le contain n'est pas adapté
   return 'display:none;object-fit:contain;position:absolute;top:'
     +objectTop+'px;left:'
     +objectLeft+'px;width:'
@@ -599,11 +600,34 @@ function getTextDecoration(){
   }
   return "normal";
 }
-function previewTextWithoutAnimation() {
-  var elem= document.getElementById($("#objectName").val());
+
+function removePreviewMediaWithoutAnimation(){
+  elem =document.getElementById($("#objectName").val());
   if (elem!=null){
     document.getElementById("previewSlideShow").removeChild(elem);
   }
+}
+
+function previewMediaWithoutAnimation(){
+  removePreviewMediaWithoutAnimation();
+  slideShowObject=slideShowObjects[$("#objectId").val()];
+  slideShowObject["width"]=$("#objectWidth").val();
+  slideShowObject["height"]=$("#objectHeight").val();
+  slideShowObject["top"]=$("#objectTop").val();
+  slideShowObject["left"]=$("#objectLeft").val();
+  slideShowObject["z-index"]=$("#objectZindex").val();
+  if (slideShowObject["media"]=="img"){
+    createObjectImage(slideShowObject);
+  } else if (slideShowObject["media"]=="txt"){
+    createObjectText(slideShowObject);
+  } else if (slideShowObject["media"]=="mp4"){
+    createObjectVideo(slideShowObject);
+  }
+  $("#"+slideShowObject["name"]).show();
+}
+
+function previewTextWithoutAnimation() {
+  removePreviewMediaWithoutAnimation();
   var dataToAdd={};
   dataToAdd["txt"]=$("#objectTextarea").html();
   dataToAdd["fontFamily"]=$("#fontFamily").val();
@@ -628,8 +652,8 @@ function previewTextWithoutAnimation() {
   dataToAdd["fontWeight"]=getTextFontWeight();
   dataToAdd["textDecoration"]=getTextDecoration();
   createObjectText(dataToAdd);
-  var id="#"+dataToAdd.name;
-  $(id).show();
+
+  $("#"+dataToAdd.name).show();
 }
 
 function previewText(){
