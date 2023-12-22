@@ -46,12 +46,12 @@
         File : <input type="file" id="objectFile"  accept="audio/mp3,audio/ogg,audio/wav,audio/mpeg,audio/mp4,audio/m4a,video/mp4,video/ogg,video/webm,image/*">
        </div>
        <div id="divConfigurationPosition" style="display:none;z-index: 100;">
-        Size Width: <input type="number" id="objectWidth" min="0" max="1600" value="1280"> Size Height: <input type="number" id="objectHeight" min="0" max="800" value="720">
+        Size Width: <input type="number" id="objectWidth" min="0" max="1600" value="1280" onchange="previewMediaWithoutAnimation();"> Size Height: <input type="number" id="objectHeight" min="0" max="800" value="720" onchange="previewMediaWithoutAnimation();">
         <a class="js-open-modal btn" href="#" title="Remove" onclick="previewMediaWithoutAnimation();"><i class="fa fa-eye" aria-hidden="true"></i></a>
         <a class="js-open-modal btn" href="#" title="Remove" onclick="removePreviewMediaWithoutAnimation();"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
         <a class="js-open-modal btn" href="#" title="Remove" onclick="showhidePreviewBorder();"><i class="fa fa-square-o" aria-hidden="true"></i></a>
         <br>
-        Position Top: <input type="number" id="objectTop" min="0" max="1600" value="0"> Position Left: <input type="number" id="objectLeft" min="0" max="800" value="0"> Z-Index : <input type="number" id="objectZindex" value="1"><br>
+        Position Top: <input type="number" id="objectTop" min="0" max="1600" value="0" onchange="previewMediaWithoutAnimation();"> Position Left: <input type="number" id="objectLeft" min="0" max="800" value="0" onchange="previewMediaWithoutAnimation();" > Z-Index : <input type="number" id="objectZindex" value="1" onchange="previewMediaWithoutAnimation();"><br>
         </div>
         Coming At : <input type="time" step="1" min="00:00:00" max="24:00:00" size="1" id="objetComingTime" value="00:00:00">
         <div id="divConfigurationDuration"  style="display:none">
