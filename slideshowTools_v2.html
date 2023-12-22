@@ -25,8 +25,8 @@
   <img id="picto" src="" width="100" heigth="100" class="picto" style="display:none">
 </div>  
 <div id="divRight">  
-    <div id="previewSlideShow"></div>
-    <div id="divObject" style="display:none">
+    <div id="previewSlideShow" style="overflow: hidden;z-index: 99;"></div>
+    <div id="divObject" style="display:none;z-index: 100;">
       <form action="javascript:addAnimationObject();">
         <div id="divInfoConfiguration" style="display:none">
           <span id="objectSpanFile"></span>
@@ -45,10 +45,11 @@
         <div id="divConfigurationFile" style="display:none">
         File : <input type="file" id="objectFile"  accept="audio/mp3,audio/ogg,audio/wav,audio/mpeg,audio/mp4,audio/m4a,video/mp4,video/ogg,video/webm,image/*">
        </div>
-       <div id="divConfigurationPosition" style="display:none">
+       <div id="divConfigurationPosition" style="display:none;z-index: 100;">
         Size Width: <input type="number" id="objectWidth" min="0" max="1600" value="1280"> Size Height: <input type="number" id="objectHeight" min="0" max="800" value="720">
         <a class="js-open-modal btn" href="#" title="Remove" onclick="previewMediaWithoutAnimation();"><i class="fa fa-eye" aria-hidden="true"></i></a>
         <a class="js-open-modal btn" href="#" title="Remove" onclick="removePreviewMediaWithoutAnimation();"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+        <a class="js-open-modal btn" href="#" title="Remove" onclick="showhidePreviewBorder();"><i class="fa fa-square-o" aria-hidden="true"></i></a>
         <br>
         Position Top: <input type="number" id="objectTop" min="0" max="1600" value="0"> Position Left: <input type="number" id="objectLeft" min="0" max="800" value="0"> Z-Index : <input type="number" id="objectZindex" value="1"><br>
         </div>

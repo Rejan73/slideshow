@@ -72,12 +72,12 @@ function createObjectMusic(slideShowObject){
 }
 
 function addStyle(slideShowObject){
-  return 'display:none;object-fit:contain;position:absolute;top:'
-    +slideShowObject["top"]+'px;left:'
-    +slideShowObject["left"]+'px;width:'
-    +slideShowObject["width"]+'px;height:'
-    +slideShowObject["height"]+'px;z-index:'
-    +slideShowObject["z-index"]+';';
+  return 'display: none;object-fit:contain;width: auto;height: auto;position:absolute;top:'
+  +slideShowObject["top"]+'px;left:'
+  +slideShowObject["left"]+'px;max-width:'
+  +slideShowObject["width"]+'px;max-height:'
+  +slideShowObject["height"]+'px;z-index:'
+  +slideShowObject["z-index"]+';';
 }
 
 function addStyleText(slideShowObject){

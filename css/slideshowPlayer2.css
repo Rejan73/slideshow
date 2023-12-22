@@ -11,6 +11,7 @@ body {
 }
 /*1280 x 720*/
 #playSlideShow {
+  overflow: hidden;
   height: 720px;
   width: 1280px;
   /*border: solid green;*/

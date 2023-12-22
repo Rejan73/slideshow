@@ -510,13 +510,13 @@ function addStyle(slideShowObject){
   objectLeft=slideShowObject["left"]/2;
   objectWidth=slideShowObject["width"]/2;
   objectHeight=slideShowObject["height"]/2;
-  //fixme  object-fit:contain si on joue avec les dimensions, le contain n'est pas adapté
-  return 'display:none;object-fit:contain;position:absolute;top:'
+  return 'display: none;object-fit:contain;width: auto;height: auto;position:absolute;top:'
     +objectTop+'px;left:'
-    +objectLeft+'px;width:'
-    +objectWidth+'px;height:'
+    +objectLeft+'px;max-width:'
+    +objectWidth+'px;max-height:'
     +objectHeight+'px;z-index:'
     +slideShowObject["z-index"]+';';
+
 }
 
 function addStyleText(slideShowObject){
@@ -626,6 +626,16 @@ function previewMediaWithoutAnimation(){
   $("#"+slideShowObject["name"]).show();
 }
 
+
+function showhidePreviewBorder(){
+  slideShowObject=slideShowObjects[$("#objectId").val()];
+  if ($("#"+slideShowObject["name"]).css("border-style")=="solid"){
+    $("#"+slideShowObject["name"]).css("border-style","none");
+  }else {
+    $("#"+slideShowObject["name"]).css("border-style","solid");
+  }
+}
+
 function previewTextWithoutAnimation() {
   removePreviewMediaWithoutAnimation();
   var dataToAdd={};
@@ -655,6 +665,7 @@ function previewTextWithoutAnimation() {
 
   $("#"+dataToAdd.name).show();
 }
+
 
 function previewText(){
   var elem= document.getElementById($("#objectName").val());
