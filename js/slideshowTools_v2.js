@@ -506,15 +506,18 @@ function createObjectMusic(slideShowObject){
 }
 
 function addStyle(slideShowObject){
+  const playSlideShowCss = document.getElementById("previewSlideShow"); 
   objectTop=slideShowObject["top"]/2;
   objectLeft=slideShowObject["left"]/2;
   objectWidth=slideShowObject["width"]/2;
   objectHeight=slideShowObject["height"]/2;
   return 'display: none;object-fit:contain;width: auto;height: auto;position:absolute;top:'
     +objectTop+'px;left:'
-    +objectLeft+'px;max-width:'
-    +objectWidth+'px;max-height:'
+    +objectLeft+'px;width:'
+    +objectWidth+'px;height:'
     +objectHeight+'px;z-index:'
+    +playSlideShowCss.clientWidth+'px;max-height:'
+    +playSlideShowCss.clientHeight+'px;z-index:'
     +slideShowObject["z-index"]+';';
 
 }
