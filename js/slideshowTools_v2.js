@@ -65,22 +65,18 @@ function toDateTime(secs) {
     return t;
 }
 
-var time=0;
+
 var timeCpt=-1;
 function  buildData(slideShowObject) {
-  var startTime=time;
-   timeCpt++;
-    if (slideShowObject["duration"] !=null){
-      time+=parseFloat(slideShowObject["duration"]);
-    } else if (slideShowObject["media"]=="mp4"){
-      time+=getDuration(slideShowObject.file);
-    } else{
-       return [ slideShowObject.media ,timeCpt+':'+ getFilename(slideShowObject.file),toDateTime(startTime), toDateTime(startTime+getDuration(slideShowObject.file))];
-    } 
-    if (slideShowObject["media"]=="txt"){
-      return [ slideShowObject.media ,timeCpt+':'+ slideShowObject.name, toDateTime(startTime),  toDateTime(time)];
-    }
-    return [ slideShowObject.media ,timeCpt+':'+ getFilename(slideShowObject.file), toDateTime(startTime),  toDateTime(time)];
+  var startTime=slideShowObject.comingAt;
+  var endTime=slideShowObject.comingAt;
+  if (slideShowObject["duration"] !=null){
+    endTime=endTime+parseFloat(slideShowObject["duration"]);
+  } else {
+    endTime=endTime+getDuration(slideShowObject.file);
+  }
+  timeCpt++;
+  return [ slideShowObject.media ,timeCpt+':'+ slideShowObject.name, toDateTime(startTime),  toDateTime(endTime)];
 }
 
 function showTimeLine(){
@@ -99,7 +95,6 @@ function drawChart(){
     dataTable.addColumn({ type: 'date', id: 'End' });
     
     var currentData=[];
-    time=0;
     timeCpt=-1;
     slideShowObjects.forEach(object => currentData.push(buildData(object)));
     dataTable.addRows( currentData);
@@ -144,27 +139,27 @@ function printSlideShowData(slideShowObject,cpt){
   switch (slideShowObject.media)
   {
     case "mp3":
-         line+='<td><i id="icon'+cpt+'" class="fa fa-file-audio-o fa-1x" ></i></td><td>'+cpt+'</td><td>'+getFilename(slideShowObject.file)+'</td>';
+         line+='<td><i id="icon'+cpt+'" class="fa fa-file-audio-o fa-2x"></i></td><td>'+cpt+'</td><td>'+getFilename(slideShowObject.file)+'</td>';
          break;
     case "mp4":
-         line+='<td><i id="icon'+cpt+'"class="fa fa-file-movie-o fa-1x" ></i></td><td>'+cpt+'</td><td>'+getFilename(slideShowObject.file)+'</td>';
+         line+='<td><i id="icon'+cpt+'"class="fa fa-file-movie-o fa-2x" ></i></td><td>'+cpt+'</td><td>'+getFilename(slideShowObject.file)+'</td>';
          break;
     case "img":
-         line+='<td><div class="tooltip" onmouseout="hideLittleImage()" onmouseover="showLittleImage(\''+cpt+'\')"><i id="icon'+cpt+'" class="fa fa-file-photo-o fa-1x" ></i></div></td>';
+         line+='<td><div class="tooltip" onmouseout="hideLittleImage()" onmouseover="showLittleImage(\''+cpt+'\')"><i id="icon'+cpt+'" class="fa fa-file-photo-o fa-2x" ></i></div></td>';
          line+='<td>'+cpt+'</td><td>'+getFilename(slideShowObject.file)+'</td>';
          break;
     case "txt":
-         line+='<td><i id="icon'+cpt+'"class="fa fa-file-text-o fa-1x" ></i></td><td>'+cpt+'</td><td>'+slideShowObject.name+'</td>';
+         line+='<td><i id="icon'+cpt+'"class="fa fa-file-text-o fa-2x" ></i></td><td>'+cpt+'</td><td>'+slideShowObject.name+'</td>';
          break; 
     defaut:
          break;    
   }
   line+='<td><input type="time" step="1" min="00:00:00" max="24:00:00" size="1" id="comingAt'+cpt+'" value="' + afficheTemps(slideShowObject.comingAt) +'" onchange="colorRedSave('+cpt+');"/></td>';
   line+='<td>';
-  line+='&nbsp;<a class="js-open-modal btn" href="#" title="Save" onclick="changeComingAt('+cpt+');"><i id="saveIcon'+cpt+'" class="fa fa-save fa-1x" ></i></a>';
-  line+='&nbsp;<a class="js-open-modal btn" href="#" title="Modify Effect" onclick="updateAnimation('+cpt+');"><i class="fa fa-film fa-1x" ></i></a>';
-  line+='&nbsp;<a class="js-open-modal btn" href="#" title="Play" onclick="runAnimation('+cpt+');"><i class="fa fa-play-circle fa-1x" ></i></a>';
-  line+='&nbsp;&nbsp;<a class="js-open-modal btn" href="#" title="Remove" onclick="removeAnimation('+cpt+');"><i class="fa fa-times-circle fa-1x" style="color:red;"></i></a></td>';
+  line+='&nbsp;<a class="js-open-modal btn" href="#" title="Save" onclick="changeComingAt('+cpt+');"><i id="saveIcon'+cpt+'" class="fa fa-save fa-2x" ></i></a>';
+  line+='&nbsp;<a class="js-open-modal btn" href="#" title="Modify Effect" onclick="updateAnimation('+cpt+');"><i class="fa fa-film fa-2x" ></i></a>';
+  line+='&nbsp;<a class="js-open-modal btn" href="#" title="Play" onclick="runAnimation('+cpt+');"><i class="fa fa-play-circle fa-2x" ></i></a>';
+  line+='&nbsp;&nbsp;<a class="js-open-modal btn" href="#" title="Remove" onclick="removeAnimation('+cpt+');"><i class="fa fa-times-circle fa-2x" style="color:red;"></i></a></td>';
   return '<tr>'+line+'</tr>';
 }
 

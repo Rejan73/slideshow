@@ -3,6 +3,7 @@ body {
   height: 95%;
   background: #000;
   color: #fff;
+  
 }
 
 #divMenu{
@@ -28,11 +29,13 @@ body {
   width: 100%;
   clear:both;
   float:left;
+  
 }
 
 #slideShow {
   height: 590px;
   overflow-x: hidden;
+  
 }
 
 #previewSlideShow {
@@ -40,7 +43,6 @@ body {
   /* 1920 x 1080 */
   width: 960px;
   height: 540px;
-  
   border: solid green;
 /*  overflow: hidden;*/
   position: relative;
@@ -48,7 +50,7 @@ body {
 
 #timelineDiv {
   background: #fff;
-  height: 150px;
+  height: 200px;
   clear:both;
   overflow-x: scroll;
   overflow-y: hidden;
