@@ -422,8 +422,8 @@ function addNewAnimation(){
   $("#objectId").val(-1);
   $("#objectName").val(Date.now());
   $("#objectMedia").val("img").change();
-  $("#objectWidth").val(1260);
-  $("#objectHeight").val(720);
+  $("#objectWidth").val(1920);
+  $("#objectHeight").val(1080);
   $("#objectTop").val(0);
   $("#objectLeft").val(0);
   $("#objectZindex").val(1);
@@ -623,6 +623,64 @@ function previewMediaWithoutAnimation(){
   }
   $("#"+slideShowObject["name"]).show();
 }
+var slideShowObjectGrid=initGrid();
+
+function initGrid(){
+  slideShowObjectGrid={};
+  slideShowObjectGrid["file"]= "grids/grille1.png";
+  slideShowObjectGrid["name"]= "Grid",
+  slideShowObjectGrid["media"]= "img";
+  slideShowObjectGrid["width"]=1920;
+  slideShowObjectGrid["height"]=1080;
+  slideShowObjectGrid["top"]=0;
+  slideShowObjectGrid["left"]=0;
+  slideShowObjectGrid["z-index"]=100;
+
+  return slideShowObjectGrid;
+}
+function showBigGrid(){
+  if (slideShowObjectGrid["file"]=="grids/grille16.png"){
+    slideShowObjectGrid["file"]="grids/grille9.png"
+  } else if (slideShowObjectGrid["file"]=="grids/grille9.png"){
+    slideShowObjectGrid["file"]="grids/grille8.png"
+  } else if (slideShowObjectGrid["file"]=="grids/grille8.png"){
+    slideShowObjectGrid["file"]="grids/grille6.png"
+  } else if (slideShowObjectGrid["file"]=="grids/grille6.png"){
+    slideShowObjectGrid["file"]="grids/grille4.png"
+  } else if (slideShowObjectGrid["file"]=="grids/grille4.png"){
+    slideShowObjectGrid["file"]="grids/grille1.png"
+  }
+  showGrid(slideShowObjectGrid["file"]);
+}
+function showSmallGrid(){
+  if (slideShowObjectGrid["file"]=="grids/grille1.png"){
+    slideShowObjectGrid["file"]="grids/grille4.png"
+  } else if (slideShowObjectGrid["file"]=="grids/grille4.png"){
+    slideShowObjectGrid["file"]="grids/grille6.png"
+  } else if (slideShowObjectGrid["file"]=="grids/grille6.png"){
+    slideShowObjectGrid["file"]="grids/grille8.png"
+  } else if (slideShowObjectGrid["file"]=="grids/grille8.png"){
+    slideShowObjectGrid["file"]="grids/grille9.png"
+  } else if (slideShowObjectGrid["file"]=="grids/grille9.png"){
+    slideShowObjectGrid["file"]="grids/grille16.png"
+  }
+  showGrid(slideShowObjectGrid["file"]);
+}
+
+function showGrid(gridPath){
+  slideShowObjectGrid["file"]= gridPath;
+  $("#"+  slideShowObjectGrid["name"]).src=slideShowObjectGrid["file"];
+  elem =document.getElementById("Grid");
+  if (elem!=null){
+    document.getElementById("previewSlideShow").removeChild(elem);
+  }
+  createObjectImage(slideShowObjectGrid);
+  
+  $("#"+  slideShowObjectGrid["name"]).show();
+}
+
+
+
 
 
 function showhidePreviewBorder(){
