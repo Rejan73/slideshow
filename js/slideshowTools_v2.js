@@ -6,6 +6,8 @@
 
 var slideShowObjects;
 var debugMode=true;
+var WIDTH_MAX=1920;
+var HEIGHT_MAX=1080;
 
 slideShowObjects=JSON.parse("[]");
 
@@ -172,10 +174,6 @@ function showLittleImage(id){
   if (slideShowObjects[id]["comeInEffect"]=="effectRotate90" || slideShowObjects[id]["comeInEffect"]=="effectRotateInverse90" || slideShowObjects[id]["comeInEffect"]=="effectRotate180"){
     $("#picto").addClass(slideShowObjects[id]["comeInEffect"]);  
   }
-
-   
-
-
   $("#picto").show();
 }
 function hideLittleImage(){
@@ -303,7 +301,7 @@ function addAnimationObject(){
   } else {
     dataToAdd["duration"]=toSecond($("#objetDuration").val());
   }
-
+  dataToAdd["id"]=$("#objectNameId").val();
   dataToAdd["name"]=$("#objectName").val();
   dataToAdd["media"]=$("#objectMedia").val();
  
@@ -362,6 +360,7 @@ function updateAnimation(id){
   $(icon).attr({'style': 'color:orange;'});
   
   $("#objectId").val(id);
+  $("#objectNameId").val(slideShowObjects[id]["id"]);
   $("#objectName").val(slideShowObjects[id]["name"]);
   $("#objectMedia").val(slideShowObjects[id]["media"]).change();
   $("#objectWidth").val(slideShowObjects[id]["width"]);
@@ -420,10 +419,11 @@ function updateAnimation(id){
 
 function addNewAnimation(){
   $("#objectId").val(-1);
-  $("#objectName").val(Date.now());
+  $("#objectNameId").val(Date.now());
+  $("#objectName").val($("#objectNameId").val());
   $("#objectMedia").val("img").change();
-  $("#objectWidth").val(1920);
-  $("#objectHeight").val(1080);
+  $("#objectWidth").val(WIDTH_MAX);
+  $("#objectHeight").val(HEIGHT_MAX);
   $("#objectTop").val(0);
   $("#objectLeft").val(0);
   $("#objectZindex").val(1);
@@ -469,7 +469,7 @@ function changeComingAt(id){
 
 function createObjectText(slideShowObject){
   var elem = document.createElement("div");
-  elem.id= slideShowObject["name"];
+  elem.id= slideShowObject["id"];
   elem.innerHTML+=slideShowObject["txt"];
   //border: solid red;
   elem.style.cssText = addStyleText(slideShowObject);
@@ -478,7 +478,7 @@ function createObjectText(slideShowObject){
 
 function createObjectVideo(slideShowObject){
   var elem = document.createElement("video");
-  elem.id= slideShowObject["name"];
+  elem.id= slideShowObject["id"];
   elem.src=slideShowObject["file"];
   elem.style.cssText = addStyle(slideShowObject);
   document.getElementById("previewSlideShow").appendChild(elem);
@@ -486,7 +486,7 @@ function createObjectVideo(slideShowObject){
 
 function createObjectImage(slideShowObject){
   var elem = document.createElement("img");
-  elem.id= slideShowObject["name"];
+  elem.id= slideShowObject["id"];
   elem.src=slideShowObject["file"];
   elem.style.cssText = addStyle(slideShowObject);
   document.getElementById("previewSlideShow").appendChild(elem);
@@ -494,7 +494,7 @@ function createObjectImage(slideShowObject){
 }
 function createObjectMusic(slideShowObject){
   var elem = document.createElement("audio");
-  elem.id= slideShowObject["name"];
+  elem.id= slideShowObject["id"];
   elem.src=slideShowObject["file"];
   elem.style.cssText = addStyle(slideShowObject);
   document.getElementById("previewSlideShow").appendChild(elem);
@@ -600,7 +600,7 @@ function getTextDecoration(){
 }
 
 function removePreviewMediaWithoutAnimation(){
-  elem =document.getElementById($("#objectName").val());
+  elem =document.getElementById($("#objectNameId").val());
   if (elem!=null){
     document.getElementById("previewSlideShow").removeChild(elem);
   }
@@ -630,8 +630,8 @@ function initGrid(){
   slideShowObjectGrid["file"]= "grids/grille1.png";
   slideShowObjectGrid["name"]= "Grid",
   slideShowObjectGrid["media"]= "img";
-  slideShowObjectGrid["width"]=1920;
-  slideShowObjectGrid["height"]=1080;
+  slideShowObjectGrid["width"]=WIDTH_MAX;
+  slideShowObjectGrid["height"]=HEIGHT_MAX;
   slideShowObjectGrid["top"]=0;
   slideShowObjectGrid["left"]=0;
   slideShowObjectGrid["z-index"]=100;
@@ -679,10 +679,6 @@ function showGrid(gridPath){
   $("#"+  slideShowObjectGrid["name"]).show();
 }
 
-
-
-
-
 function showhidePreviewBorder(){
   slideShowObject=slideShowObjects[$("#objectId").val()];
   if ($("#"+slideShowObject["name"]).css("border-style")=="solid"){
@@ -699,6 +695,7 @@ function previewTextWithoutAnimation() {
   dataToAdd["fontFamily"]=$("#fontFamily").val();
   dataToAdd["fontColor"]=$("#fontColor").val();
   dataToAdd["fontSize"]=$("#fontSize").val();
+  dataToAdd["id"]=$("#objectNameId").val();
   dataToAdd["name"]=$("#objectName").val();
   dataToAdd["media"]=$("#objectMedia").val();
  
@@ -724,7 +721,7 @@ function previewTextWithoutAnimation() {
 
 
 function previewText(){
-  var elem= document.getElementById($("#objectName").val());
+  var elem= document.getElementById($("#objectNameId").val());
   if (elem!=null){
     document.getElementById("previewSlideShow").removeChild(elem);
   }
@@ -733,6 +730,7 @@ function previewText(){
   dataToAdd["fontFamily"]=$("#fontFamily").val();
   dataToAdd["fontColor"]=$("#fontColor").val();
   dataToAdd["fontSize"]=$("#fontSize").val();
+  dataToAdd["id"]=$("#objectNameId").val();
   dataToAdd["name"]=$("#objectName").val();
   dataToAdd["media"]=$("#objectMedia").val();
  
@@ -763,7 +761,7 @@ function runObjectAnimation(slideShowObject){
   if (debugMode){
     commingAt=1;
   }
-  var elem= document.getElementById(slideShowObject["name"]);
+  var elem= document.getElementById(slideShowObject["id"]);
   setTimeout(function() { 
     console.log(slideShowObject["name"]+" show");
     var id="#"+elem.id;

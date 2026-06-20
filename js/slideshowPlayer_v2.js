@@ -40,7 +40,7 @@ $('a[set-slideshow-id]').click(function(e) {
 
 function createObjectText(slideShowObject){
   var elem = document.createElement("div");
-  elem.id= slideShowObject["name"];
+  elem.id= slideShowObject["id"];
   elem.innerHTML+=slideShowObject["txt"];
   //border: solid red;
   elem.style.cssText = addStyleText(slideShowObject);
@@ -49,7 +49,7 @@ function createObjectText(slideShowObject){
 
 function createObjectVideo(slideShowObject){
   var elem = document.createElement("video");
-  elem.id= slideShowObject["name"];
+  elem.id= slideShowObject["id"];
   elem.src=slideShowObject["file"];
   elem.style.cssText = addStyle(slideShowObject);
   document.getElementById("playSlideShow").appendChild(elem);
@@ -57,7 +57,7 @@ function createObjectVideo(slideShowObject){
 
 function createObjectImage(slideShowObject){
   var elem = document.createElement("img");
-  elem.id= slideShowObject["name"];
+  elem.id= slideShowObject["id"];
   elem.src=slideShowObject["file"];
   elem.style.cssText = addStyle(slideShowObject);
   document.getElementById("playSlideShow").appendChild(elem);
@@ -65,7 +65,7 @@ function createObjectImage(slideShowObject){
 }
 function createObjectMusic(slideShowObject){
   var elem = document.createElement("audio");
-  elem.id= slideShowObject["name"];
+  elem.id= slideShowObject["id"];
   elem.src=slideShowObject["file"];
   elem.style.cssText = addStyle(slideShowObject);
   document.getElementById("playSlideShow").appendChild(elem);
@@ -97,10 +97,10 @@ function addStyleText(slideShowObject){
 
 
 function runObjectAnimation(slideShowObject){
-  console.log(slideShowObject["name"]);
-  var elem= document.getElementById(slideShowObject["name"]);
+  console.log(slideShowObject["id"]);
+  var elem= document.getElementById(slideShowObject["id"]);
   setTimeout(function() { 
-    console.log(slideShowObject["name"]+" show");
+    console.log(slideShowObject["id"]+" show");
     var id="#"+elem.id;
     var duration=slideShowObject["duration"];
     if (slideShowObject["media"]=="mp4" || slideShowObject["media"]=="mp3"){
@@ -116,7 +116,7 @@ function runObjectAnimation(slideShowObject){
       $(id).addClass(slideShowObject["comeInEffect"]);
     }
     setTimeout(function() {    
-      console.log(slideShowObject["name"]+" remove");
+      console.log(slideShowObject["id"]+" remove");
       $(id).hide();
       document.getElementById("playSlideShow").removeChild(elem);
     }, duration*1000);
